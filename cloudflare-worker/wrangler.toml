@@ -6,7 +6,7 @@ workers_dev = true
 # Create this KV namespace in Cloudflare and replace the placeholder ID.
 [[kv_namespaces]]
 binding = "VERIFICATION_KV"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+id = "153e48f49af34f5cbd7e09fcb2bd97a2"
 
 [triggers]
 crons = ["0 * * * *"]
