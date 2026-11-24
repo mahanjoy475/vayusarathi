@@ -1425,6 +1425,8 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 .meteogram-toolbar{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px}
 .meteogram-toolbar .range-wrap{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.meteogram-toolbar .range-label{font-size:10px;font-weight:900;color:#64748b;text-transform:uppercase;letter-spacing:.5px}
 .meteogram-select{background:#fff;border:1.5px solid #cbd5e1;border-radius:10px;padding:8px 11px;font-weight:800;color:#334155;box-shadow:0 2px 7px rgba(15,23,42,.04)}
+#meteogramParameter{min-width:176px}#meteogramRange{min-width:124px}
+@media(max-width:600px){#meteogramParameter{min-width:155px;max-width:46vw}#meteogramRange{min-width:115px}}
 .meteogram-guide{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:0 0 10px}
 .meteogram-guide-card{border-radius:13px;padding:10px 11px;display:flex;gap:9px;align-items:center;border:1px solid}
 .meteogram-guide-card.conv{background:linear-gradient(135deg,#f5f3ff,#ede9fe);border-color:#c4b5fd}.meteogram-guide-card.nonconv{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-color:#93c5fd}
@@ -2982,14 +2984,14 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
   </div>
 </div>
 
-<div class="floating-meteogram-tab" id="floatingMeteogramTab" role="button" tabindex="0" onclick="toggleMeteogram(true)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMeteogram(true)}" aria-label="Open precipitation meteogram">📊 Meteogram<span class="floating-minimize-control" role="button" tabindex="0" aria-label="Minimize Meteogram" onclick="event.stopPropagation();toggleFloatingMinimize('floatingMeteogramTab','meteogram')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();toggleFloatingMinimize('floatingMeteogramTab','meteogram')}">−</span></div>
+<div class="floating-meteogram-tab" id="floatingMeteogramTab" role="button" tabindex="0" onclick="toggleMeteogram(true)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMeteogram(true)}" aria-label="Open weather meteogram">📊 Meteogram<span class="floating-minimize-control" role="button" tabindex="0" aria-label="Minimize Meteogram" onclick="event.stopPropagation();toggleFloatingMinimize('floatingMeteogramTab','meteogram')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();toggleFloatingMinimize('floatingMeteogramTab','meteogram')}">−</span></div>
 
-<aside class="meteogram-panel" id="meteogramPanel" aria-label="Precipitation meteogram panel">
+<aside class="meteogram-panel" id="meteogramPanel" aria-label="Weather meteogram panel">
   <div class="meteogram-head">
     <div class="meteogram-head-left">
       <div class="meteogram-head-icon">🌧️</div>
       <div>
-        <div class="meteogram-title">Rainfall Meteogram</div>
+        <div class="meteogram-title" id="meteogramTitle">Rainfall Meteogram</div>
         <div class="meteogram-sub" id="meteogramLocation">Selected location • forecast pending</div>
       </div>
     </div>
@@ -2997,13 +2999,22 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
   </div>
   <div class="meteogram-body">
     <div class="meteogram-toolbar">
-      <div class="range-wrap"><span class="range-label">Forecast</span><select id="meteogramRange" class="meteogram-select" onchange="renderMeteogram()">
-        <option value="24">Next 24 h</option><option value="48">Next 48 h</option><option value="72" selected>Next 72 h</option>
-      </select></div>
+      <div class="range-wrap">
+        <span class="range-label">Parameter</span>
+        <select id="meteogramParameter" class="meteogram-select" onchange="renderMeteogram()" aria-label="Meteogram parameter">
+          <option value="rainfall" selected>Rainfall</option>
+          <option value="temperature_2m">Dry-bulb temperature</option>
+          <option value="dew_point_2m">Dew-point temperature</option>
+        </select>
+        <span class="range-label">Forecast</span>
+        <select id="meteogramRange" class="meteogram-select" onchange="renderMeteogram()" aria-label="Forecast range">
+          <option value="24">Next 24 h</option><option value="48">Next 48 h</option><option value="72">Next 72 h</option><option value="120" selected>Next 5 days</option>
+        </select>
+      </div>
       <button class="source-btn" style="padding:8px 12px" onclick="loadMeteogram()">↻ Refresh</button>
     </div>
 
-    <div class="meteogram-guide">
+    <div class="meteogram-guide" id="meteogramGuide">
       <div class="meteogram-guide-card conv"><div class="icon">⛈️</div><div><b>Convective rain / showers</b><span>Storm-driven component</span></div></div>
       <div class="meteogram-guide-card nonconv"><div class="icon">🌧️</div><div><b>Non-convective rain</b><span>Large-scale precipitation</span></div></div>
     </div>
@@ -3017,20 +3028,20 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
       <div class="meteogram-stat peak"><div class="label">Peak 1-h</div><div class="value" id="mgPeakHour">—</div></div>
     </div>
 
-    <div class="meteogram-legend">
+    <div class="meteogram-legend" id="meteogramLegend">
       <span class="meteogram-key"><i class="meteogram-swatch" style="background:#7c3aed"></i>Convective</span>
       <span class="meteogram-key"><i class="meteogram-swatch" style="background:#93c5fd"></i>Non-convective</span>
       <span class="meteogram-key"><i class="meteogram-swatch" style="background:#0f766e"></i>Probability of rain</span>
     </div>
     <div class="meteogram-chart-wrap"><canvas id="meteogramChart"></canvas></div>
-    <div class="meteogram-chart-caption"><span>Bars = hourly rainfall • line = probability</span><span class="tip">Darker purple = storm-related component</span></div>
+    <div class="meteogram-chart-caption" id="meteogramChartCaption"><span>Bars = hourly rainfall • line = probability</span><span class="tip">Darker purple = storm-related component</span></div>
 
     <div class="card meteogram-table-card">
-      <h3 class="card-heading heading-cyan">Hourly Rainfall Detail</h3>
-      <div class="table-wrap"><table class="table" style="min-width:660px"><thead><tr><th>Time</th><th>Total</th><th>Convective</th><th>Non-conv.</th><th>PoP</th><th>CAPE</th><th>Weather</th></tr></thead><tbody id="meteogramTableBody"></tbody></table></div>
+      <h3 class="card-heading heading-cyan" id="meteogramTableTitle">Hourly Rainfall Detail</h3>
+      <div class="table-wrap"><table class="table" style="min-width:660px"><thead id="meteogramTableHead"><tr><th>Time</th><th>Total</th><th>Convective</th><th>Non-conv.</th><th>PoP</th><th>CAPE</th><th>Weather</th></tr></thead><tbody id="meteogramTableBody"></tbody></table></div>
     </div>
 
-    <div class="meteogram-note" style="margin-top:10px"><b>How to read:</b> darker purple bars indicate the convective/showers component; light-blue bars indicate large-scale rain. The separation is model guidance from the GFS forecast, not an observed radar classification.</div>
+    <div class="meteogram-note" id="meteogramNote" style="margin-top:10px"><b>How to read:</b> darker purple bars indicate the convective/showers component; light-blue bars indicate large-scale rain. The separation is model guidance from the GFS forecast, not an observed radar classification.</div>
   </div>
 </aside>
 
@@ -4355,18 +4366,19 @@ async function loadMeteogram(){
   const locEl=document.getElementById('meteogramLocation');
   locEl.textContent=`${state.name||'Selected location'} • ${Number(state.lat).toFixed(4)}°N, ${Number(state.lon).toFixed(4)}°E`;
   alertEl.className='alert marine-notice';
-  alertEl.textContent='Loading precipitation components from GFS forecast…';
+  alertEl.textContent='Loading 5-day hourly GFS meteogram…';
   try{
-    const vars='precipitation,rain,showers,precipitation_probability,weather_code,cape';
-    const url=`https://api.open-meteo.com/v1/gfs?latitude=${Number(state.lat).toFixed(4)}&longitude=${Number(state.lon).toFixed(4)}&hourly=${vars}&forecast_days=4&timezone=Asia%2FKolkata`;
-    const r=await fetch(url);
+    const vars='precipitation,rain,showers,precipitation_probability,weather_code,cape,temperature_2m,dew_point_2m';
+    // Six calendar forecast days ensure a full rolling 120-hour window is available
+    // even when the request is made part-way through the current local day.
+    const url=`https://api.open-meteo.com/v1/gfs?latitude=${Number(state.lat).toFixed(4)}&longitude=${Number(state.lon).toFixed(4)}&hourly=${vars}&forecast_days=6&timezone=Asia%2FKolkata&temperature_unit=celsius`;
+    const r=await fetch(url,{cache:'no-store'});
     const d=await r.json();
-    if(d.error)throw new Error(d.reason||'GFS precipitation request failed');
-    if(!d.hourly||!Array.isArray(d.hourly.time))throw new Error('No hourly precipitation data returned');
+    if(!r.ok||d.error)throw new Error(d.reason||`GFS forecast request returned HTTP ${r.status}`);
+    if(!d.hourly||!Array.isArray(d.hourly.time))throw new Error('No hourly GFS meteogram data returned');
+    if(!Array.isArray(d.hourly.temperature_2m)||!Array.isArray(d.hourly.dew_point_2m))throw new Error('Temperature or dew-point data is missing from the GFS response');
     meteogramData=d;
     renderMeteogram();
-    alertEl.className='alert ok';
-    alertEl.innerHTML='<b>Precipitation meteogram ready.</b> Convective and non-convective components are separated from the GFS guidance.';
   }catch(e){
     meteogramData=null;
     alertEl.className='alert';
@@ -4377,44 +4389,112 @@ async function loadMeteogram(){
 function renderMeteogram(){
   if(!meteogramData||!meteogramData.hourly)return;
   const h=meteogramData.hourly;
-  const hours=Math.min(Number(document.getElementById('meteogramRange')?.value||72), h.time.length);
+  const parameter=document.getElementById('meteogramParameter')?.value||'rainfall';
+  const hours=Math.min(Number(document.getElementById('meteogramRange')?.value||120),120,h.time.length);
   const now=new Date();
   let start=0;
   for(let i=0;i<h.time.length;i++){ if(new Date(h.time[i])<=now) start=i; else break; }
   const end=Math.min(start+hours,h.time.length);
   const idx=Array.from({length:Math.max(0,end-start)},(_,k)=>start+k);
+  if(!idx.length)return;
   const labels=idx.map(i=>{const dt=new Date(h.time[i]);return dt.toLocaleDateString('en-IN',{day:'2-digit',month:'short'})+' '+dt.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:false});});
-  const total=idx.map(i=>Math.max(0,Number(h.precipitation?.[i]??0)));
-  const conv=idx.map(i=>Math.max(0,Math.min(total[idx.indexOf(i)]??0,Number(h.showers?.[i]??0))));
+  const safe=(arr,i)=>arr?.[i]==null||!Number.isFinite(Number(arr[i]))?null:Number(arr[i]);
+  const total=idx.map(i=>Math.max(0,safe(h.precipitation,i)??0));
+  const conv=idx.map((i,k)=>Math.max(0,Math.min(total[k],safe(h.showers,i)??0)));
   const nonconv=idx.map((i,k)=>Math.max(0,total[k]-conv[k]));
-  const pop=idx.map(i=>Math.max(0,Number(h.precipitation_probability?.[i]??0)));
-  const cape=idx.map(i=>Number(h.cape?.[i]??0));
-  const weather=idx.map(i=>Number(h.weather_code?.[i]??0));
-  const totalSum=total.reduce((a,b)=>a+b,0),convSum=conv.reduce((a,b)=>a+b,0),nonSum=nonconv.reduce((a,b)=>a+b,0);
-  const peak=Math.max(...total,0),peakIndex=total.indexOf(peak);
-  document.getElementById('mgTotal').textContent=totalSum.toFixed(1)+' mm';
-  document.getElementById('mgConvective').textContent=convSum.toFixed(1)+' mm';
-  document.getElementById('mgNonConv').textContent=nonSum.toFixed(1)+' mm';
-  document.getElementById('mgPeakHour').textContent=peak.toFixed(1)+' mm/h';
+  const pop=idx.map(i=>Math.max(0,safe(h.precipitation_probability,i)??0));
+  const cape=idx.map(i=>safe(h.cape,i));
+  const weather=idx.map(i=>safe(h.weather_code,i)??0);
+  const temp=idx.map(i=>safe(h.temperature_2m,i));
+  const dew=idx.map(i=>safe(h.dew_point_2m,i));
+  const setStat=(index,label,value)=>{
+    const card=document.querySelectorAll('#meteogramPanel .meteogram-stat')[index];
+    if(!card)return;
+    const l=card.querySelector('.label'),v=card.querySelector('.value');
+    if(l)l.textContent=label;if(v)v.textContent=value;
+  };
+  const title=document.getElementById('meteogramTitle');
+  const icon=document.querySelector('#meteogramPanel .meteogram-head-icon');
+  const guide=document.getElementById('meteogramGuide');
+  const legend=document.getElementById('meteogramLegend');
+  const caption=document.getElementById('meteogramChartCaption');
+  const tableTitle=document.getElementById('meteogramTableTitle');
+  const tableHead=document.getElementById('meteogramTableHead');
+  const note=document.getElementById('meteogramNote');
+  const alertEl=document.getElementById('meteogramAlert');
+  const tbody=document.getElementById('meteogramTableBody');
+  const unit=parameter==='rainfall'?'mm': '°C';
+  const format=(v,d=1)=>v==null?'—':Number(v).toFixed(d);
+  const timeAt=k=>{const dt=new Date(h.time[idx[k]]);return dt.toLocaleDateString('en-IN',{day:'2-digit',month:'short'})+' '+dt.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:false})+' IST';};
+
+  if(parameter==='rainfall'){
+    if(title)title.textContent='Rainfall Meteogram';if(icon)icon.textContent='🌧️';
+    if(guide)guide.style.display='grid';
+    if(legend)legend.innerHTML='<span class="meteogram-key"><i class="meteogram-swatch" style="background:#7c3aed"></i>Convective</span><span class="meteogram-key"><i class="meteogram-swatch" style="background:#93c5fd"></i>Non-convective</span><span class="meteogram-key"><i class="meteogram-swatch" style="background:#0f766e"></i>Probability of rain</span>';
+    setStat(0,'Total rainfall',total.reduce((a,b)=>a+b,0).toFixed(1)+' mm');
+    setStat(1,'Convective',conv.reduce((a,b)=>a+b,0).toFixed(1)+' mm');
+    setStat(2,'Non-convective',nonconv.reduce((a,b)=>a+b,0).toFixed(1)+' mm');
+    setStat(3,'Peak 1-hour',Math.max(...total,0).toFixed(1)+' mm/h');
+    if(caption)caption.innerHTML='<span>Bars = hourly rainfall • line = probability of precipitation</span><span class="tip">Convective and large-scale components</span>';
+    if(tableTitle)tableTitle.textContent='Hourly Rainfall Detail';
+    if(tableHead)tableHead.innerHTML='<tr><th>Time (IST)</th><th>Total</th><th>Convective</th><th>Non-conv.</th><th>PoP</th><th>CAPE</th><th>Weather</th></tr>';
+    if(note)note.innerHTML='<b>How to read:</b> darker purple bars indicate the convective/showers component; light-blue bars indicate large-scale rain. The separation is model guidance from GFS, not an observed radar classification.';
+    if(alertEl){alertEl.className='alert ok meteogram-alert';alertEl.textContent='5-day rainfall forecast ready. Convective and non-convective components are separated from GFS guidance.';}
+    if(meteogramChart)meteogramChart.destroy();
+    meteogramChart=new Chart(document.getElementById('meteogramChart'),{
+      type:'bar',data:{labels,datasets:[
+        {label:'Non-convective / large-scale rain',data:nonconv,backgroundColor:'rgba(147,197,253,.82)',borderColor:'#60a5fa',borderWidth:1,stack:'p'},
+        {label:'Convective / showers',data:conv,backgroundColor:'rgba(124,58,237,.82)',borderColor:'#6d28d9',borderWidth:1,stack:'p'},
+        {type:'line',label:'PoP (%)',data:pop,borderColor:'#0f766e',backgroundColor:'rgba(15,118,110,.12)',borderWidth:2,pointRadius:0,tension:.3,yAxisID:'y1'}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>ctx.dataset.label==='PoP (%)'?`${ctx.dataset.label}: ${Number(ctx.parsed.y||0).toFixed(0)}%`:`${ctx.dataset.label}: ${Number(ctx.parsed.y||0).toFixed(1)} mm`}}},
+        scales:{x:{stacked:true,ticks:{maxRotation:0,minRotation:0,color:'#64748b',autoSkip:true,maxTicksLimit:12},grid:{display:false}},y:{stacked:true,beginAtZero:true,title:{display:true,text:'Precipitation (mm/h)'},ticks:{color:'#475569'}},y1:{position:'right',beginAtZero:true,max:100,title:{display:true,text:'PoP (%)'},ticks:{color:'#0f766e'},grid:{drawOnChartArea:false}}}
+      }
+    });
+    tbody.innerHTML=idx.map((i,k)=>{
+      const dt=new Date(h.time[i]),code=weather[k],desc=(typeof weatherCodeDesc==='function'?weatherCodeDesc(code):'Forecast');
+      return `<tr><td>${dt.toLocaleDateString('en-IN',{day:'2-digit',month:'short'})} ${dt.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:false})}</td><td><b>${total[k].toFixed(1)}</b> mm</td><td style="color:#6d28d9;font-weight:800">${conv[k].toFixed(1)} mm</td><td style="color:#2563eb;font-weight:800">${nonconv[k].toFixed(1)} mm</td><td>${pop[k].toFixed(0)}%</td><td>${format(cape[k],0)} J/kg</td><td>${desc}</td></tr>`;
+    }).join('');
+    return;
+  }
+
+  const values=parameter==='temperature_2m'?temp:dew;
+  const parameterName=parameter==='temperature_2m'?'Dry-bulb temperature':'Dew-point temperature';
+  const shortName=parameter==='temperature_2m'?'Dry bulb':'Dew point';
+  const finiteValues=values.filter(v=>v!=null&&Number.isFinite(v));
+  if(!finiteValues.length){if(alertEl){alertEl.className='alert';alertEl.textContent=parameterName+' data are unavailable in the GFS response.';}return;}
+  const max=Math.max(...finiteValues),min=Math.min(...finiteValues),mean=finiteValues.reduce((a,b)=>a+b,0)/finiteValues.length;
+  const maxAt=values.findIndex(v=>v===max),minAt=values.findIndex(v=>v===min);
+  const daily=[];
+  for(let offset=0;offset<idx.length;offset+=24){
+    const slice=values.slice(offset,Math.min(offset+24,idx.length));
+    const valid=slice.map((v,j)=>({value:v,localIndex:offset+j})).filter(x=>x.value!=null&&Number.isFinite(x.value));
+    if(!valid.length)continue;
+    const hi=valid.reduce((a,b)=>b.value>a.value?b:a),lo=valid.reduce((a,b)=>b.value<a.value?b:a);
+    daily.push({day:daily.length+1,start:offset,end:Math.min(offset+23,idx.length-1),max:hi.value,min:lo.value,mean:valid.reduce((a,b)=>a+b.value,0)/valid.length,maxIndex:hi.localIndex,minIndex:lo.localIndex});
+  }
+  if(title)title.textContent=parameterName+' Meteogram';if(icon)icon.textContent=parameter==='temperature_2m'?'🌡️':'💧';
+  if(guide)guide.style.display='none';
+  if(legend)legend.innerHTML=`<span class="meteogram-key"><i class="meteogram-swatch" style="background:#ea580c"></i>${shortName} (hourly)</span><span class="meteogram-key"><i class="meteogram-swatch" style="background:#64748b"></i>Daily maximum / minimum shown below</span>`;
+  setStat(0,'5-day maximum',max.toFixed(1)+' °C');
+  setStat(1,'5-day minimum',min.toFixed(1)+' °C');
+  setStat(2,'5-day mean',mean.toFixed(1)+' °C');
+  setStat(3,'5-day range',(max-min).toFixed(1)+' °C');
+  if(caption)caption.innerHTML=`<span>Hourly ${parameterName.toLowerCase()} • values in °C</span><span class="tip">Max ${max.toFixed(1)}°C at ${timeAt(maxAt)} • Min ${min.toFixed(1)}°C at ${timeAt(minAt)}</span>`;
+  if(tableTitle)tableTitle.textContent='Daily '+shortName+' Maximum / Minimum';
+  if(tableHead)tableHead.innerHTML='<tr><th>24-hour forecast block</th><th>Maximum</th><th>Max time (IST)</th><th>Minimum</th><th>Min time (IST)</th><th>Mean</th></tr>';
+  if(note)note.innerHTML='<b>How to read:</b> the line shows hourly '+parameterName.toLowerCase()+'. The table groups the 120-hour outlook into five consecutive 24-hour forecast blocks and calculates the maximum, minimum and mean from hourly GFS values.';
+  if(alertEl){alertEl.className='alert ok meteogram-alert';alertEl.textContent='5-day '+parameterName.toLowerCase()+' forecast ready. Daily maximum and minimum values are calculated from the hourly GFS forecast.';}
   if(meteogramChart)meteogramChart.destroy();
   meteogramChart=new Chart(document.getElementById('meteogramChart'),{
-    type:'bar',
-    data:{labels,datasets:[
-      {label:'Non-convective / large-scale rain',data:nonconv,backgroundColor:'rgba(147,197,253,.82)',borderColor:'#60a5fa',borderWidth:1,stack:'p'},
-      {label:'Convective / showers',data:conv,backgroundColor:'rgba(124,58,237,.82)',borderColor:'#6d28d9',borderWidth:1,stack:'p'},
-      {type:'line',label:'PoP (%)',data:pop,borderColor:'#0f766e',backgroundColor:'rgba(15,118,110,.12)',borderWidth:2,pointRadius:0,tension:.3,yAxisID:'y1'}
+    type:'line',data:{labels,datasets:[
+      {label:parameterName,data:values,borderColor:'#ea580c',backgroundColor:'rgba(234,88,12,.12)',borderWidth:2.4,pointRadius:0,pointHitRadius:8,tension:.22,spanGaps:false,fill:true}
     ]},
-    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>ctx.dataset.label==='PoP (%)'?`${ctx.dataset.label}: ${Number(ctx.parsed.y||0).toFixed(0)}%`:`${ctx.dataset.label}: ${Number(ctx.parsed.y||0).toFixed(1)} mm`}}},
-      scales:{x:{stacked:true,ticks:{maxRotation:0,minRotation:0,color:'#64748b',autoSkip:true,maxTicksLimit:12},grid:{display:false}},y:{stacked:true,beginAtZero:true,title:{display:true,text:'Precipitation (mm/h)'},ticks:{color:'#475569'}},y1:{position:'right',beginAtZero:true,max:100,title:{display:true,text:'PoP (%)'},ticks:{color:'#0f766e'},grid:{drawOnChartArea:false}}}
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>`${parameterName}: ${ctx.parsed.y==null?'—':Number(ctx.parsed.y).toFixed(1)+' °C'}`}}},
+      scales:{x:{ticks:{maxRotation:0,minRotation:0,color:'#64748b',autoSkip:true,maxTicksLimit:12},grid:{display:false}},y:{title:{display:true,text:parameterName+' (°C)'},ticks:{color:'#475569',callback:v=>Number(v).toFixed(0)+'°C'}}}
     }
   });
-  const tbody=document.getElementById('meteogramTableBody');
-  tbody.innerHTML=idx.map((i,k)=>{
-    const dt=new Date(h.time[i]);
-    const code=weather[k];
-    const desc=(typeof weatherCodeDesc==='function'?weatherCodeDesc(code):'Forecast');
-    return `<tr><td>${dt.toLocaleDateString('en-IN',{day:'2-digit',month:'short'})} ${dt.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:false})}</td><td><b>${total[k].toFixed(1)}</b> mm</td><td style="color:#6d28d9;font-weight:800">${conv[k].toFixed(1)} mm</td><td style="color:#2563eb;font-weight:800">${nonconv[k].toFixed(1)} mm</td><td>${pop[k].toFixed(0)}%</td><td>${cape[k].toFixed(0)} J/kg</td><td>${desc}</td></tr>`;
-  }).join('');
+  tbody.innerHTML=daily.map(d=>`<tr><td><b>Day ${d.day}</b><br><span style="color:#64748b">${timeAt(d.start)} – ${timeAt(d.end)}</span></td><td style="color:#c2410c;font-weight:900">${d.max.toFixed(1)} °C</td><td>${timeAt(d.maxIndex)}</td><td style="color:#2563eb;font-weight:900">${d.min.toFixed(1)} °C</td><td>${timeAt(d.minIndex)}</td><td>${d.mean.toFixed(1)} °C</td></tr>`).join('');
 }
 
 function weatherCodeDesc(code){
