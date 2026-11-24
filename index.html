@@ -2338,7 +2338,7 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
     <div class="obs-cal-bias-grid" id="verificationKpiGrid" style="margin-top:12px">
       <div class="obs-cal-bias"><span>Matched cases</span><b id="verMatched">0</b></div>
       <div class="obs-cal-bias"><span>Forecast snapshots</span><b id="verSnapshots">0</b></div>
-      <div class="obs-cal-bias"><span>ML readiness</span><b id="verReadiness">Collecting</b></div>
+      <div class="obs-cal-bias"><span>Refinement stage</span><b id="verReadiness">Collecting</b></div>
       <div class="obs-cal-bias"><span>Best temperature MAE</span><b id="verTempMae">—</b></div>
       <div class="obs-cal-bias"><span>Best wind MAE</span><b id="verWindMae">—</b></div>
     </div>
@@ -2348,10 +2348,11 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
     <p class="muted" style="margin:0 0 10px">Scores are calculated only from matched forecast/observation pairs. The ML model is not allowed to replace the current forecast until it demonstrates better validation performance.</p>
     <div class="table-wrap">
       <table class="table" id="verificationModelTable">
-        <thead><tr><th>Parameter</th><th>GFS MAE</th><th>ECMWF MAE</th><th>ICON MAE</th><th>Open-Meteo MAE</th><th>VayuSarathi MAE</th><th>Cases</th></tr></thead>
+        <thead><tr><th>Parameter</th><th>GFS MAE</th><th>ECMWF MAE</th><th>ICON MAE</th><th>Open-Meteo MAE</th><th>VayuSarathi MAE</th><th>Max valid pairs</th></tr></thead>
         <tbody><tr><td colspan="7" class="muted" style="padding:18px">No verified cases yet. The database will populate automatically as forecasts age into observation time.</td></tr></tbody>
       </table>
     </div>
+    <p class="muted" style="margin:10px 0 0;line-height:1.55">Quality note: pressure is scored as mean-sea-level pressure (MSLP) only when a coded METAR sea-level pressure value is available; QNH/altimeter setting is never substituted. Cloud cover is estimated from METAR cloud-group categories (FEW/SCT/BKN/OVC) using category midpoints, so it is an approximate categorical observation. Missing cloud or pressure observations are excluded rather than treated as zero.</p>
   </div>
   <div class="card wide">
     <h3 class="card-heading heading-purple">Significant Weather Verification</h3>
@@ -2359,16 +2360,17 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
     <div class="fv-event-list" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"><span class="fv-event">⛈️ Thunderstorm / TS</span><span class="fv-event">🌧️ Rain / Showers</span><span class="fv-event">🌫️ Fog / Mist</span><span class="fv-event">❄️ Snow</span><span class="fv-event">🧊 Freezing precip</span><span class="fv-event">🌪️ Dust / Sand</span></div>
     <div class="table-wrap">
       <table class="table" id="verificationWeatherTable">
-        <thead><tr><th>Weather event</th><th>Hits</th><th>Misses</th><th>False alarms</th><th>Correct neg.</th><th>POD</th><th>FAR</th><th>CSI</th></tr></thead>
-        <tbody id="verificationWeatherBody"><tr><td colspan="8" class="muted" style="padding:18px">No matched significant-weather cases yet.</td></tr></tbody>
+        <thead><tr><th>Weather event</th><th>Cases</th><th>Hits</th><th>Misses</th><th>False alarms</th><th>Correct neg.</th><th>POD</th><th>FAR</th><th>CSI</th></tr></thead>
+        <tbody id="verificationWeatherBody"><tr><td colspan="9" class="muted" style="padding:18px">No matched significant-weather cases yet.</td></tr></tbody>
       </table>
     </div>
   </div>
   <div class="card wide">
     <h3 class="card-heading heading-cyan">Learning Dataset Status</h3>
-    <div id="verificationDatasetMessage" class="muted" style="line-height:1.6">The first stage collects forecast → observation → error records. At 1,000+ matched cases we can begin experimental ML; around 5,000 is the recommended first operational threshold.</div>
+    <div id="verificationDatasetMessage" class="muted" style="line-height:1.6">The first stage collects forecast → observation → error records. At 500+ matched cases, begin offline experimental refinement review. At 2,000+ cases, begin operational validation review. These are review milestones, not automatic ML activation: each parameter/model pair must independently meet its sample requirement, use a chronological 20% holdout (minimum 100 validation pairs experimentally / 400 operationally), cover at least 30 / 60 distinct days, and show at least 5% lower holdout MAE without degrading critical aviation-weather event scores. No correction is applied automatically.</div>
+    <p id="verificationQualityGateSummary" class="muted" style="margin:8px 0 0;line-height:1.55">Per-parameter/model sample gates will appear as valid comparisons are collected. Corrections remain disabled.</p>
     <div style="margin-top:14px;background:#e2e8f0;border-radius:999px;height:12px;overflow:hidden"><div id="verificationProgress" style="height:100%;width:0%;background:linear-gradient(90deg,#06b6d4,#10b981);transition:width .4s"></div></div>
-    <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:12px;font-weight:800"><span id="verificationProgressText">0 / 5,000 matched cases</span><span id="verificationTrainText">Training pipeline: collecting data</span></div>
+    <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:12px;font-weight:800"><span id="verificationProgressText">0 / 2,000 matched cases</span><span id="verificationTrainText">Training pipeline: collecting data</span></div>
   </div>
 </section>
 
@@ -5455,7 +5457,7 @@ function renderOpenMeteoMainStrip(){
 }
 
 async function loadForecast(){
-  const vars='temperature_2m,apparent_temperature,relative_humidity_2m,dew_point_2m,precipitation_probability,precipitation,rain,showers,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m,surface_pressure,visibility,cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high,cloud_base,cape,lifted_index';
+  const vars='temperature_2m,apparent_temperature,relative_humidity_2m,dew_point_2m,precipitation_probability,precipitation,rain,showers,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m,surface_pressure,pressure_msl,visibility,cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high,cloud_base,cape,lifted_index';
   let url=`https://api.open-meteo.com/v1/forecast?latitude=${state.lat}&longitude=${state.lon}&hourly=${vars}&forecast_days=7&timezone=Asia%2FKolkata&wind_speed_unit=kn`;
   
   try{
@@ -6683,7 +6685,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const h=base.hourly, modelIds=Object.keys(mmDatasets);
     const keys=['temperature_2m','dew_point_2m','relative_humidity_2m','precipitation','precipitation_probability','surface_pressure','pressure_msl','cloud_cover','cloud_cover_low','cloud_cover_mid','cloud_cover_high','wind_speed_10m','wind_gusts_10m','visibility','cape','wind_direction_10m'];
     const numKeys=keys.filter(k=>k!=='wind_direction_10m');
-    const finite=x=>Number.isFinite(Number(x));
+    const finite=x=>x!==null&&x!==undefined&&x!==''&&Number.isFinite(Number(x));
     const consensus=(i,key,dir=false)=>{
       const vals=modelIds.map(id=>mmDatasets[id].hourly?.[key]?.[i]).filter(finite).map(Number);
       if(!vals.length)return null;
@@ -6696,7 +6698,7 @@ document.addEventListener('DOMContentLoaded', () => {
       dew:obs&&finite(obs.dewC)?Number(obs.dewC):null,
       wind:obs&&finite(obs.windSpeedKt)?Number(obs.windSpeedKt):null,
       dir:obs&&finite(obs.windDirection)?Number(obs.windDirection):null,
-      press:obs&&finite(obs.altimeterHpa)?Number(obs.altimeterHpa):null,
+      press:obs&&finite(obs.seaLevelPressureHpa)?Number(obs.seaLevelPressureHpa):null,
       vis:obs&&finite(obs.visibilityM)?Number(obs.visibilityM):null
     };
     const idxNow=Math.max(0,Math.min(h.time.length-1,(()=>{let x=0,now=Date.now();for(let i=0;i<h.time.length;i++){if(new Date(h.time[i]).getTime()<=now)x=i;else break;}return x;})()));
@@ -6768,7 +6770,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // silently degrade the forecast.
   let verificationLastKey = '';
   function verificationApi(){ return window.VS_API_BASE+'/verification'; }
-  function verificationFinite(v){ return Number.isFinite(Number(v)); }
+  function verificationFinite(v){ return v!==null&&v!==undefined&&v!==''&&Number.isFinite(Number(v)); }
   function verificationNum(v){ return verificationFinite(v) ? Number(v) : null; }
   function verificationMedian(vals){ const a=vals.filter(verificationFinite).map(Number).sort((x,y)=>x-y); if(!a.length)return null; const m=Math.floor(a.length/2); return a.length%2?a[m]:(a[m-1]+a[m])/2; }
   function verificationSnapshotFromCurrent(){
@@ -6780,7 +6782,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const models={};
     Object.entries(mmDatasets||{}).forEach(([id,d])=>{ if(d?.hourly) models[id]=d.hourly; });
     const rows=[];
-    const keys=['temperature_2m','dew_point_2m','wind_speed_10m','wind_direction_10m','wind_gusts_10m','surface_pressure','visibility','cloud_cover','precipitation','weather_code'];
+    const keys=['temperature_2m','dew_point_2m','wind_speed_10m','wind_direction_10m','wind_gusts_10m','surface_pressure','pressure_msl','visibility','cloud_cover','precipitation','weather_code'];
     for(let i=0;i<n;i++){
       const row={validTime:h.time[i],leadHour:i,openMeteo:{},models:{},vayuSarathi:{}};
       keys.forEach(k=>{ row.openMeteo[k]=verificationNum(rawH[k]?.[i]); row.vayuSarathi[k]=verificationNum(h[k]?.[i]); });
@@ -6810,7 +6812,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       if(!best||bestDt>35*60*1000)return;
-      const o={temperature_2m:verificationNum(obs.tempC),wind_speed_10m:verificationNum(obs.windSpeedKt),wind_direction_10m:verificationNum(obs.windDirection),wind_gusts_10m:verificationNum(obs.windGustKt),visibility:verificationNum(obs.visibilityM),surface_pressure:verificationNum(obs.altimeterHpa),weather_text:String(obs.weather||''),raw_metar:String(obs.rawText||'')};
+      const o={temperature_2m:verificationNum(obs.tempC),wind_speed_10m:verificationNum(obs.windSpeedKt),wind_direction_10m:verificationNum(obs.windDirection),wind_gusts_10m:verificationNum(obs.windGustKt),visibility:verificationNum(obs.visibilityM),pressure_msl:verificationNum(obs.seaLevelPressureHpa),cloud_cover:verificationNum(obs.cloudCoverPct),cloud_cover_method:obs.cloudCoverMethod||null,weather_text:[obs.weather,obs.rawText].filter(Boolean).join(' '),raw_metar:String(obs.rawText||''),altimeter_setting_hpa:verificationNum(obs.altimeterHpa)};
       await fetch(verificationApi(),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'match',location:best.s.location,validTime:best.row.validTime,observation:o,station:{icao:obs.icao||'',name:obs.stationName||'',distanceKm:obs.distanceKm},forecast:best.row})});
     }catch(e){console.warn('Verification match failed:',e);}
   }
@@ -6820,19 +6822,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const stats=data?.stats||{}; const matched=Number(stats.matchedCases||0), snaps=Number(stats.snapshots||0);
     const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
     set('verMatched',matched.toLocaleString()); set('verSnapshots',snaps.toLocaleString());
-    set('verReadiness',matched>=5000?'ML READY':matched>=1000?'EXPERIMENTAL':'Collecting');
+    set('verReadiness',matched>=2000?'2,000+ total':matched>=500?'500+ total':'Collecting');
     set('verTempMae',verificationFmt(stats.best?.temperature?.mae,' °C')); set('verWindMae',verificationFmt(stats.best?.wind?.mae,' kt'));
     const wb=document.getElementById('verificationWeatherBody');
-    if(wb){ const labels={thunderstorm:'⛈️ Thunderstorm / TS',rain:'🌧️ Rain / Showers',fog:'🌫️ Fog / Mist',snow:'❄️ Snow',freezing:'🧊 Freezing precipitation',dust:'🌪️ Dust / Sand'}; const rows=Object.keys(labels).map(k=>{const x=stats.weatherEvents?.[k]||{}; const hits=Number(x.hits||0),miss=Number(x.misses||0),fa=Number(x.falseAlarms||0),cn=Number(x.correctNegatives||0); const pod=(hits+miss)?hits/(hits+miss):null,far=(hits+fa)?fa/(hits+fa):null,csi=(hits+miss+fa)?hits/(hits+miss+fa):null; return `<tr><td><b>${labels[k]}</b></td><td>${hits}</td><td>${miss}</td><td>${fa}</td><td>${cn}</td><td>${pod==null?'—':(pod*100).toFixed(1)+'%'}</td><td>${far==null?'—':(far*100).toFixed(1)+'%'}</td><td>${csi==null?'—':(csi*100).toFixed(1)+'%'}</td></tr>`;}).join(''); wb.innerHTML=rows||'<tr><td colspan="8" class="muted" style="padding:18px">No matched significant-weather cases yet.</td></tr>'; }
-    const pct=Math.min(100,matched/5000*100); const bar=document.getElementById('verificationProgress');if(bar)bar.style.width=pct+'%';
-    set('verificationProgressText',matched.toLocaleString()+' / 5,000 matched cases');
-    set('verificationTrainText',matched>=5000?'Training pipeline: ML threshold reached':matched>=1000?'Training pipeline: experimental ML eligible':'Training pipeline: collecting data');
+    if(wb){ const labels={thunderstorm:'⛈️ Thunderstorm / TS',rain:'🌧️ Rain / Showers',fog:'🌫️ Fog / Mist',snow:'❄️ Snow',freezing:'🧊 Freezing precipitation',dust:'🌪️ Dust / Sand'}; const rows=Object.keys(labels).map(k=>{const x=stats.weatherEvents?.[k]||{}; const hits=Number(x.hits||0),miss=Number(x.misses||0),fa=Number(x.falseAlarms||0),cn=Number(x.correctNegatives||0),cases=Number(x.cases||hits+miss+fa+cn); const pod=(hits+miss)?hits/(hits+miss):null,far=(hits+fa)?fa/(hits+fa):null,csi=(hits+miss+fa)?hits/(hits+miss+fa):null; return `<tr><td><b>${labels[k]}</b></td><td>${cases}</td><td>${hits}</td><td>${miss}</td><td>${fa}</td><td>${cn}</td><td>${pod==null?'—':(pod*100).toFixed(1)+'%'}</td><td>${far==null?'—':(far*100).toFixed(1)+'%'}</td><td>${csi==null?'—':(csi*100).toFixed(1)+'%'}</td></tr>`;}).join(''); wb.innerHTML=rows||'<tr><td colspan="9" class="muted" style="padding:18px">No matched significant-weather cases yet.</td></tr>'; }
+    const pct=Math.min(100,matched/2000*100); const bar=document.getElementById('verificationProgress');if(bar)bar.style.width=pct+'%';
+    set('verificationProgressText',matched.toLocaleString()+' / 2,000 matched cases (QA review target)');
+    set('verificationTrainText',matched>=2000?'Pipeline: quality gates and independent validation required':matched>=500?'Pipeline: offline experimental review only':'Pipeline: collecting data');
+    const learning=data?.learning||{};
+    const expN=Number(learning.thresholdExperimental||500), opN=Number(learning.thresholdOperational||2000);
+    const datasetMessage=matched<expN
+      ? `Collecting valid forecast → observation → error records. Offline experimental review begins at ${expN.toLocaleString()} matched cases; current total: ${matched.toLocaleString()}.`
+      : matched<opN
+        ? `Experimental review milestone reached (${matched.toLocaleString()} matched cases). Keep corrections offline. Operational validation review target: ${opN.toLocaleString()} cases.`
+        : `Operational review sample milestone reached (${matched.toLocaleString()} matched cases). This does not activate corrections: check per-parameter/model sample counts, chronological holdout skill and aviation-weather event scores.`;
+    set('verificationDatasetMessage',datasetMessage);
+    const gates=stats.qualityGates||{};let pairTotal=0,expPairs=0,opPairs=0;
+    Object.values(gates).forEach(bySource=>Object.values(bySource||{}).forEach(g=>{pairTotal++;if(g.experimentalSampleReady)expPairs++;if(g.operationalReviewSampleReady)opPairs++;}));
+    const gateNote=document.getElementById('verificationQualityGateSummary');
+    if(gateNote)gateNote.textContent=pairTotal?`Per-parameter/model sample gates: ${expPairs}/${pairTotal} ready for offline experimental review; ${opPairs}/${pairTotal} ready for operational validation review. Each uses a date-blocked chronological 20% holdout. Sample readiness is not skill approval; corrections remain disabled until a candidate improves holdout MAE by at least 5% without degrading critical weather-event scores.`:'Per-parameter/model sample gates will appear as valid, time-stamped comparison pairs are collected. Corrections remain disabled.';
     const body=document.querySelector('#verificationModelTable tbody'); if(!body)return;
-    const params=[['temperature_2m','Temperature','°C'],['wind_speed_10m','Wind speed',' kt'],['visibility','Visibility',' km'],['surface_pressure','Pressure',' hPa'],['cloud_cover','Cloud cover','%']];
+    const params=[['temperature_2m','Temperature','°C'],['wind_speed_10m','Wind speed',' kt'],['visibility','Visibility',' km'],['pressure_msl','MSL pressure',' hPa'],['cloud_cover','Cloud cover*','%']];
     const modelNames={gfs:'GFS',ecmwf:'ECMWF',icon:'ICON',openMeteo:'Open-Meteo',vayuSarathi:'VayuSarathi'};
     body.innerHTML=params.map(([key,label,suf])=>{
       const p=stats.parameters?.[key]||{};
-      return `<tr><td><b>${label}</b></td>${['gfs','ecmwf','icon','openMeteo','vayuSarathi'].map(m=>`<td>${verificationFmt(p[m]?.mae,suf)}</td>`).join('')}<td>${Number(p.cases||0).toLocaleString()}</td></tr>`;
+      return `<tr><td><b>${label}</b></td>${['gfs','ecmwf','icon','openMeteo','vayuSarathi'].map(m=>`<td>${verificationFmt(p[m]?.mae,suf)}<div class="muted" style="font-size:10px">n=${Number(p[m]?.cases||0).toLocaleString()}</div></td>`).join('')}<td>${Number(p.cases||0).toLocaleString()}</td></tr>`;
     }).join('') || '<tr><td colspan="7" class="muted" style="padding:18px">No verified cases yet.</td></tr>';
     verificationSetStatus(matched?`Verification database active • ${matched.toLocaleString()} matched cases from ${snaps.toLocaleString()} forecast snapshots.`:'Collector active • waiting for forecast cases to reach observation time.',true);
   }
@@ -7321,7 +7335,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const o=data.observation;
       if(!data.ok||!o){lastResult={at:Date.now(),key,observation:null};noObservation(series,data.message||'No sufficiently recent METAR station was found within 200 km.');return;}
       const nowBase=series.rows[0]||{};
-      const tempObs=n(o.tempC),dewObs=n(o.dewC),windObs=n(o.windSpeedKt),dirObs=n(o.windDirection),pressureObs=n(o.altimeterHpa),visObs=n(o.visibilityM);
+      const tempObs=n(o.tempC),dewObs=n(o.dewC),windObs=n(o.windSpeedKt),dirObs=n(o.windDirection),pressureObs=n(o.seaLevelPressureHpa),visObs=n(o.visibilityM);
       const delta=(obs,base,limit)=>obs==null||n(base)==null?null:clamp(obs-n(base),-limit,limit);
       const bias={
         temp:delta(tempObs,nowBase.temperature_2m,5),
@@ -7337,7 +7351,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const tempPart=tempObs==null?'':` Temp ${fmt(tempObs)}°C;`;
       const dewPart=dewObs==null?'':` dew point ${fmt(dewObs)}°C;`;
       const windPart=windObs==null?'':` wind ${fmt(windObs)} kt${dirObs==null?'':' / '+direction(dirObs)};`;
-      const pressurePart=pressureObs==null?'':` altimeter ${fmt(pressureObs)} hPa;`;
+      const pressurePart=pressureObs==null?'':` MSL pressure ${fmt(pressureObs)} hPa;`;
       const visPart=visObs==null?'':` visibility ${km(visObs)};`;
       const meta=el('obsCalMeta');if(meta)meta.innerHTML=`<b>Actual station observation:</b> ${String(o.stationName||o.icao||'METAR station').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))} (${String(o.icao||'—')}) • ${dist==null?'distance unavailable':fmt(dist,0)+' km away'} • observed ${timeIST(o.observationTime)}.<br>${(tempPart+dewPart+windPart+pressurePart+visPart)||'Raw report available.'} <b>Raw METAR:</b> ${String(o.rawText||'not supplied').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}`;
       renderBiasCards(bias,1);
