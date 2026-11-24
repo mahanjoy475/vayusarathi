@@ -1,16 +1,12 @@
 name = "vayusarathi-api"
 main = "src/index.js"
-compatibility_date = "2026-11-23"
+compatibility_date = "2026-11-24"
 workers_dev = true
 
-# Create this KV namespace in Cloudflare and replace the placeholder ID.
 [[kv_namespaces]]
 binding = "VERIFICATION_KV"
 id = "153e48f49af34f5cbd7e09fcb2bd97a2"
 
 [triggers]
+# Forecast Validation collector checks for matching observations every hour (UTC).
 crons = ["0 * * * *"]
-
-[vars]
-GEMINI_MODEL = "gemini-3.5-flash-lite"
-OPENAI_MODEL = "gpt-6-luna"

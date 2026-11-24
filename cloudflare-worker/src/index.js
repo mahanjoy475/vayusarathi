@@ -7,21 +7,6 @@ const CORS = {
   'Access-Control-Max-Age': '86400'
 };
 const json = (data, status=200, extra={}) => new Response(JSON.stringify(data), {status, headers:{...CORS,'Content-Type':'application/json; charset=utf-8',...extra}});
-const text = (body,status=200,extra={}) => new Response(body,{status,headers:{...CORS,'Content-Type':'text/plain; charset=utf-8',...extra}});
-const safeNum = v => Number.isFinite(Number(v)) ? Number(v) : null;
-
-async function rateLimit(env, req, route, max=12){
-  if(!env.VERIFICATION_KV)return null;
-  const ip=req.headers.get('CF-Connecting-IP')||'unknown';
-  const minute=Math.floor(Date.now()/60000);
-  const key=`rate:${route}:${ip}:${minute}`;
-  const count=Number(await env.VERIFICATION_KV.get(key)||0);
-  if(count>=max)return json({ok:false,error:'Too many requests. Please wait a minute before trying again.'},429);
-  await env.VERIFICATION_KV.put(key,String(count+1),{expirationTtl:120});
-  return null;
-}
-
-const cleanHistory = (history, roleMap=false) => Array.isArray(history) ? history.slice(-12).map(m=>({role:m?.role==='assistant'?(roleMap?'model':'assistant'):'user',content:String(m?.content||'').slice(0,6000)})).filter(m=>m.content.trim()) : [];
 
 async function aviation(req,url){
   const qs=url.searchParams;
@@ -54,16 +39,6 @@ async function nearestMetar(lat,lon){const r=await fetch('https://aviationweathe
   return best;
 }
 
-async function gemini(req,env){
-  if(req.method==='OPTIONS')return new Response('',{status:204,headers:CORS});if(req.method==='GET')return json({ok:true,configured:!!env.GEMINI_API_KEY,provider:'Google Gemini',model:env.GEMINI_MODEL||'gemini-3.5-flash-lite'});if(req.method!=='POST')return json({ok:false,error:'Method not allowed.'},405);const limited=await rateLimit(env,req,'gemini');if(limited)return limited;if(!env.GEMINI_API_KEY)return json({ok:false,error:'GEMINI_API_KEY is not configured in Cloudflare Worker secrets.'},503);
-  let b;try{b=await req.json();}catch{return json({ok:false,error:'Invalid JSON request.'},400);}const message=String(b.message||'').trim();if(!message)return json({ok:false,error:'Message is required.'},400);if(message.length>6000)return json({ok:false,error:'Message is too long. Please keep it below 6000 characters.'},400);
-  const ctx=b.context&&typeof b.context==='object'?b.context:{};const hist=cleanHistory(b.history,true);const prev=typeof b.previous_interaction_id==='string'&&b.previous_interaction_id.trim()?b.previous_interaction_id.trim():undefined;
-  const instructions=`You are VayuSarathi AI, the built-in meteorological assistant for the VayuSarathi weather dashboard.\nBe concise, technically sound, aviation-meteorology aware, and explicit about uncertainty. Use dashboard context supplied below when relevant. Never invent observations, forecasts, model values, METAR/TAF, warnings, cyclone classifications, or official bulletin content. Clearly distinguish observed data, NWP guidance, VayuSarathi post-processing, official guidance, and your own interpretation. For operationally significant weather, advise checking relevant official aviation or meteorological bulletins. You are advisory and do not issue official warnings.\nCURRENT VAYUSARATHI CONTEXT:\n${JSON.stringify(ctx).slice(0,12000)}`;
-  const input=prev?message:[...hist,{role:'user',content:message}];const payload={model:env.GEMINI_MODEL||'gemini-3.5-flash-lite',instructions,input,store:true,max_output_tokens:900};if(prev)payload.previous_interaction_id=prev;
-  try{const r=await fetch('https://generativelanguage.googleapis.com/v1beta/interactions',{method:'POST',headers:{'x-goog-api-key':env.GEMINI_API_KEY,'Content-Type':'application/json'},body:JSON.stringify(payload)});const d=await r.json().catch(()=>({}));if(!r.ok)return json({ok:false,error:d?.error?.message||`Gemini API returned HTTP ${r.status}.`},r.status>=500?502:r.status);let answer=d.output_text||'';if(!answer&&Array.isArray(d.steps))answer=d.steps.filter(x=>x.type==='model_output').flatMap(x=>x.content||[]).filter(x=>x.type==='text').map(x=>x.text).join('\n');if(!answer&&Array.isArray(d.output))answer=d.output.flatMap(x=>[x.text,...(x.content||[]).map(c=>c.text)]).filter(Boolean).join('\n');if(!answer)return json({ok:false,error:'Gemini returned no text response.'},502);return json({ok:true,response_id:d.id||null,model:d.model||payload.model,provider:'Google Gemini',answer});}catch(e){return json({ok:false,error:`Gemini service request failed: ${e.message||e}`},502);}
-}
-async function openai(req,env){if(req.method==='OPTIONS')return new Response('',{status:204,headers:CORS});if(req.method==='GET')return json({ok:true,configured:!!env.OPENAI_API_KEY,model:env.OPENAI_MODEL||'gpt-6-luna'});if(req.method!=='POST')return json({ok:false,error:'Method not allowed.'},405);const limited=await rateLimit(env,req,'openai');if(limited)return limited;if(!env.OPENAI_API_KEY)return json({ok:false,error:'OPENAI_API_KEY is not configured in Cloudflare Worker secrets.'},503);let b;try{b=await req.json();}catch{return json({ok:false,error:'Invalid JSON request.'},400);}const message=String(b.message||'').trim();if(!message)return json({ok:false,error:'Message is required.'},400);if(message.length>6000)return json({ok:false,error:'Message is too long. Please keep it below 6000 characters.'},400);const ctx=b.context&&typeof b.context==='object'?b.context:{};const hist=cleanHistory(b.history,false);const prev=typeof b.previous_response_id==='string'&&b.previous_response_id.trim()?b.previous_response_id.trim():undefined;const instructions=`You are VayuSarathi AI, the built-in meteorological assistant for the VayuSarathi weather dashboard. Be concise, technically sound, aviation-meteorology aware. Prefer SI/aviation units and explain uncertainty. Never invent observations, forecasts, model values, METAR/TAF, warnings, or official cyclone classifications. Distinguish observed data, NWP guidance, VayuSarathi post-processing, and your interpretation. For operationally significant weather, recommend checking relevant official bulletins. Advisory only.\nCURRENT VAYUSARATHI CONTEXT:\n${JSON.stringify(ctx).slice(0,12000)}`;const input=prev?[{role:'user',content:message}]:[...hist,{role:'user',content:message}];const payload={model:env.OPENAI_MODEL||'gpt-6-luna',instructions,input,store:true,max_output_tokens:900};if(prev)payload.previous_response_id=prev;try{const r=await fetch('https://api.openai.com/v1/responses',{method:'POST',headers:{Authorization:`Bearer ${env.OPENAI_API_KEY}`,'Content-Type':'application/json'},body:JSON.stringify(payload)});const d=await r.json().catch(()=>({}));if(!r.ok)return json({ok:false,error:d?.error?.message||`OpenAI API returned HTTP ${r.status}.`},r.status>=500?502:r.status);return json({ok:true,response_id:d.id||null,model:d.model||payload.model,answer:d.output_text||'I could not produce a text response.'});}catch(e){return json({ok:false,error:`AI service request failed: ${e.message||e}`},502);}}
-
 const params=['temperature_2m','wind_speed_10m','visibility','surface_pressure','cloud_cover'];const sources=['gfs','ecmwf','icon','openMeteo','vayuSarathi'];
 function keyHour(t){const d=new Date(t);return Number.isFinite(d.getTime())?d.toISOString().slice(0,13):String(t);}
 function keySnapshot(s){return `snapshots/${Number(s.location.lat).toFixed(3)}_${Number(s.location.lon).toFixed(3)}/${String(s.issuedAt).replace(/[:.]/g,'-')}.json`;}
@@ -73,33 +48,99 @@ function wxForecast(c){const n=Number(c);return{thunderstorm:[95,96,99].includes
 function wxObs(t){t=String(t||'').toUpperCase();return{thunderstorm:/TS|THUNDER/.test(t),rain:/SHRA|RA/.test(t),fog:/FG|BR|MIST|FOG/.test(t),snow:/SN|SG|SNOW/.test(t),freezing:/FZ|FREEZ/.test(t),dust:/DU|SA|HZ|DS|SS|DUST|SAND/.test(t)};}
 async function listKV(env,prefix){const all=[];let cursor;do{const res=await env.VERIFICATION_KV.list({prefix,cursor,limit:1000});all.push(...res.keys);cursor=res.list_complete?undefined:res.cursor;}while(cursor);return all;}
 async function getJSON(env,key){const v=await env.VERIFICATION_KV.get(key);if(!v)return null;try{return JSON.parse(v);}catch{return null;}}
-async function verification(req,url,env){try{if(req.method==='POST'){let b;try{b=await req.json();}catch{return json({ok:false,error:'Invalid JSON request.'},400);}if(b.action==='snapshot'){if(!b.snapshot?.location||!Array.isArray(b.snapshot.rows))return json({ok:false,error:'Invalid forecast snapshot.'},400);const s=b.snapshot,key=keySnapshot(s);await env.VERIFICATION_KV.put(key,JSON.stringify(s));return json({ok:true,key,modified:true});}if(b.action==='match'){if(!b.location||!b.validTime||!b.forecast||!b.observation)return json({ok:false,error:'Invalid verification match.'},400);const lat=Number(b.location.lat),lon=Number(b.location.lon);if(!Number.isFinite(lat)||!Number.isFinite(lon))return json({ok:false,error:'Invalid match location.'},400);const key=`matches/${lat.toFixed(3)}_${lon.toFixed(3)}/${keyHour(b.validTime)}.json`;const match={schemaVersion:1,location:{name:b.location.name||'Selected location',lat,lon},validTime:b.validTime,observation:b.observation,station:b.station||{},forecast:b.forecast};await env.VERIFICATION_KV.put(key,JSON.stringify(match));return json({ok:true,key,modified:true});}return json({ok:false,error:'Unknown verification action.'},400);}
+async function verification(req,url,env){try{if(!env.VERIFICATION_KV)return json({ok:false,error:'VERIFICATION_KV binding is not configured.'},503);if(req.method==='POST'){let b;try{b=await req.json();}catch{return json({ok:false,error:'Invalid JSON request.'},400);}if(b.action==='snapshot'){if(!b.snapshot?.location||!Array.isArray(b.snapshot.rows))return json({ok:false,error:'Invalid forecast snapshot.'},400);const s=b.snapshot,key=keySnapshot(s);await env.VERIFICATION_KV.put(key,JSON.stringify(s));return json({ok:true,key,modified:true});}if(b.action==='match'){if(!b.location||!b.validTime||!b.forecast||!b.observation)return json({ok:false,error:'Invalid verification match.'},400);const lat=Number(b.location.lat),lon=Number(b.location.lon);if(!Number.isFinite(lat)||!Number.isFinite(lon))return json({ok:false,error:'Invalid match location.'},400);const key=`matches/${lat.toFixed(3)}_${lon.toFixed(3)}/${keyHour(b.validTime)}.json`;const match={schemaVersion:1,location:{name:b.location.name||'Selected location',lat,lon},validTime:b.validTime,observation:b.observation,station:b.station||{},forecast:b.forecast};await env.VERIFICATION_KV.put(key,JSON.stringify(match));return json({ok:true,key,modified:true});}return json({ok:false,error:'Unknown verification action.'},400);}
     const snapsKeys=await listKV(env,'snapshots/');const snapshots=[];for(const k of snapsKeys){const s=await getJSON(env,k.name);if(s)snapshots.push({key:k.name,snapshot:s});}snapshots.sort((a,b)=>String(a.snapshot.issuedAt||'').localeCompare(String(b.snapshot.issuedAt||'')));
     if(url.searchParams.get('action')==='snapshots')return json({ok:true,snapshots:snapshots.slice(-100).map(x=>x.snapshot)});
     const matchKeys=await listKV(env,'matches/');const matches=[];for(const k of matchKeys){const m=await getJSON(env,k.name);if(m)matches.push(m);}
     const errors={};for(const p of params){errors[p]={};for(const s of sources)errors[p][s]=[];}
-    for(const m of matches){const f=m.forecast||{},o=m.observation||{};for(const p of params){for(const s of sources){const fv=s==='gfs'?f.models?.gfs?.[p]:s==='ecmwf'?f.models?.ecmwf?.[p]:s==='icon'?f.models?.icon?.[p]:s==='openMeteo'?f.openMeteo?.[p]:f.vayuSarathi?.[p];const e=errFor(p,Number(fv),Number(o[p]));if(Number.isFinite(e))errors[p][s].push(e);}}}
+    const numberOrNull = value => value === null || value === undefined || value === '' ? null : (Number.isFinite(Number(value)) ? Number(value) : null);
+    for(const m of matches){const f=m.forecast||{},o=m.observation||{};for(const p of params){for(const s of sources){const fv=s==='gfs'?f.models?.gfs?.[p]:s==='ecmwf'?f.models?.ecmwf?.[p]:s==='icon'?f.models?.icon?.[p]:s==='openMeteo'?f.openMeteo?.[p]:f.vayuSarathi?.[p];const e=errFor(p,numberOrNull(fv),numberOrNull(o[p]));if(e!==null)errors[p][s].push(e);}}}
     const events={thunderstorm:{hits:0,misses:0,falseAlarms:0,correctNegatives:0},rain:{hits:0,misses:0,falseAlarms:0,correctNegatives:0},fog:{hits:0,misses:0,falseAlarms:0,correctNegatives:0},snow:{hits:0,misses:0,falseAlarms:0,correctNegatives:0},freezing:{hits:0,misses:0,falseAlarms:0,correctNegatives:0},dust:{hits:0,misses:0,falseAlarms:0,correctNegatives:0}};
-    for(const m of matches){const f=wxForecast(m.forecast?.weather_code),o=wxObs(m.observation?.weather_text||m.observation?.wx_string||'');for(const k in f){const x=events[k];if(f[k]&&o[k])x.hits++;else if(!f[k]&&o[k])x.misses++;else if(f[k]&&!o[k])x.falseAlarms++;else x.correctNegatives++;}}
+    for(const m of matches){const fc=m.forecast?.vayuSarathi?.weather_code ?? m.forecast?.openMeteo?.weather_code ?? m.forecast?.weather_code;const f=wxForecast(fc),o=wxObs(m.observation?.weather_text||m.observation?.wx_string||m.observation?.raw_metar||'');for(const k in f){const x=events[k];if(f[k]&&o[k])x.hits++;else if(!f[k]&&o[k])x.misses++;else if(f[k]&&!o[k])x.falseAlarms++;else x.correctNegatives++;}}
     const stats={snapshots:snapshots.length,matchedCases:matches.length,parameters:{},best:{},weatherEvents:events};for(const p of params){stats.parameters[p]={cases:0};let bestMae=Infinity,bestSrc=null;for(const s of sources){const a=errors[p][s],m=mae(a),r=rmse(a),bias=a.length?a.reduce((sum,x)=>sum+x,0)/a.length:null;stats.parameters[p][s]={mae:m,rmse:r,bias,cases:a.length};if(m!=null&&m<bestMae){bestMae=m;bestSrc=s;}}stats.parameters[p].cases=Math.max(...sources.map(s=>stats.parameters[p][s].cases),0);if(bestSrc)stats.best[p]={source:bestSrc,mae:bestMae};}
+    // Frontend summary cards currently read these two compatibility aliases.
+    stats.best.temperature = stats.best.temperature_2m || {source:null,mae:null};
+    stats.best.wind = stats.best.wind_speed_10m || {source:null,mae:null};
     return json({ok:true,stats,learning:{thresholdExperimental:1000,thresholdOperational:5000,validationSplit:0.2,method:'forecast-error correction'}});
   }catch(e){return json({ok:false,error:'Verification service failed.',detail:String(e.message||e)},500);}}
-async function verificationHealth(env){try{const key='_health/verification.json';if(!await env.VERIFICATION_KV.get(key))await env.VERIFICATION_KV.put(key,JSON.stringify({ok:true,createdAt:new Date().toISOString()}));return json({ok:true,service:'vayusarathi-verification',kv:true,time:new Date().toISOString()},200);}catch(e){return json({ok:false,error:'Verification backend is unavailable.',detail:String(e.message||e)},503);}}
+async function verificationHealth(env){try{if(!env.VERIFICATION_KV)throw Error('VERIFICATION_KV binding is not configured.');const key='_health/verification.json';if(!await env.VERIFICATION_KV.get(key))await env.VERIFICATION_KV.put(key,JSON.stringify({ok:true,createdAt:new Date().toISOString()}));return json({ok:true,service:'vayusarathi-verification',kv:true,time:new Date().toISOString()},200);}catch(e){return json({ok:false,error:'Verification backend is unavailable.',detail:String(e.message||e)},503);}}
 
-async function cronCollector(env){const keys=await listKV(env,'snapshots/');const locs=new Map();for(const k of keys){const s=await getJSON(env,k.name);if(s?.location)locs.set(`${Number(s.location.lat).toFixed(3)}_${Number(s.location.lon).toFixed(3)}`,s);}if(!locs.size)return 'No forecast snapshots yet.';const r=await fetch('https://aviationweather.gov/data/cache/metars.cache.csv.gz',{headers:{'User-Agent':'VayuSarathi/1.0 Forecast Verification Collector'}});if(!r.ok)throw Error(`METAR cache HTTP ${r.status}`);let csv;try{csv=await gunzipText(await r.arrayBuffer());}catch(e){csv=await r.text();}const lines=csv.split(/\r?\n/).filter(Boolean);const hi=lines.findIndex(x=>/station_id/i.test(x)&&/latitude/i.test(x)&&/longitude/i.test(x));if(hi<0)throw Error('METAR cache header missing');const h=csvLine(lines[hi]).map(x=>x.trim().toLowerCase());const idx=(...names)=>{for(const n of names){const i=h.indexOf(n);if(i>=0)return i;}return -1;};const n=v=>{const x=parseFloat(v);return Number.isFinite(x)?x:null;};const obs=[];for(let i=hi+1;i<lines.length;i++){const row=csvLine(lines[i]),lat=n(row[idx('latitude','lat')]),lon=n(row[idx('longitude','lon')]),t=Date.parse(row[idx('observation_time','obs_time','obstime')]||'');if(lat==null||lon==null||!Number.isFinite(t)||Math.abs(Date.now()-t)>2.5*3600*1000)continue;obs.push({icao:row[idx('station_id','icao_id','icao')]||'',lat,lon,observationTime:new Date(t).toISOString(),tempC:n(row[idx('temp_c','temperature_c','tmpc')]),windSpeedKt:n(row[idx('wind_speed_kt','wind_speed_kts','sknt')]),windDirection:n(row[idx('wind_dir_degrees','wind_direction_degrees','drct')]),visibilityM:n(row[idx('visibility_statute_mi','visibility','visib')])==null?null:n(row[idx('visibility_statute_mi','visibility','visib')])*1609.344,altimeterHpa:n(row[idx('altim_in_hg','altimeter_in_hg','altim')])==null?null:n(row[idx('altim_in_hg','altimeter_in_hg','altim')])*33.8638866667,wxString:row[idx('wx_string','present_weather','weather')]||''});}
+async function cronCollector(env){if(!env.VERIFICATION_KV)throw Error('VERIFICATION_KV binding is not configured.');const keys=await listKV(env,'snapshots/');const locs=new Map();for(const k of keys){const s=await getJSON(env,k.name);if(s?.location)locs.set(`${Number(s.location.lat).toFixed(3)}_${Number(s.location.lon).toFixed(3)}`,s);}if(!locs.size)return 'No forecast snapshots yet.';const r=await fetch('https://aviationweather.gov/data/cache/metars.cache.csv.gz',{headers:{'User-Agent':'VayuSarathi/1.0 Forecast Verification Collector'}});if(!r.ok)throw Error(`METAR cache HTTP ${r.status}`);const rawBytes=await r.arrayBuffer();let csv;try{csv=await gunzipText(rawBytes);}catch(e){csv=new TextDecoder().decode(rawBytes);}const lines=csv.split(/\r?\n/).filter(Boolean);const hi=lines.findIndex(x=>/station_id/i.test(x)&&/latitude/i.test(x)&&/longitude/i.test(x));if(hi<0)throw Error('METAR cache header missing');const h=csvLine(lines[hi]).map(x=>x.trim().toLowerCase());const idx=(...names)=>{for(const n of names){const i=h.indexOf(n);if(i>=0)return i;}return -1;};const n=v=>{const x=parseFloat(v);return Number.isFinite(x)?x:null;};const obs=[];for(let i=hi+1;i<lines.length;i++){const row=csvLine(lines[i]),lat=n(row[idx('latitude','lat')]),lon=n(row[idx('longitude','lon')]),t=Date.parse(row[idx('observation_time','obs_time','obstime')]||'');if(lat==null||lon==null||!Number.isFinite(t)||Math.abs(Date.now()-t)>2.5*3600*1000)continue;obs.push({icao:row[idx('station_id','icao_id','icao')]||'',lat,lon,observationTime:new Date(t).toISOString(),tempC:n(row[idx('temp_c','temperature_c','tmpc')]),windSpeedKt:n(row[idx('wind_speed_kt','wind_speed_kts','sknt')]),windDirection:n(row[idx('wind_dir_degrees','wind_direction_degrees','drct')]),visibilityM:n(row[idx('visibility_statute_mi','visibility','visib')])==null?null:n(row[idx('visibility_statute_mi','visibility','visib')])*1609.344,altimeterHpa:n(row[idx('altim_in_hg','altimeter_in_hg','altim')])==null?null:n(row[idx('altim_in_hg','altimeter_in_hg','altim')])*33.8638866667,wxString:row[idx('wx_string','present_weather','weather')]||''});}
   let matched=0,processed=0;for(const s of [...locs.values()].slice(0,100)){let row=null,best=Infinity;for(const x of s.rows||[]){const d=Math.abs(new Date(x.validTime).getTime()-Date.now());if(d<best){best=d;row=x;}}if(!row||best>35*60*1000)continue;let ob=null,dist=Infinity;for(const m of obs){const d=hav(s.location.lat,s.location.lon,m.lat,m.lon);if(d<dist&&d<=200){dist=d;ob=m;}}if(!ob)continue;const key=`matches/${Number(s.location.lat).toFixed(3)}_${Number(s.location.lon).toFixed(3)}/${keyHour(row.validTime)}.json`;if(await env.VERIFICATION_KV.get(key)){processed++;continue;}const observation={temperature_2m:ob.tempC,wind_speed_10m:ob.windSpeedKt,wind_direction_10m:ob.windDirection,wind_gusts_10m:null,visibility:ob.visibilityM,surface_pressure:ob.altimeterHpa,cloud_cover:null,weather_text:ob.wxString||''};await env.VERIFICATION_KV.put(key,JSON.stringify({schemaVersion:1,location:s.location,validTime:row.validTime,observation,station:{icao:ob.icao,distanceKm:Math.round(dist*10)/10,observationTime:ob.observationTime},forecast:row}));matched++;processed++;}return `Verification collector processed ${processed} locations and created ${matched} new matches.`;}
 
 export default {
-  async fetch(req,env,ctx){const url=new URL(req.url);if(req.method==='OPTIONS')return new Response('',{status:204,headers:CORS});const p=url.pathname.replace(/\/$/,'');try{
-    if(p==='/api/aviation')return aviation(req,url);
-    if(p==='/api/gemini-chat')return gemini(req,env);
-    if(p==='/api/ai-chat')return openai(req,env);
-    if(p==='/api/tropical-watch'){const r=await tropicalWatch();return new Response(r.body,{status:r.statusCode||200,headers:{...CORS,...r.headers}});}
-    if(p==='/api/verification')return verification(req,url,env);
-    if(p==='/api/verification-health')return verificationHealth(env);
-    if(p==='/api/verification-cron'&&req.method==='POST'){if(!env.CRON_TOKEN||req.headers.get('Authorization')!==`Bearer ${env.CRON_TOKEN}`)return json({ok:false,error:'Unauthorized'},401);const out=await cronCollector(env);return text(out);}
-    if(p==='/api/health')return json({ok:true,service:'VayuSarathi Cloudflare Worker',time:new Date().toISOString()});
-    return json({ok:false,error:'Route not found',routes:['/api/aviation','/api/gemini-chat','/api/ai-chat','/api/tropical-watch','/api/verification','/api/verification-health','/api/verification-cron','/api/health']},404);
-  }catch(e){return json({ok:false,error:String(e.message||e)},500);}},
-  async scheduled(controller,env,ctx){ctx.waitUntil(cronCollector(env).then(x=>console.log(x)).catch(e=>console.error('VayuSarathi collector failed',e)));}
+  async fetch(req, env, ctx) {
+    const url = new URL(req.url);
+    const path = url.pathname.replace(/\/$/, '') || '/';
+
+    if (req.method === 'OPTIONS') {
+      return new Response(null, { status: 204, headers: CORS });
+    }
+
+    try {
+      // Friendly root health response for opening the Worker URL directly.
+      if (path === '/' || path === '/health' || path === '/api/health') {
+        return json({
+          ok: true,
+          service: 'VayuSarathi API',
+          status: 'online',
+          functions: ['METAR/TAF', 'Tropical Watch', 'Forecast Validation'],
+          routes: [
+            '/api/aviation',
+            '/api/tropical-watch',
+            '/api/verification',
+            '/api/verification-health'
+          ],
+          time: new Date().toISOString()
+        });
+      }
+
+      if (path === '/api/aviation') {
+        if (req.method !== 'GET') return json({ ok: false, error: 'Method not allowed.' }, 405);
+        return aviation(req, url);
+      }
+
+      if (path === '/api/tropical-watch') {
+        if (req.method !== 'GET') return json({ ok: false, error: 'Method not allowed.' }, 405);
+        const result = await tropicalWatch();
+        return new Response(result.body, {
+          status: result.statusCode || 200,
+          headers: { ...CORS, ...result.headers }
+        });
+      }
+
+      if (path === '/api/verification') {
+        if (!['GET', 'POST'].includes(req.method)) return json({ ok: false, error: 'Method not allowed.' }, 405);
+        return verification(req, url, env);
+      }
+
+      if (path === '/api/verification-health') {
+        if (req.method !== 'GET') return json({ ok: false, error: 'Method not allowed.' }, 405);
+        return verificationHealth(env);
+      }
+
+      return json({
+        ok: false,
+        error: 'Route not found',
+        routes: [
+          '/api/aviation (METAR/TAF)',
+          '/api/tropical-watch',
+          '/api/verification',
+          '/api/verification-health',
+          '/api/health'
+        ]
+      }, 404);
+    } catch (error) {
+      console.error('VayuSarathi Worker error:', error);
+      return json({ ok: false, error: String(error?.message || error) }, 500);
+    }
+  },
+
+  async scheduled(controller, env, ctx) {
+    ctx.waitUntil(
+      cronCollector(env)
+        .then(message => console.log(message))
+        .catch(error => console.error('VayuSarathi verification collector failed:', error))
+    );
+  }
 };

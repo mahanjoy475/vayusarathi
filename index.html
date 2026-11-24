@@ -1976,7 +1976,6 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
         <div class="tab" data-view="forecast-guidance">Forecast Guidance • 3 Methods</div>
         <div class="tab" data-view="verification-learning">📊 Forecast Verification &amp; Learning</div>
         <div class="tab" data-view="tropical-watch">🌀 Tropical System Watch</div>
-        <div class="tab" data-view="ai-assistant">🤖 VayuSarathi AI Assistant</div>
         <div class="tab" data-view="marine">🌊 Marine & Sea State (Ocean Telemetry)</div>
         <div class="tab" data-view="thunderstorm">⛈️ Thunderstorm Hotspot • 50 km</div>
         <div class="tab" data-view="upper">Upper Winds / Temp</div>
@@ -2262,63 +2261,6 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
   </div>
 
 </section>
-
-
-
-
-<section id="ai-assistant" class="view">
-  <div class="section-tag tag-purple">🤖 VayuSarathi AI • Meteorological Assistant</div>
-  <div class="location-card">
-    <div>
-      <div class="loc-title">Ask VayuSarathi AI</div>
-      <div class="coords">Ask about the selected location, forecast guidance, aviation weather, NWP, METAR/TAF, tropical systems or general meteorology.</div>
-    </div>
-    <div class="badges"><span class="badge" style="border-color:#c4b5fd;color:#6d28d9;background:#f5f3ff">Gemini 3.5 Flash-Lite</span><span class="badge" style="border-color:#7dd3fc;color:#0369a1;background:#f0f9ff">SERVER-SIDE API</span></div>
-  </div>
-  <div class="vsai-shell">
-    <div class="card wide vsai-chat-card">
-      <div class="vsai-head">
-        <div><div class="vsai-title">VayuSarathi AI</div><div class="vsai-sub">Context-aware assistant • current dashboard location and available forecast context</div></div>
-        <div style="display:flex;gap:7px;align-items:center"><span id="vsaiStatus" class="vsai-status off">Checking AI service…</span><button class="vsai-clear" id="vsaiClearBtn" type="button">Clear chat</button></div>
-      </div>
-      <div id="vsaiMessages" class="vsai-messages" aria-live="polite"></div>
-      <div class="vsai-composer">
-        <div class="vsai-quick">
-          <button type="button" data-prompt="Summarise the current forecast for the selected location in aviation-meteorology terms.">Summarise forecast</button>
-          <button type="button" data-prompt="What are the main weather hazards expected in the next 24 hours?">Hazards next 24 h</button>
-          <button type="button" data-prompt="Explain the current NWP guidance and model agreement in simple terms.">Explain NWP</button>
-          <button type="button" data-prompt="Check the tropical-system watch context and explain whether there is any meaningful cyclogenesis signal.">Cyclogenesis check</button>
-        </div>
-        <form id="vsaiForm" class="vsai-form">
-          <textarea id="vsaiInput" class="vsai-input" placeholder="Ask VayuSarathi AI…" rows="2"></textarea>
-          <button id="vsaiSend" class="vsai-send" type="submit">Send</button>
-        </form>
-        <div class="vsai-note" style="margin-top:7px">AI responses are advisory. Official METAR/TAF, warnings and operational bulletins remain authoritative.</div>
-      </div>
-    </div>
-    <aside class="vsai-side">
-      <div class="card">
-        <h3 class="card-heading heading-cyan">Live dashboard context</h3>
-        <div class="vsai-context-list">
-          <div class="vsai-context-item"><span>Location</span><b id="vsaiCtxLocation">—</b></div>
-          <div class="vsai-context-item"><span>Coordinates</span><b id="vsaiCtxCoords">—</b></div>
-          <div class="vsai-context-item"><span>ICAO</span><b id="vsaiCtxIcao">—</b></div>
-          <div class="vsai-context-item"><span>Forecast</span><b id="vsaiCtxForecast">Available from dashboard</b></div>
-          <div class="vsai-context-item"><span>Tropical watch</span><b id="vsaiCtxTropical">Checking…</b></div>
-        </div>
-      </div>
-      <div class="card">
-        <h3 class="card-heading heading-purple">What it can do</h3>
-        <div class="vsai-note">Interpret model guidance, explain meteorological concepts, summarise forecast hazards, discuss aviation weather and help interpret VayuSarathi's verification/learning results.</div>
-      </div>
-      <div class="card">
-        <h3 class="card-heading heading-amber">API setup</h3>
-        <div class="vsai-note">The Gemini API key is kept server-side in Cloudflare Worker secrets. It is never placed in this HTML. Configure <b>GEMINI_API_KEY</b> in Cloudflare before using the assistant. The key remains server-side.</div>
-      </div>
-    </aside>
-  </div>
-</section>
-
 <section id="tropical-watch" class="view">
   <div class="tw-wrap">
     <div class="tw-topline">
@@ -6868,7 +6810,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       if(!best||bestDt>35*60*1000)return;
-      const o={temperature_2m:verificationNum(obs.tempC),wind_speed_10m:verificationNum(obs.windSpeedKt),wind_direction_10m:verificationNum(obs.windDirection),wind_gusts_10m:verificationNum(obs.windGustKt),visibility:verificationNum(obs.visibilityM),surface_pressure:verificationNum(obs.altimeterHpa)};
+      const o={temperature_2m:verificationNum(obs.tempC),wind_speed_10m:verificationNum(obs.windSpeedKt),wind_direction_10m:verificationNum(obs.windDirection),wind_gusts_10m:verificationNum(obs.windGustKt),visibility:verificationNum(obs.visibilityM),surface_pressure:verificationNum(obs.altimeterHpa),weather_text:String(obs.weather||''),raw_metar:String(obs.rawText||'')};
       await fetch(verificationApi(),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'match',location:best.s.location,validTime:best.row.validTime,observation:o,station:{icao:obs.icao||'',name:obs.stationName||'',distanceKm:obs.distanceKm},forecast:best.row})});
     }catch(e){console.warn('Verification match failed:',e);}
   }
@@ -7416,98 +7358,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-<script id="vayusarathi-ai-js">
-(function(){
-  const KEY='vayusarathi.ai.chat.gemini.v1';
-  let messages=[]; let previousInteractionId=null; let busy=false;
-  const $=id=>document.getElementById(id);
-  function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-  function render(){
-    const box=$('vsaiMessages');if(!box)return;
-    if(!messages.length){
-      box.innerHTML='<div class="vsai-msg"><div><div class="vsai-bubble"><b>Namaste.</b> I’m VayuSarathi AI powered by Google Gemini. Ask me about the current forecast, NWP guidance, aviation weather, METAR/TAF, tropical systems or meteorology.</div><div class="vsai-meta">VayuSarathi AI • Gemini</div></div></div>';
-      return;
-    }
-    box.innerHTML=messages.map(m=>`<div class="vsai-msg ${m.role==='user'?'user':''}"><div><div class="vsai-bubble">${esc(m.content)}</div><div class="vsai-meta">${m.role==='user'?'You':'VayuSarathi AI • Gemini'}</div></div></div>`).join('');
-    box.scrollTop=box.scrollHeight;
-  }
-  function save(){try{localStorage.setItem(KEY,JSON.stringify({messages:messages.slice(-30),previousInteractionId}));}catch(_){}}
-  function load(){try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(x){messages=Array.isArray(x.messages)?x.messages:[];previousInteractionId=x.previousInteractionId||null;}}catch(_){}render();}
-  function context(){
-    const st=(typeof state!=='undefined')?state:{};
-    const tropical=window.__vayusarathiTropicalWatch||null;
-    let forecast={};
-    try{
-      const h=st.forecast?.hourly||st.forecast||{};
-      if(h.time?.length){
-        const i=0;
-        forecast={time:h.time[i],temperature_2m:h.temperature_2m?.[i],dew_point_2m:h.dew_point_2m?.[i],wind_speed_10m:h.wind_speed_10m?.[i],wind_direction_10m:h.wind_direction_10m?.[i],wind_gusts_10m:h.wind_gusts_10m?.[i],pressure_msl:h.pressure_msl?.[i],visibility:h.visibility?.[i],cloud_cover:h.cloud_cover?.[i],weather_code:h.weather_code?.[i],precipitation_probability:h.precipitation_probability?.[i],cape:h.cape?.[i]};
-      }
-    }catch(_){}
-    return {location:{name:st.name||'Selected Point',latitude:Number(st.lat),longitude:Number(st.lon),icao:st.icao||null},forecast_now:forecast,tropical_watch:tropical||null};
-  }
-  function updateContextUI(){
-    const st=(typeof state!=='undefined')?state:{};const set=(id,v)=>{const e=$(id);if(e)e.textContent=v;};
-    set('vsaiCtxLocation',st.name||'Selected Point');
-    set('vsaiCtxCoords',`${Number(st.lat||0).toFixed(3)}°, ${Number(st.lon||0).toFixed(3)}°`);
-    set('vsaiCtxIcao',st.icao||'—');
-    const tw=window.__vayusarathiTropicalWatch;set('vsaiCtxTropical',tw?.overall?.title||'No current result');
-  }
-  async function check(){
-    try{
-      const r=await fetch(window.VS_API_BASE+'/gemini-chat',{headers:{'Accept':'application/json'},cache:'no-store'});
-      const d=await r.json().catch(()=>({}));
-      const ok=Boolean(r.ok&&d.configured);
-      const s=$('vsaiStatus');
-      if(s){s.textContent=ok?`Gemini online • ${d.model||'Gemini'}`:'Gemini API key required';s.className='vsai-status '+(ok?'':'off');}
-    }catch(_){
-      const s=$('vsaiStatus');if(s){s.textContent='Gemini backend unavailable';s.className='vsai-status off';}
-    }
-  }
-  async function send(text){
-    text=String(text||'').trim();if(!text||busy)return;
-    busy=true;const btn=$('vsaiSend');if(btn)btn.disabled=true;
-    messages.push({role:'user',content:text});render();
-    messages.push({role:'assistant',content:'Thinking…'});render();
-    try{
-      const r=await fetch(window.VS_API_BASE+'/gemini-chat',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-          message:text,
-          history:messages.slice(0,-1),
-          previous_interaction_id:previousInteractionId,
-          context:context()
-        })
-      });
-      const d=await r.json().catch(()=>({}));
-      messages.pop();
-      if(!r.ok||!d.ok)throw Error(d.error||('Gemini backend returned HTTP '+r.status));
-      messages.push({role:'assistant',content:d.answer||'No response returned.'});
-      previousInteractionId=d.response_id||previousInteractionId;
-      const s=$('vsaiStatus');if(s){s.textContent=`Gemini online • ${d.model||'Gemini'}`;s.className='vsai-status';}
-    }catch(e){
-      messages.push({role:'assistant',content:'Gemini connection error: '+String(e.message||e)+'\n\nCheck that the Cloudflare Worker is deployed and GEMINI_API_KEY is configured.'});
-    }finally{busy=false;if(btn)btn.disabled=false;save();render();}
-  }
-  window.vayuSarathiAIAsk=send;
-  document.addEventListener('DOMContentLoaded',()=>{
-    load();updateContextUI();check();
-    const f=$('vsaiForm'),input=$('vsaiInput');
-    if(f)f.addEventListener('submit',e=>{e.preventDefault();const v=input?.value||'';if(input)input.value='';send(v);});
-    document.querySelectorAll('.vsai-quick button').forEach(b=>b.addEventListener('click',()=>send(b.dataset.prompt||'')));
-    const clear=$('vsaiClearBtn');if(clear)clear.addEventListener('click',()=>{messages=[];previousInteractionId=null;save();render();});
-    if(input)input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();f?.requestSubmit();}});
-  });
-  setTimeout(()=>{
-    const original=window.switchTab;
-    if(typeof original!=='function')return;
-    window.switchTab=function(id){original(id);if(id==='ai-assistant')setTimeout(updateContextUI,80);};
-  },0);
-})();
-</script>
-
-<button class="vsai-fab" type="button" onclick="switchTab('ai-assistant')">🤖 Ask VayuSarathi AI</button>
 
 <script>
 /* ===== Unified floating-tab minimize / restore state ===== */
