@@ -8,7 +8,6 @@ const SOURCES={
   imdBhubaneswar:'https://mausam.imd.gov.in/Forecast/coastal_bulletin_new.php?id=5',
   imdChennai:'https://mausam.imd.gov.in/Forecast/coastal_bulletin_new.php?id=6',
   imdKolkataSea:'https://mausam.imd.gov.in/Forecast/seaarea_bulletin_new.php?id=0',
-  rsmc:'https://rsmcnewdelhi.imd.gov.in/',
   // Tier 2: independent/secondary operational sources. These are used only
   // when the primary IMD layer is unavailable, or as corroboration.
   wmo:'https://wwmiws.wmo.int/index.php/metareas/bulletinset/8N/html'
@@ -57,6 +56,11 @@ function sourceTier(url){
 }
 function parseIssueDate(text){
   const t=String(text||'');
+  const numericIssue=t.match(/ISSUED AT\s+(\d{3,4})\s*UTC\s+OF\s+(\d{1,2})[./-](\d{1,2})[./-](20\d{2})/i);
+  if(numericIssue){
+    const hhmm=String(numericIssue[1]).padStart(4,'0');
+    return Date.UTC(Number(numericIssue[4]),Number(numericIssue[3])-1,Number(numericIssue[2]),Number(hhmm.slice(0,2)),Number(hhmm.slice(2,4)));
+  }
   const patterns=[
     /(\d{1,2}):(\d{2})\s*(?:IST|UTC)\s*(?:OF|on)\s*(\d{1,2})(?:ST|ND|RD|TH)?[\s./-]+([A-Z]{3,9})[\s./-]+(20\d{2})/i,
     /(\d{1,2})(?:ST|ND|RD|TH)?[\s./-]+([A-Z]{3,9})[\s./-]+(20\d{2}).{0,80}?(\d{1,2}):(\d{2})\s*(?:IST|UTC)/i
@@ -76,65 +80,94 @@ function parseOfficial(text,sourceUrl){
   const t=cleanOfficialText(raw);
   const upper=t.toUpperCase();
   const active=[];
-  const categoryRe=/(SUPER CYCLONIC STORM|EXTREMELY SEVERE CYCLONIC STORM|VERY SEVERE CYCLONIC STORM|SEVERE CYCLONIC STORM|CYCLONIC STORM|DEEP DEPRESSION|DEPRESSION|WELL[- ]MARKED LOW PRESSURE AREA|LOW[- ]PRESSURE AREA)/i;
-  const catMatch=upper.match(categoryRe);
-  const category=catMatch?catMatch[1].replace(/\s+/g,' ').trim():null;
-  const hasCyclo=/(CYCLONIC STORM|DEPRESSION|DEEP DEPRESSION|LOW[- ]PRESSURE AREA)/i.test(t);
-  const likely=/(LIKELY TO FORM|LIKELY TO DEVELOP|FORMATION OF.*DEPRESSION|PROBABILITY OF CYCLOGENESIS|DEVELOPMENT OF.*LOW PRESSURE|MAY FORM|FORMATION.*LOW PRESSURE)/i.test(t);
 
-  // Extract a name immediately following a cyclone category. Do not treat bulletin
-  // grammar/location words (especially "OVER") as a system name when a bulletin
-  // is un-named or its quotation marks are malformed.
+  const categoryRe=/(SUPER CYCLONIC STORM|EXTREMELY SEVERE CYCLONIC STORM|VERY SEVERE CYCLONIC STORM|SEVERE CYCLONIC STORM|CYCLONIC STORM|DEEP DEPRESSION|DEPRESSION|WELL[- ]MARKED LOW PRESSURE AREA|LOW[- ]PRESSURE AREA)/gi;
+  const posMatch=t.match(/NEAR\s+LATITUDE\s+(\d+(?:\.\d+)?)\s*[°º]?\s*([NS])[^.]{0,160}?LONGITUDE\s+(\d+(?:\.\d+)?)\s*[°º]?\s*([EW])/i);
+  const positionIndex=posMatch ? posMatch.index : -1;
+  // Only classify a current official system when a named disturbance category
+  // appears in the same bulletin passage as a reported centre/position. This
+  // prevents navigation links, archive references and generic outlook wording
+  // (for example, "formation of depression") from creating a false red alert.
+  const activeContext=positionIndex>=0
+    ? t.slice(Math.max(0,positionIndex-900),Math.min(t.length,positionIndex+500))
+    : '';
+  const contextCategories=[...activeContext.matchAll(categoryRe)];
+  const contextCategory=contextCategories.length ? contextCategories[contextCategories.length-1] : null;
+  const hasPositionContext=positionIndex>=0 && /\b(?:LAY|LIES|CENTERED|CENTRED|LOCATED|MOVED|MOVING|POSITION)\b/i.test(activeContext);
+  const hasCyclo=!!(contextCategory && hasPositionContext);
+  const category=hasCyclo ? contextCategory[1].replace(/\s+/g,' ').trim() : null;
+  const detailText=hasCyclo ? activeContext : t;
+
+  // A cyclogenesis heading is not itself a positive signal. Read the values in
+  // the probability table and mark a watch only when at least one period is
+  // LOW, MODERATE or HIGH (not when every period is NIL).
+  const probabilitySections=[...upper.matchAll(/PROBABILITY OF CYCLOGENESIS[^:]{0,100}:([\s\S]{0,500}?)(?=\bNOTE\s*:|\bARABIAN SEA\s*:|\bBAY OF BENGAL\s*:|\bREMARKS\s*:|$)/gi)];
+  const positiveProbability=probabilitySections.some(m=>{
+    const values=(m[1].match(/\b(?:NIL|LOW|MODERATE|HIGH)\b/g)||[]);
+    return values.some(v=>v!=='NIL');
+  });
+  const explicitDevelopment=/\b(?:LIKELY TO FORM|LIKELY TO DEVELOP INTO|VERY LIKELY TO DEVELOP INTO|LIKELY TO INTENSIFY INTO|VERY LIKELY TO INTENSIFY INTO|EXPECTED TO INTENSIFY INTO)\s+(?:A\s+)?(?:DEPRESSION|DEEP DEPRESSION|CYCLONIC STORM|WELL[- ]MARKED LOW PRESSURE AREA)\b/i.test(t);
+  const likely=!hasCyclo && (positiveProbability || explicitDevelopment);
+
   const nonNameWords=new Set(['OVER','AT','IN','ON','NEAR','TO','INTO','WITH','AND','FROM','FOR','AS','IS','WAS','HAS','HAVE','DURING','THE','SAME','BAY','SEA','ARABIAN','NORTH','SOUTH','EAST','WEST','SOUTHWEST','SOUTHEAST','NORTHWEST','NORTHEAST','WESTCENTRAL','EASTCENTRAL','NORTHWESTWARDS','WESTNORTHWESTWARDS','PRONUNCIATION','FORECAST']);
   const namePattern=/(?:SUPER CYCLONIC STORM|EXTREMELY SEVERE CYCLONIC STORM|VERY SEVERE CYCLONIC STORM|SEVERE CYCLONIC STORM|CYCLONIC STORM)\s*[^A-Z0-9]{0,24}([A-Z][A-Z0-9-]{2,})/gi;
   let name=null;
-  for(const match of t.matchAll(namePattern)){
-    const candidate=match[1].toUpperCase();
-    if(!nonNameWords.has(candidate)){name=candidate;break;}
+  if(hasCyclo){
+    for(const match of detailText.matchAll(namePattern)){
+      const candidate=match[1].toUpperCase();
+      if(!nonNameWords.has(candidate)){name=candidate;break;}
+    }
   }
 
-  const posMatch=t.match(/NEAR\s+LATITUDE\s+(\d+(?:\.\d+)?)\s*[°º]?\s*([NS])[^.]{0,120}?LONGITUDE\s+(\d+(?:\.\d+)?)\s*[°º]?\s*([EW])/i);
   const lat=posMatch?(Number(posMatch[1])*(posMatch[2].toUpperCase()==='S'?-1:1)):null;
   const lon=posMatch?(Number(posMatch[3])*(posMatch[4].toUpperCase()==='W'?-1:1)):null;
-  const moveMatch=t.match(/MOVED\s+(?:NEARLY\s+)?([A-Z-]+(?:\s+[A-Z-]+)?)\s+WITH(?:\s+A)?\s+SPEED\s+OF\s+(\d+(?:\.\d+)?)\s*KMPH/i);
+  const moveMatch=detailText.match(/MOVED\s+(?:NEARLY\s+)?([A-Z-]+(?:\s+[A-Z-]+)?)\s+WITH(?:\s+A)?\s+SPEED\s+OF\s+(\d+(?:\.\d+)?)\s*KMPH/i);
   const movement=moveMatch?moveMatch[1].replace(/WARDS?$/i,'').toLowerCase().replace(/\b\w/g,c=>c.toUpperCase())+'wards at '+moveMatch[2]+' km/h':null;
-  const speedMatch=(t.match(/MAXIMUM\s+SUSTAINED\s+WIND\s+(?:SPEED|SPEEDS)\s+(?:IS|OF|AROUND)?\s*(\d+(?:\s*TO\s*\d+)?)\s*KMPH(?:\s*GUSTING\s*(?:TO|UP TO)?\s*(\d+(?:\s*TO\s*\d+)?)\s*KMPH)?/i) || t.match(/WIND\s+SPEED\s+OF\s*(\d+(?:\s*TO\s*\d+)?)\s*KMPH\s+GUSTING\s+(?:TO|UP TO)?\s*(\d+(?:\s*TO\s*\d+)?)\s*KMPH/i));
+  const speedMatch=(detailText.match(/MAXIMUM\s+SUSTAINED\s+WIND\s+(?:SPEED|SPEEDS)\s+(?:IS|OF|AROUND)?\s*(\d+(?:\s*TO\s*\d+)?)\s*KMPH(?:\s*GUSTING\s*(?:TO|UP TO)?\s*(\d+(?:\s*TO\s*\d+)?)\s*KMPH)?/i) || detailText.match(/WIND\s+SPEED\s+OF\s*(\d+(?:\s*TO\s*\d+)?)\s*KMPH\s+GUSTING\s+(?:TO|UP TO)?\s*(\d+(?:\s*TO\s*\d+)?)\s*KMPH/i));
   const maxWindKmh=speedMatch?speedMatch[1].replace(/\s+/g,' '):null;
   const gustKmh=speedMatch?.[2]?.replace(/\s+/g,' ')||null;
-  const pressureMatch=t.match(/(?:CENTRAL|ESTIMATED\s+CENTRAL)\s+PRESSURE(?:\s+IS\s+AROUND|\s+IS|\s+OF|\s+AROUND)?\s+(\d{3,4}(?:\.\d+)?)\s*HPA/i);
+  const pressureMatch=detailText.match(/(?:CENTRAL|ESTIMATED\s+CENTRAL)\s+PRESSURE(?:\s+IS\s+AROUND|\s+IS|\s+OF|\s+AROUND)?\s+(\d{3,4}(?:\.\d+)?)\s*HPA/i);
   const pressure=pressureMatch?Number(pressureMatch[1]):null;
   const issueMatch=t.match(/TIME\s+OF\s+ISSUE\s*[|:]?\s*(\d{1,2}:\d{2}\s*IST\s+OF\s+\d{4}-\d{2}-\d{2})/i) || t.match(/TIME\s+OF\s+ISSUE\s*[|:]?\s*([^|]{5,80})/i);
   const issueTime=issueMatch?escText(issueMatch[1]):null;
   let issuedAt=parseIssueDate(t);
   const isoIssue=issueTime&&issueTime.match(/(\d{1,2}):(\d{2})\s*IST\s+OF\s+(\d{4})-(\d{2})-(\d{2})/i);
   if(isoIssue) issuedAt=Date.UTC(Number(isoIssue[3]),Number(isoIssue[4])-1,Number(isoIssue[5]),Number(isoIssue[1]),Number(isoIssue[2]))-19800000;
-  const dateMatch=t.match(/(\d{1,2})(?:ST|ND|RD|TH)?\s+([A-Z]+)\s+(20\d{2})/i) || t.match(/(\d{4})-(\d{2})-(\d{2})/);
-  const dateText=dateMatch ? (dateMatch[0].includes('-') ? `${dateMatch[3]}-${dateMatch[2]}-${dateMatch[1]}` : `${dateMatch[1]} ${dateMatch[2]} ${dateMatch[3]}`) : null;
-  const basin=/BAY OF BENGAL/i.test(t)?'Bay of Bengal':/ARABIAN SEA/i.test(t)?'Arabian Sea':'North Indian Ocean';
-  const bulletinTitle=name&&category?`${category} “${name}” over ${basin}`:category?`${category} over ${basin}`:'Official tropical-system bulletin';
+  const dateMatch=t.match(/(\d{1,2})(?:ST|ND|RD|TH)?\s+([A-Z]+)\s+(20\d{2})/i) || t.match(/(20\d{2})-(\d{2})-(\d{2})/) || t.match(/(\d{1,2})[./-](\d{1,2})[./-](20\d{2})/);
+  let dateText=null;
+  if(dateMatch){
+    if(dateMatch[0].includes('-') && /^20\d{2}-/.test(dateMatch[0])) dateText=`${dateMatch[3]}-${dateMatch[2]}-${dateMatch[1]}`;
+    else if(/[./-]/.test(dateMatch[0])) dateText=`${dateMatch[1].padStart(2,'0')}-${dateMatch[2].padStart(2,'0')}-${dateMatch[3]}`;
+    else dateText=`${dateMatch[1]} ${dateMatch[2]} ${dateMatch[3]}`;
+  }
+  const basinText=hasCyclo?activeContext:t;
+  const basin=/BAY OF BENGAL/i.test(basinText)?'Bay of Bengal':/ARABIAN SEA/i.test(basinText)?'Arabian Sea':'North Indian Ocean';
+  const bulletinTitle=name&&category?`${category} “${name}” over ${basin}`:category?`${category} over ${basin}`:likely?'Official cyclogenesis guidance':'No active official tropical system';
   let forecastText='—';
-  const forecastSentence=t.match(/(?:IT IS VERY LIKELY TO|IS VERY LIKELY TO|VERY LIKELY TO)\s+MOVE\s+[^.]{20,700}\./i);
+  const forecastSentence=detailText.match(/(?:IT IS VERY LIKELY TO|IS VERY LIKELY TO|VERY LIKELY TO)\s+MOVE\s+[^.]{20,700}\./i);
   if(forecastSentence) forecastText=escText(forecastSentence[0]);
   const validity=t.match(/BULLETIN\s+VALID\s+FOR\s+12\s+HRS\s+FROM\s+([^|]+?)(?=\s+SYNOPTIC\s+SITUATION|$)/i);
-  const synoptic=t.match(/SYNOPTIC\s+SITUATION\s*\|?\s*([^|]{80,900}?)(?=\s+0?IT\s+IS\s+VERY\s+LIKELY|\s+NORTH\s+ODISHA\s+COAST|\s+TIME\s+OF\s+ISSUE|$)/i);
+  const synoptic=detailText.match(/SYNOPTIC\s+SITUATION\s*\|?\s*([^|]{80,900}?)(?=\s+0?IT\s+IS\s+VERY\s+LIKELY|\s+NORTH\s+ODISHA\s+COAST|\s+TIME\s+OF\s+ISSUE|$)/i);
   const synopticText=synoptic?escText(synoptic[1]):null;
   const validityText=validity?escText(validity[1]):null;
 
   const impactParts=[];
-  const surge=t.match(/(?:STORM SURGE|COASTAL INUNDATION)[^.]{0,500}\./i);
+  const surge=detailText.match(/(?:STORM SURGE|COASTAL INUNDATION)[^.]{0,500}\./i);
   if(surge) impactParts.push(escText(surge[0]));
-  const rain=t.match(/(?:HEAVY|VERY HEAVY|EXTREMELY HEAVY)[^.]{0,300}(?:RAIN|RAINFALL)[^.]{0,300}\./i);
+  const rain=detailText.match(/(?:HEAVY|VERY HEAVY|EXTREMELY HEAVY)[^.]{0,300}(?:RAIN|RAINFALL)[^.]{0,300}\./i);
   if(rain) impactParts.push(escText(rain[0]));
-  const portSignals=[...t.matchAll(/PORT SIGNAL\s*\|?\s*([^|]{10,220}?)(?=\s+TIME\s+OF\s+ISSUE|$)/gi)].slice(0,4).map(m=>escText(m[1]));
+  const portSignals=[...detailText.matchAll(/PORT SIGNAL\s*\|?\s*([^|]{10,220}?)(?=\s+TIME\s+OF\s+ISSUE|$)/gi)].slice(0,4).map(m=>escText(m[1]));
   portSignals.forEach(x=>impactParts.push('Port signal: '+x));
-  const sea=t.match(/SEA CONDITION\s*\|?\s*([^|]{5,180})/i);
+  const sea=detailText.match(/SEA CONDITION\s*\|?\s*([^|]{5,180})/i);
   if(sea) impactParts.push('Sea condition: '+escText(sea[1]));
   const impactText=[...new Set(impactParts)].slice(0,8).join(' ') || 'See the latest official bulletin for rainfall, strong winds, sea-state, fishermen and coastal warnings.';
-  const warningText=/(TTT WARNING|CYCLONE WARNING|DISTANT WARNING SIGNAL|GALE|STORM SURGE|COASTAL INUNDATION|FISHERMEN)/i.test(t)?'Official warning/advisory information is present in the latest bulletin.':'No specific warning phrase was extracted from the checked bulletin.';
-  const activeLine=category?(category+(name?' '+name:'')):'Official tropical-system information';
-  if(hasCyclo)active.push(activeLine);
-  const summary=hasCyclo?(name?`${category} “${name}” is active in the ${basin}.`:'Official tropical system information detected'):likely?'Official cyclogenesis/development guidance detected':'No active official tropical-system alert detected';
-  return {hasCyclo,likely,high:false,moderate:false,low:false,active:[...new Set(active)],summary,sourceUrl,sourceTier:sourceTier(sourceUrl),category,name,basin,lat,lon,movement,maxWindKmh,gustKmh,pressure,issueTime,issuedAt,dateText,validityText,synopticText,bulletinTitle,forecastText,impactText,warningText,raw:escText(raw).slice(0,30000)};
+  const warningText=/(TTT WARNING|CYCLONE WARNING|DISTANT WARNING SIGNAL|GALE|STORM SURGE|COASTAL INUNDATION|FISHERMEN)/i.test(detailText)?'Official warning/advisory information is present in the latest bulletin.':'No specific warning phrase was extracted from the checked bulletin.';
+  const activeLine=category?(category+(name?' '+name:'')):null;
+  if(hasCyclo&&activeLine)active.push(activeLine);
+  const summary=hasCyclo?(name?`${category} “${name}” is active in the ${basin}.`:`${category} is active in the ${basin}.`):likely?'Official cyclogenesis/development guidance detected':'No active official tropical-system alert detected';
+  // Keep the diagnostic payload useful: expose cleaned bulletin text rather
+  // than leaking the entire upstream HTML document and its navigation markup.
+  return {hasCyclo,likely,high:false,moderate:false,low:false,active:[...new Set(active)],summary,sourceUrl,sourceTier:sourceTier(sourceUrl),category,name,basin,lat,lon,movement,maxWindKmh,gustKmh,pressure,issueTime,issuedAt,dateText,validityText,synopticText,bulletinTitle,forecastText,impactText,warningText,raw:t.slice(0,30000)};
 }
 
 async function fetchOfficial(url,priority){
@@ -152,7 +185,7 @@ async function officialLayer(){
   // cyclone IMD publishes hourly bulletins; polling this live layer keeps the
   // dashboard aligned with the latest official update. Coastal/RSMC bulletins
   // corroborate the hourly layer. WMO is the independent backup.
-  const primaryUrls=[SOURCES.imdHourly,SOURCES.imdBhubaneswar,SOURCES.imdChennai,SOURCES.imdKolkataSea,SOURCES.rsmc];
+  const primaryUrls=[SOURCES.imdHourly,SOURCES.imdBhubaneswar,SOURCES.imdChennai,SOURCES.imdKolkataSea];
   const backupUrls=[SOURCES.wmo];
   const primary=await Promise.all(primaryUrls.map((u,i)=>fetchOfficial(u,i)));
   const primaryHealthy=primary.filter(x=>!x.error);
