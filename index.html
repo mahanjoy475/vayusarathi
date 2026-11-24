@@ -2002,6 +2002,89 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 @media(min-width:768px){#mobileApp,.mobile-legacy-back{display:none!important}}
 
 </style>
+
+<style id="vayusarathi-desktop-workspace">
+/* Desktop workstation refresh — scoped to desktop/tablet landscape only. */
+#desktopSidebar{display:none}
+@media (min-width:1100px){
+  :root{--vs-sidebar-width:258px;--vs-ink:#172b46;--vs-muted:#718096;--vs-line:#dce5ef;--vs-soft:#f3f7fb;--vs-navy:#10233f;--vs-blue:#1769aa;--vs-blue-soft:#e9f3fc}
+  html{scroll-behavior:smooth}
+  body{background:#f3f6fa!important;color:var(--vs-ink)}
+  body::before,body::after{opacity:.16}
+  #desktopSidebar{display:flex;position:fixed;inset:0 auto 0 0;width:var(--vs-sidebar-width);z-index:1200;background:linear-gradient(180deg,#10233f 0%,#142d4e 58%,#10243d 100%);color:#e7f0fb;flex-direction:column;padding:22px 15px 16px;box-shadow:8px 0 28px rgba(15,35,63,.10);overflow-y:auto;overscroll-behavior:contain}
+  .desktop-side-brand{display:flex;align-items:center;gap:11px;padding:3px 8px 21px;border-bottom:1px solid rgba(203,220,240,.15)}
+  .desktop-side-mark{width:40px;height:40px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(135deg,#38bdf8,#6366f1);color:#fff;font-size:15px;font-weight:950;letter-spacing:-1px;box-shadow:0 7px 18px rgba(56,189,248,.24)}
+  .desktop-side-brand strong{display:block;font-size:17px;letter-spacing:.1px;color:#fff}
+  .desktop-side-brand small{display:block;margin-top:3px;font-size:8px;letter-spacing:1.05px;font-weight:850;color:#9fb7d2}
+  .desktop-side-location{margin:18px 4px 14px;padding:12px 12px 13px;border-radius:13px;background:rgba(255,255,255,.07);border:1px solid rgba(201,220,242,.12)}
+  .desktop-side-eyebrow{display:block;font-size:8px;letter-spacing:1.2px;font-weight:900;color:#91abc8;margin-bottom:7px}
+  .desktop-side-location strong{display:block;font-size:12px;color:#fff;font-weight:850}
+  .desktop-side-location small{display:block;font-size:10px;color:#abc0d8;line-height:1.4;margin-top:5px}
+  .desktop-side-nav{display:flex;flex-direction:column;gap:4px;flex:1}
+  .desktop-nav-group-label{font-size:9px;letter-spacing:1.15px;font-weight:950;color:#86a3c3;padding:15px 10px 6px}
+  .desktop-nav-item{width:100%;display:flex;align-items:center;gap:11px;border:1px solid transparent;background:transparent;color:#c9d8e9;border-radius:10px;padding:10px 11px;text-align:left;font:700 12px/1.2 Arial,Helvetica,sans-serif;cursor:pointer;transition:background .16s ease,border-color .16s ease,color .16s ease,transform .16s ease}
+  .desktop-nav-item:hover{background:rgba(255,255,255,.085);color:#fff;transform:translateX(2px)}
+  .desktop-nav-item.active{background:linear-gradient(100deg,rgba(56,189,248,.22),rgba(99,102,241,.20));border-color:rgba(125,211,252,.27);color:#fff;box-shadow:inset 3px 0 0 #38bdf8}
+  .desktop-nav-icon{width:20px;height:20px;display:grid;place-items:center;flex:0 0 20px;border-radius:6px;background:rgba(255,255,255,.08);font-size:14px;color:#9bd8fa}
+  .desktop-nav-item.active .desktop-nav-icon{background:rgba(56,189,248,.20);color:#dff5ff}
+  .desktop-side-footer{display:flex;align-items:center;gap:9px;border-top:1px solid rgba(203,220,240,.15);padding:15px 7px 0;margin-top:15px}
+  .desktop-footer-dot{width:8px;height:8px;border-radius:50%;background:#34d399;box-shadow:0 0 0 4px rgba(52,211,153,.13)}
+  .desktop-side-footer strong{display:block;color:#dce9f7;font-size:10px}
+  .desktop-side-footer small{display:block;color:#8fa9c6;font-size:9px;margin-top:3px}
+
+  body>header{margin-left:var(--vs-sidebar-width);width:calc(100% - var(--vs-sidebar-width));box-sizing:border-box;min-height:118px;padding:14px 30px 15px 32px;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;align-items:center;column-gap:24px;row-gap:10px;background:rgba(255,255,255,.96);border:0;border-bottom:1px solid #dce5ef;box-shadow:0 5px 22px rgba(17,40,70,.055);backdrop-filter:blur(16px);position:sticky;top:0;z-index:1050}
+  body>header .brand-group{grid-column:1;grid-row:1;min-width:0}
+  body>header .brand{font-size:32px;gap:10px;filter:none;line-height:1.05}
+  body>header .brand:hover{transform:none;filter:none}
+  body>header .weather-emblem{transform:scale(.88);transform-origin:left center;margin-right:-4px}
+  body>header .sub{font-size:10px;letter-spacing:.35px;color:#718096;margin-top:4px}
+  body>header .header-right-tools{grid-column:2;grid-row:1;gap:12px;justify-self:end}
+  body>header .digital-clock-banner{background:#f4f8fc;border:1px solid #d9e5f0;padding:9px 13px;border-radius:9px;color:#35516e;font-size:11px;box-shadow:none;white-space:nowrap}
+  body>header .menu-container{display:none!important}
+  body>header #searchForm{grid-column:1 / -1;grid-row:2;margin:0;width:min(100%,920px)!important;max-width:none;gap:8px}
+  body>header #searchForm .searchwrap{min-width:260px}
+  body>header #search{height:40px;padding:9px 14px;border:1px solid #d5e0eb;border-radius:9px;background:#f8fafc;box-shadow:none;font-size:12px}
+  body>header #search:focus{background:#fff;border-color:#56a6df;box-shadow:0 0 0 3px rgba(23,105,170,.10)}
+  body>header #searchButton{height:40px;padding:0 20px;border-radius:9px;background:#1769aa;box-shadow:none;font-size:12px}
+  body>header #searchButton:hover{background:#14598f;transform:none;box-shadow:none}
+  body>main{margin:0 0 0 var(--vs-sidebar-width);width:calc(100% - var(--vs-sidebar-width));max-width:none;box-sizing:border-box;padding:25px clamp(24px,2.4vw,42px) 46px}
+  body>main>.view{max-width:1840px;margin:0 auto}
+  .section-tag{font-size:9px;letter-spacing:1.1px;padding:5px 10px;border-radius:6px;margin-bottom:14px}
+  .card,.card.wide,.map-sidebar-card,.ts-map-card,.waypoint-assessment-card{border:1px solid #e0e7ef;border-radius:14px;box-shadow:0 4px 14px rgba(20,43,72,.045)}
+  .card{padding:18px}
+  .card-heading{font-size:12px;letter-spacing:.2px;color:#27496c}
+  .muted{color:#728196}
+  .alert{border-radius:10px}
+  .forecast-top-layout{grid-template-columns:minmax(0,1.45fr) minmax(340px,.78fr);gap:18px;align-items:stretch}
+  .hero-weather-card{border-radius:17px;box-shadow:0 10px 26px rgba(16,48,82,.10)}
+  .map-sidebar-card{padding:14px;background:#fff}
+  #map{min-height:420px;border-radius:11px;overflow:hidden}
+  .grid-5{grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+  .grid-5>.card{min-width:0}
+  .grid-5 .metric{font-size:25px}
+  .hourly-scroll-container{border-radius:12px}
+  .forecast-guidance-intro{border-left:3px solid #38a9db}
+  .tw-wrap,.location-card{border-radius:15px}
+  .meteogram-panel{box-shadow:0 20px 60px rgba(15,35,63,.22)}
+  .table-wrap{border-radius:10px}
+  table.table th{background:#f3f7fb;color:#38516c;font-size:10px;letter-spacing:.25px}
+  table.table td{font-size:11px}
+  button,select,input{accent-color:#1769aa}
+}
+@media (min-width:1100px) and (max-width:1350px){
+  :root{--vs-sidebar-width:238px}
+  body>header{padding-left:24px;padding-right:24px}
+  body>main{padding-left:22px;padding-right:22px}
+  .grid-5{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .forecast-top-layout{grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr)}
+}
+@media (min-width:768px) and (max-width:1099px){
+  body>header{padding:12px 18px;gap:12px}
+  body>header .brand{font-size:30px}
+  body>main{padding:20px 18px}
+}
+</style>
+
 </head>
 <body>
 <header>
@@ -2148,6 +2231,42 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
   </nav>
 </div>
 <button class="mobile-legacy-back" type="button" onclick="mobileReturnHome()">← Mobile home</button>
+
+<aside id="desktopSidebar" aria-label="Desktop workspace navigation">
+  <div class="desktop-side-brand">
+    <div class="desktop-side-mark">VS</div>
+    <div><strong>VayuSarathi</strong><small>METEOROLOGICAL WORKSTATION</small></div>
+  </div>
+  <div class="desktop-side-location">
+    <span class="desktop-side-eyebrow">ACTIVE WORKSPACE</span>
+    <strong id="desktopActiveView">Weather overview</strong>
+    <small id="desktopActiveLocation">Location follows the main search</small>
+  </div>
+  <nav class="desktop-side-nav" aria-label="Main modules">
+    <div class="desktop-nav-group-label">OPERATIONS</div>
+    <button class="desktop-nav-item active" type="button" data-view="forecast" onclick="switchTab('forecast')"><span class="desktop-nav-icon">⌂</span><span>Weather overview</span></button>
+    <button class="desktop-nav-item" type="button" data-view="forecast-guidance" onclick="switchTab('forecast-guidance')"><span class="desktop-nav-icon">▥</span><span>Forecast guidance</span></button>
+    <button class="desktop-nav-item" type="button" data-view="aviation-forecast" onclick="switchTab('aviation-forecast')"><span class="desktop-nav-icon">✈</span><span>Aviation forecast</span></button>
+    <button class="desktop-nav-item" type="button" data-view="multi-metar" onclick="switchTab('multi-metar')"><span class="desktop-nav-icon">◉</span><span>METAR / TAF</span></button>
+
+    <div class="desktop-nav-group-label">ANALYSIS &amp; VERIFICATION</div>
+    <button class="desktop-nav-item" type="button" data-view="verification-learning" onclick="switchTab('verification-learning')"><span class="desktop-nav-icon">▤</span><span>Forecast validation</span></button>
+    <button class="desktop-nav-item" type="button" data-view="thunderstorm" onclick="switchTab('thunderstorm')"><span class="desktop-nav-icon">ϟ</span><span>Thunderstorm analysis</span></button>
+    <button class="desktop-nav-item" type="button" data-view="tropical-watch" onclick="switchTab('tropical-watch')"><span class="desktop-nav-icon">◌</span><span>Tropical system watch</span></button>
+    <button class="desktop-nav-item" type="button" data-view="fits" onclick="switchTab('fits')"><span class="desktop-nav-icon">◈</span><span>FITS assessment</span></button>
+
+    <div class="desktop-nav-group-label">ATMOSPHERE &amp; MARINE</div>
+    <button class="desktop-nav-item" type="button" data-view="marine" onclick="switchTab('marine')"><span class="desktop-nav-icon">≈</span><span>Marine &amp; sea state</span></button>
+    <button class="desktop-nav-item" type="button" data-view="upper" onclick="switchTab('upper')"><span class="desktop-nav-icon">↟</span><span>Upper winds</span></button>
+    <button class="desktop-nav-item" type="button" data-view="satellites" onclick="switchTab('satellites')"><span class="desktop-nav-icon">◎</span><span>Satellite imagery</span></button>
+    <button class="desktop-nav-item" type="button" data-view="route" onclick="switchTab('route')"><span class="desktop-nav-icon">⌁</span><span>Route briefing</span></button>
+    <button class="desktop-nav-item" type="button" data-view="nwp" onclick="switchTab('nwp')"><span class="desktop-nav-icon">▦</span><span>IMD NWP portal</span></button>
+  </nav>
+  <div class="desktop-side-footer">
+    <span class="desktop-footer-dot"></span>
+    <div><strong>Desktop workspace</strong><small>Full dashboard modules</small></div>
+  </div>
+</aside>
 
 <main>
 <section id="forecast" class="view active">
@@ -4653,7 +4772,15 @@ function weatherCodeDesc(code){
 
 function switchTab(id){
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.view===id));
+  document.querySelectorAll('.desktop-nav-item').forEach(t=>t.classList.toggle('active',t.dataset.view===id));
   document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));
+  const desktopActiveView=document.getElementById('desktopActiveView');
+  const desktopNavItem=document.querySelector('.desktop-nav-item[data-view="'+id+'"]');
+  if(desktopActiveView&&desktopNavItem)desktopActiveView.textContent=desktopNavItem.textContent.trim();
+  const desktopLoc=document.getElementById('desktopActiveLocation');
+  const heroName=document.getElementById('heroName');
+  const heroCoords=document.getElementById('heroCoords');
+  if(desktopLoc)desktopLoc.textContent=(heroName&&heroName.textContent.trim()!=='Select a location'?heroName.textContent.trim():'Location follows the main search')+(heroCoords&&heroCoords.textContent.trim()&&heroCoords.textContent.trim()!=='Coordinate telemetry pending…'?' · '+heroCoords.textContent.trim():'');
 
   if (id === 'forecast') {
     setTimeout(() => {
@@ -4713,6 +4840,24 @@ function switchTab(id){
 document.querySelectorAll('.tab').forEach(t=>t.onclick=(e)=>{
   switchTab(t.dataset.view);
 });
+
+// Keep desktop workspace context synchronized with the live selected location.
+(function(){
+  const refreshDesktopLocation=()=>{
+    const el=document.getElementById('desktopActiveLocation');
+    if(!el)return;
+    const name=document.getElementById('heroName')?.textContent?.trim();
+    const coords=document.getElementById('heroCoords')?.textContent?.trim();
+    el.textContent=(name&&name!=='Select a location'?name:'Location follows the main search')+(coords&&coords!=='Coordinate telemetry pending…'?' · '+coords:'');
+  };
+  const nameEl=document.getElementById('heroName');
+  const coordsEl=document.getElementById('heroCoords');
+  if(typeof MutationObserver!=='undefined'){
+    const mo=new MutationObserver(refreshDesktopLocation);
+    [nameEl,coordsEl].filter(Boolean).forEach(el=>mo.observe(el,{childList:true,subtree:true,characterData:true}));
+  }
+  refreshDesktopLocation();
+})();
 
 async function searchPlace(){
   const input=document.getElementById('search');
