@@ -1527,10 +1527,10 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 .multi-report-card.metar-caution{background:#fffbeb!important;border-color:#f59e0b!important;box-shadow:inset 4px 0 0 #f59e0b}
 .multi-report-card.metar-clear{background:#f0fdf4!important;border-color:#86c99a!important;box-shadow:inset 4px 0 0 #16a34a}
 .multi-metar-row{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(260px,.95fr);gap:0;align-items:stretch;min-width:0}
-.multi-report-main{min-width:0;min-height:54px;padding:7px 12px;display:grid;grid-template-columns:auto auto minmax(0,1fr);column-gap:10px;align-items:center}
+.multi-report-main{min-width:0;min-height:54px;padding:7px 12px;display:flex;align-items:center}
 .multi-report-head{display:contents}
 .multi-report-head strong{font-size:12px;letter-spacing:.65px;font-weight:950}.multi-report-head span{font-size:10px;font-weight:900;color:#475569;text-align:right}
-.multi-raw{min-width:0;padding:0;white-space:nowrap;overflow-x:auto;overflow-y:hidden;overflow-wrap:normal;font:800 clamp(16px,1.05vw,18px)/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;color:#0f172a;letter-spacing:.2px;scrollbar-width:thin}
+.multi-raw{min-width:0;flex:1 1 auto;width:100%;padding:0;white-space:nowrap;overflow-x:auto;overflow-y:hidden;overflow-wrap:normal;font:800 clamp(16px,1.05vw,18px)/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;color:#0f172a;letter-spacing:.2px;scrollbar-width:thin}
 .multi-report-assessment{min-width:0;padding:8px 10px;border-left:1px solid rgba(100,116,139,.22);background:rgba(255,255,255,.38);display:flex;flex-direction:column;justify-content:center;gap:6px}
 .multi-report-assessment .metar-criteria-box{margin:0;width:100%;box-sizing:border-box}
 .multi-report-flight-cat{display:flex;justify-content:flex-end}
@@ -1545,7 +1545,7 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 @media(max-width:900px){.multi-metar-toolbar{grid-template-columns:1fr 1fr}.multi-metar-input-wrap{grid-column:1/-1}.multi-metar-actions{grid-column:1/-1}.multi-metar-grid{grid-template-columns:1fr}}
 @media(max-width:600px){.multi-metar-toolbar{grid-template-columns:1fr}.multi-metar-actions{grid-column:auto}.multi-metar-btn{flex:1}.multi-metar-grid{grid-template-columns:1fr}.multi-raw{font-size:14px;line-height:1.4;padding:5px 2px}}
 @media(max-width:900px){.multi-report-table-head{grid-template-columns:minmax(0,2.2fr) minmax(220px,.95fr)}.multi-metar-row{grid-template-columns:minmax(0,2.2fr) minmax(220px,.95fr)}.multi-report-assessment{border-left:1px solid rgba(100,116,139,.22);border-top:0}}
-@media(max-width:600px){.multi-report-table-head{display:none}.multi-metar-row{grid-template-columns:minmax(0,1fr) minmax(138px,42%)}.multi-report-main{min-height:48px;padding:6px 8px;grid-template-columns:auto minmax(0,1fr);column-gap:6px}.multi-report-head span{display:none}.multi-raw{font-size:14px;line-height:1.4}.multi-report-assessment{padding:6px;border-left:1px solid rgba(100,116,139,.22);border-top:0}.multi-report-assessment .metar-criteria-box{padding:6px;font-size:10px}.metar-criteria-title{font-size:9px}}
+@media(max-width:600px){.multi-report-table-head{display:none}.multi-metar-row{grid-template-columns:minmax(0,1fr) minmax(138px,42%)}.multi-report-main{min-height:48px;padding:6px 8px;display:flex;align-items:center}.multi-report-head span{display:none}.multi-raw{font-size:14px;line-height:1.4}.multi-report-assessment{padding:6px;border-left:1px solid rgba(100,116,139,.22);border-top:0}.multi-report-assessment .metar-criteria-box{padding:6px;font-size:10px}.metar-criteria-title{font-size:9px}}
 
 
 /* ===== Dynamic Solar Cycle / Sun-Moon Timeline ===== */
@@ -6634,7 +6634,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const stateClass=criteria.level==='warning'?'metar-warning':criteria.level==='caution'?'metar-caution':'metar-clear';
     return `<article class="multi-report-card multi-metar-row ${stateClass}">
       <div class="multi-report-main">
-        <div class="multi-report-head"><strong>METAR</strong><span>${esc(fmtObsTime(report))}</span></div>
         <div class="multi-raw">${esc(raw)}</div>
       </div>
       <aside class="multi-report-assessment" aria-label="METAR warning and CMR assessment">
