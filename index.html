@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <script src="./api-config.js"></script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>VayuSarathi — Meteorological & Aviation Briefing</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="./api-config.js"></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>VayuSarathi — Meteorological &amp; Aviation Briefing</title>
+<link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
@@ -1683,78 +1684,8 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 }
 
 
-/* ===== Forecast & TAF Generator Floating Tab ===== */
-.floating-forecast-taf-tab{
-  position:fixed;right:0;top:calc(42% + 220px);z-index:3600;
-  background:linear-gradient(180deg,#7c3aed,#6d28d9 58%,#581c87);color:#fff;
-  border:1px solid rgba(255,255,255,.35);border-radius:18px 0 0 18px;
-  padding:14px 9px;cursor:pointer;box-shadow:0 12px 28px rgba(109,40,217,.28);
-  font-weight:900;font-size:11px;writing-mode:vertical-rl;text-orientation:mixed;
-  letter-spacing:.65px;transition:all .25s ease;display:flex;align-items:center;gap:7px;
-}
-.floating-forecast-taf-tab::before{content:'✈️';font-size:14px;line-height:1}
-.floating-forecast-taf-tab:hover{padding-right:13px;box-shadow:0 16px 36px rgba(109,40,217,.36);transform:translateX(-2px)}
-.forecast-taf-panel{
-  position:fixed;right:20px;bottom:24px;z-index:3599;width:min(680px,calc(100vw - 24px));
-  max-height:min(82vh,760px);background:#fff;color:#102033;border:1px solid #cbd5e1;
-  border-radius:16px;box-shadow:0 18px 55px rgba(0,0,0,.30);display:none;overflow:hidden;
-}
-.forecast-taf-panel.open{display:flex;flex-direction:column}
-.forecast-taf-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff}
-.forecast-taf-head h3{margin:0;font-size:16px}.forecast-taf-close{border:0;background:transparent;color:#fff;font-size:24px;cursor:pointer}
-.forecast-taf-body{padding:14px;overflow:auto}.forecast-taf-card{border:1px solid #e2e8f0;border-radius:14px;padding:13px;margin-bottom:12px;background:linear-gradient(180deg,#fff,#f8fafc)}
-.forecast-taf-card h4{margin:0 0 9px;font-size:13px;color:#334155}.forecast-taf-toolbar{display:flex;gap:8px;align-items:end;flex-wrap:wrap}
-.forecast-taf-toolbar label{display:flex;flex-direction:column;gap:5px;font-size:10px;font-weight:900;color:#475569;text-transform:uppercase;letter-spacing:.4px;flex:1;min-width:220px}
-.forecast-taf-toolbar select{border:1px solid #cbd5e1;border-radius:9px;padding:9px;background:#fff;font-weight:700;color:#0f172a}
-.forecast-taf-btn{border:0;border-radius:9px;padding:10px 14px;background:#7c3aed;color:#fff;font-weight:800;cursor:pointer}
-.forecast-taf-btn.secondary{background:#e2e8f0;color:#1e293b}.forecast-taf-output{margin-top:10px;white-space:pre-wrap;max-height:260px;overflow:auto;font:12px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;background:#0f172a;color:#e2e8f0;border-radius:10px;padding:12px}
-@media(max-width:600px){.floating-forecast-taf-tab{top:calc(50% + 180px);font-size:10px;padding:12px 7px}.forecast-taf-panel{right:8px;bottom:8px;width:calc(100vw - 16px);max-height:calc(100vh - 16px);border-radius:18px}.forecast-taf-toolbar label{min-width:100%}.forecast-taf-btn{flex:1}}
-
-/* ===== VayuSarathi METAR/TAF Floating Tab ===== */
-.floating-metar-tab{
-  position:fixed;right:0;top:calc(42% + 92px);z-index:3600;
-  background:linear-gradient(180deg,#0f766e,#155e75 58%,#164e63);color:#fff;
-  border:1px solid rgba(255,255,255,.35);border-radius:18px 0 0 18px;
-  padding:14px 9px;cursor:pointer;box-shadow:0 12px 28px rgba(15,118,110,.25);
-  font-weight:900;font-size:11px;writing-mode:vertical-rl;text-orientation:mixed;
-  letter-spacing:.65px;transition:all .25s ease;display:flex;align-items:center;gap:7px;
-}
-.floating-metar-tab::before{content:'✈️';font-size:14px;line-height:1}
-.floating-metar-tab:hover{padding-right:13px;box-shadow:0 16px 36px rgba(15,118,110,.34);transform:translateX(-2px)}
-.vs-metar-panel{
-  position:fixed;right:20px;bottom:158px;z-index:1199;width:min(620px,calc(100vw - 24px));
-  max-height:min(78vh,720px);background:#fff;color:#102033;border:1px solid #cbd5e1;
-  border-radius:16px;box-shadow:0 18px 55px rgba(0,0,0,.30);display:none;overflow:hidden;
-}
-.vs-metar-panel.open{display:flex;flex-direction:column}
-.vs-metar-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;
-  background:linear-gradient(135deg,#0f766e,#155e75);color:#fff}
-.vs-metar-head h3{margin:0;font-size:16px}
-.vs-metar-close{border:0;background:transparent;color:#fff;font-size:24px;cursor:pointer}
-.vs-metar-body{padding:14px;overflow:auto}
-.vs-metar-help{font-size:12px;color:#64748b;margin-bottom:10px}
-.vs-metar-inputrow{display:flex;gap:8px;align-items:stretch}
-.vs-metar-input{flex:1;min-width:0;border:1px solid #94a3b8;border-radius:9px;padding:10px 12px;font-size:15px;text-transform:uppercase}
-.vs-metar-btn{border:0;border-radius:9px;padding:10px 14px;background:#0f766e;color:#fff;font-weight:700;cursor:pointer}
-.vs-metar-btn.secondary{background:#e2e8f0;color:#1e293b}
-.vs-metar-status{margin:10px 0;font-size:12px;color:#475569;min-height:18px}
-.vs-metar-results{display:grid;gap:10px}
-.vs-metar-card{border:1px solid #cbd5e1;border-radius:12px;overflow:hidden;background:#f8fafc}
-.vs-metar-card-head{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#e2e8f0;font-weight:800}
-.vs-metar-card-head a{font-size:11px;color:#0369a1;text-decoration:none}
-.vs-metar-section{padding:9px 10px;border-top:1px solid #e2e8f0}
-.vs-metar-section b{display:block;font-size:13px;font-weight:950;color:#334155;margin-bottom:7px;letter-spacing:.35px}
-.vs-metar-raw{white-space:pre-wrap;word-break:break-word;font:700 24px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;color:#0f172a;letter-spacing:.25px}
-.vs-metar-empty{padding:16px;text-align:center;color:#64748b;border:1px dashed #cbd5e1;border-radius:10px}
-@media(max-width:600px){
-  .floating-metar-tab{top:calc(50% + 92px);font-size:10px;padding:12px 7px}
-  .vs-metar-panel{right:8px;top:8px;bottom:auto;width:calc(100vw - 16px);max-height:calc(100vh - 16px);border-radius:18px}
-  .vs-metar-inputrow{flex-wrap:wrap}.vs-metar-input{flex-basis:100%}.vs-metar-btn{flex:1}.vs-metar-raw{font-size:20px;line-height:1.5}
-}
 
 </style>
-
-
 <!-- Multi-model median guidance styles copied from source dashboard -->
 <style id="multimodel-tab-style">
   .mm-shell{padding:4px 0 24px}
@@ -1788,7 +1719,6 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
   .mm-title-row h3{margin:0}
   @media(max-width:700px){.mm-field{flex:1 1 100%}.mm-chart{height:320px}.mm-hour-card{width:270px;min-width:270px}}
 </style>
-
 <style id="forecast-guidance-tabs-style">
   .forecast-guidance-intro{margin-bottom:14px}
   .obs-cal-card{margin-top:14px}
@@ -1819,7 +1749,6 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
   #forecast-guidance .mm-home-content{padding-top:12px}
   @media(max-width:700px){.obs-cal-head .source-btn{width:100%}.obs-cal-table-wrap{max-height:60vh}}
 </style>
-
 <style id="mm-guidance-enhanced-style">
 .mm-guidance-card{overflow:hidden}
 .mm-guidance-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
@@ -1855,7 +1784,6 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
   .mm-home-content .mm-shell{padding:0 0 8px;}
   @media(max-width:700px){.mm-home-summary{padding:14px}.mm-home-content{padding:8px;}}
 </style>
-
 <style id="tropical-watch-css">
 /* Tropical System Watch — screenshot-matched operational dashboard */
 /* Global tropical-system alert: remains visible across every tab and while scrolling. */
@@ -1919,7 +1847,6 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 .tw-model-note{margin-top:7px;font-size:9px;line-height:1.4;color:#64748b}.tw-source-details{margin-top:12px}.tw-source-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.tw-source-item{border:1px solid #dbe4ef;border-radius:9px;padding:7px 8px;background:#f8fafc;font-size:9px;line-height:1.4}.tw-source-item b{display:block;font-size:10px;color:#0f172a}.tw-source-ok{color:#166534;font-weight:900}.tw-source-fail{color:#991b1b;font-weight:900}..tw-sourcebar{margin-top:12px;border:1px solid #93c5fd;border-radius:12px;background:#eff6ff;padding:9px 12px;font-size:10px;color:#334155;font-weight:700}.tw-sourcebar a{color:#0369a1;font-weight:900;text-decoration:underline}.tw-status{font-size:9px;color:#64748b;margin-top:6px}.tw-footer{font-size:9px;color:#64748b;margin-top:6px}
 @media(max-width:1200px){.tw-details-grid{grid-template-columns:1fr 1fr}.tw-details-grid .tw-detail-panel:last-child{grid-column:1/-1}.tw-kpi-grid{grid-template-columns:repeat(4,1fr)}.tw-lower{grid-template-columns:1fr 1fr}.tw-lower .tw-panel:last-child{grid-column:1/-1}}@media(max-width:800px){.tw-details-grid{grid-template-columns:1fr}.tw-details-grid .tw-detail-panel:last-child{grid-column:auto}.tw-source-grid{grid-template-columns:1fr}.tw-topline{display:block}.tw-livebox{justify-content:flex-start;margin-top:8px}.tw-hero-banner{flex-wrap:wrap}.tw-hero-label{border-right:0;padding-right:0}.tw-hero-button{margin-left:0}.tw-kpi-grid{grid-template-columns:repeat(2,1fr)}.tw-lower{grid-template-columns:1fr}.tw-lower .tw-panel:last-child{grid-column:auto}.tw-sat,.tw-map{height:220px}}@media(max-width:520px){.tw-kpi-grid{grid-template-columns:1fr 1fr}.tw-hero-name{font-size:17px}.tw-title{font-size:20px}}
 </style>
-
 <style>
 
 /* ==================== VAYUSARATHI MOBILE-ONLY EXPERIENCE ==================== */
@@ -1990,7 +1917,6 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
   /* Hide desktop floating launchers while in the simplified mobile shell. */
   body:not(.mobile-classic-mode) .floating-meteogram-tab,
   body:not(.mobile-classic-mode) .floating-metar-tab,
-  body:not(.mobile-classic-mode) .floating-forecast-taf-tab,
   body:not(.mobile-classic-mode) .floating-windy-widget,
   body:not(.mobile-classic-mode) #tropicalWatchBanner,
   body:not(.mobile-classic-mode) .forecast-taf-panel{display:none!important}
@@ -2002,7 +1928,6 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 @media(min-width:768px){#mobileApp,.mobile-legacy-back{display:none!important}}
 
 </style>
-
 <style id="vayusarathi-desktop-workspace">
 /* Desktop workstation refresh — scoped to desktop/tablet landscape only. */
 #desktopSidebar{display:none}
@@ -2084,8 +2009,6 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
   body>main{padding:20px 18px}
 }
 </style>
-
-
 <style id="vayusarathi-aviation-visual-refresh">
 /* VayuSarathi Flight Deck — desktop only. Mobile shell and data logic are untouched. */
 @media (min-width:1100px){
@@ -2218,1305 +2141,1129 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
   body>main{margin:0;width:100%;padding:20px 18px}
 }
 </style>
-
 </head>
 <body>
 <header>
-  <div class="brand-group">
-    <div class="brand" onclick="switchTab('forecast')">
-      <span class="first">Vayu</span><span class="second">Sarathi</span>
-      
-      <!-- Bolder Animated Weather Graphic -->
-      <div class="weather-emblem" aria-label="Animated weather emblem">
-        <svg class="emblem-sun" width="26" height="26" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="5.5" fill="url(#sunGrad)" stroke="#d97706" stroke-width="1.2" />
-          <path d="M12 1.5V4M12 20V22.5M1.5 12H4M20 12H22.5M4.5 4.5L6.4 6.4M17.6 17.6L19.5 19.5M4.5 19.5L6.4 17.6M17.6 6.4L19.5 4.5" stroke="#f59e0b" stroke-width="2.8" stroke-linecap="round" />
-          <defs>
-            <radialGradient id="sunGrad" cx="0.5" cy="0.5" r="0.5">
-              <stop offset="0%" stop-color="#fffbeb" />
-              <stop offset="60%" stop-color="#fef08a" />
-              <stop offset="100%" stop-color="#f59e0b" />
-            </radialGradient>
-          </defs>
-        </svg>
-        
-        <svg class="emblem-cloud" width="34" height="23" viewBox="0 0 24 16" fill="none">
-          <path d="M19.35 6.04C18.67 2.59 15.64 0 12 0C9.11 0 6.6 1.64 5.35 4.04C2.34 4.36 0 6.91 0 10C0 13.31 2.69 16 6 16H19C21.76 16 24 13.76 24 11C24 8.36 21.95 6.22 19.35 6.04Z" fill="url(#cloudGrad)" stroke="#0284c7" stroke-width="1.3" />
-          <defs>
-            <linearGradient id="cloudGrad" x1="0" y1="0" x2="24" y2="16" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#ffffff"/>
-              <stop offset="45%" stop-color="#bae6fd"/>
-              <stop offset="100%" stop-color="#0284c7"/>
-            </linearGradient>
-          </defs>
-        </svg>
-
-        <svg class="emblem-lightning" width="16" height="22" viewBox="0 0 24 24" fill="none">
-          <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#eab308" stroke="#ca8a04" stroke-width="1.6" stroke-linejoin="round"/>
-        </svg>
-
-        <svg class="emblem-rain-1" width="4" height="10" viewBox="0 0 2 8"><line x1="1" y1="0" x2="1" y2="8"/></svg>
-        <svg class="emblem-rain-2" width="4" height="10" viewBox="0 0 2 8"><line x1="1" y1="0" x2="1" y2="8"/></svg>
-        <svg class="emblem-rain-3" width="4" height="10" viewBox="0 0 2 8"><line x1="1" y1="0" x2="1" y2="8"/></svg>
-      </div>
-    </div>
-    <div class="sub">AVIATION METEOROLOGY  /  FLIGHT OPERATIONS WEATHER DESK</div>
-  </div>
-
-  <div class="header-right-tools">
-    <div id="liveClock" class="digital-clock-banner">🕒 UTC: — | IST: —</div>
-
-    <div class="menu-container">
-      <button class="hamburger-btn" aria-label="Navigation Menu">
-        <span class="hamburger-bar"></span>
-        <span class="hamburger-bar"></span>
-        <span class="hamburger-bar"></span>
-      </button>
-      <div class="nav-dropdown">
-        <div class="tab active" data-view="forecast">Current Weather & Location Map</div>
-        <div class="tab" data-view="forecast-guidance">Forecast Guidance • 3 Methods</div>
-        <div class="tab" data-view="verification-learning">📊 Forecast Verification &amp; Learning</div>
-        <div class="tab" data-view="tropical-watch">🌀 Tropical System Watch</div>
-        <div class="tab" data-view="marine">🌊 Marine & Sea State (Ocean Telemetry)</div>
-        <div class="tab" data-view="thunderstorm">⛈️ Thunderstorm Hotspot • 50 km</div>
-        <div class="tab" data-view="upper">Upper Winds / Temp</div>
-        <div class="tab" data-view="aviation-forecast">Aviation Forecast</div>
-        <div class="tab" data-view="multi-metar">✈️ Multi METAR / TAF</div>
-        <div class="tab" data-view="fits">Fighter Index of Thermal Stress (FITS)</div>
-        <div class="tab" data-view="route">Route Briefing & Upper Air</div>
-        <div class="tab" data-view="satellites">Live Satellite Imagery</div>
-        <div class="tab" data-view="nwp">IMD NWP Portal</div>
-      </div>
-    </div>
-  </div>
-  
-  <form id="searchForm" class="searchbar" style="width: 100%;" role="search" onsubmit="return false;">
-    <div class="searchwrap">
-      <input id="search" placeholder="Search city, airport, port, coastal zone or coordinates…" autocomplete="off">
-      <div id="suggestions" class="suggestions" hidden></div>
-    </div>
-    <button id="searchButton" type="submit" title="Search and load the first matching result">Enter</button>
-  </form>
-</header>
-
-
-<div id="mobileApp" aria-label="VayuSarathi mobile dashboard">
-  <div class="mobile-top">
-    <div class="mobile-brandline">
-      <div class="mobile-brand"><span class="mark">☁</span><span>VayuSarathi</span></div>
-      <div class="mobile-time" id="mobileClock">IST • —</div>
-    </div>
-    <form class="mobile-search" id="mobileSearchForm" autocomplete="off">
-      <input id="mobileSearchInput" type="search" placeholder="Search city, airport or coordinates" aria-label="Search location">
-      <button type="submit">Search</button>
-      <div id="mobileSuggestions" hidden></div>
-    </form>
-  </div>
-  <main class="mobile-main">
-    <section class="mobile-page active" id="mobilePageHome">
-      <div class="mobile-section-head"><h2>Weather now</h2><span id="mobileUpdated">Loading forecast…</span></div>
-      <div class="mobile-hero">
-        <div class="mobile-location" id="mobileLocation">Kalaikunda / Selected location</div>
-        <div class="mobile-coords" id="mobileCoords">22.670°N, 87.016°E</div>
-        <div class="mobile-current-row"><div><div class="mobile-temp" id="mobileTemp">—°C</div><div class="mobile-condition" id="mobileCondition">Waiting for forecast…</div><div class="mobile-feels" id="mobileFeels">Feels like —°C</div></div><div class="mobile-weather-icon" id="mobileWeatherIcon">🌤️</div></div>
-      </div>
-      <div class="mobile-data-grid">
-        <div class="mobile-data-card"><div class="k">Dew point</div><div class="v" id="mobileDew">—°C</div><div class="s">Moisture level</div></div>
-        <div class="mobile-data-card"><div class="k">Relative humidity</div><div class="v" id="mobileHumidity">—%</div><div class="s">Near-surface RH</div></div>
-        <div class="mobile-data-card"><div class="k">Wind</div><div class="v" id="mobileWind">— kt</div><div class="s" id="mobileWindDir">Direction —</div></div>
-        <div class="mobile-data-card"><div class="k">Rain probability</div><div class="v" id="mobileRainProb">—%</div><div class="s" id="mobileRainNow">Rainfall — mm/h</div></div>
-      </div>
-      <div class="mobile-card">
-        <div class="mobile-card-title"><span>Next 5 days</span><button type="button" onclick="mobileShowPage('forecast')">Full forecast →</button></div>
-        <div class="mobile-day-list" id="mobileHomeDays"><div class="mobile-empty">Waiting for forecast data…</div></div>
-      </div>
-      <div class="mobile-actions">
-        <button class="mobile-action" type="button" onclick="mobileOpenMeteogram()"><span class="ico">📈</span><span><b>5-day meteogram</b><small>Rain, dry bulb and dew point</small></span></button>
-        <button class="mobile-action" type="button" onclick="mobileOpenClassic('multi-metar')"><span class="ico">✈️</span><span><b>METAR / TAF</b><small>Aviation observations</small></span></button>
-      </div>
-    </section>
-
-    <section class="mobile-page" id="mobilePageForecast">
-      <div class="mobile-section-head"><h2>5-day forecast</h2><span>GFS guidance</span></div>
-      <div class="mobile-card"><div class="mobile-card-title">Daily temperature and rainfall</div><div class="mobile-day-list" id="mobileForecastDays"><div class="mobile-empty">Waiting for forecast data…</div></div></div>
-      <div class="mobile-card"><div class="mobile-card-title">Detailed meteogram <button type="button" onclick="mobileOpenMeteogram()">Open →</button></div><div style="font-size:11px;color:#718096;line-height:1.5">View hourly rainfall, dry-bulb temperature and dew-point temperature for the next 5 days, including daily maximum and minimum temperatures.</div></div>
-    </section>
-
-    <section class="mobile-page" id="mobilePageMore">
-      <div class="mobile-section-head"><h2>More tools</h2><span>Full dashboard modules</span></div>
-      <div class="mobile-actions">
-        <button class="mobile-action" type="button" onclick="mobileOpenClassic('tropical-watch')"><span class="ico">🌀</span><span><b>Tropical Watch</b><small>Official alerts and model guidance</small></span></button>
-        <button class="mobile-action" type="button" onclick="mobileOpenClassic('verification-learning')"><span class="ico">📊</span><span><b>Forecast Validation</b><small>Model errors and quality scores</small></span></button>
-        <button class="mobile-action" type="button" onclick="mobileOpenClassic('aviation-forecast')"><span class="ico">🛫</span><span><b>Aviation Forecast</b><small>Operational weather guidance</small></span></button>
-        <button class="mobile-action" type="button" onclick="mobileOpenClassic('marine')"><span class="ico">🌊</span><span><b>Marine & Sea State</b><small>Waves and ocean conditions</small></span></button>
-        <button class="mobile-action" type="button" onclick="mobileOpenClassic('upper')"><span class="ico">💨</span><span><b>Upper Winds</b><small>Winds and temperatures aloft</small></span></button>
-        <button class="mobile-action" type="button" onclick="mobileOpenClassic('satellites')"><span class="ico">🛰️</span><span><b>Satellite Imagery</b><small>Live satellite feeds</small></span></button>
-        <button class="mobile-action" type="button" onclick="mobileOpenClassic('thunderstorm')"><span class="ico">⛈️</span><span><b>Thunderstorm Hotspot</b><small>0–3 hour spatial guidance</small></span></button>
-        <button class="mobile-action" type="button" onclick="mobileOpenClassic('fits')"><span class="ico">🌡️</span><span><b>FITS</b><small>Thermal stress assessment</small></span></button>
-      </div>
-      <div class="mobile-card"><div class="mobile-card-title">About this view</div><div style="font-size:11px;color:#718096;line-height:1.55">This simplified interface is shown on narrow mobile screens. The full VayuSarathi dashboard remains available from each tool link and continues to be used on desktop.</div></div>
-    </section>
-  </main>
-  <nav class="mobile-bottom-nav" aria-label="Mobile navigation">
-    <button class="mobile-nav-btn active" data-page="home" onclick="mobileShowPage('home')"><span class="ico">⌂</span><span>Home</span></button>
-    <button class="mobile-nav-btn" data-page="forecast" onclick="mobileShowPage('forecast')"><span class="ico">▦</span><span>5-day</span></button>
-    <button class="mobile-nav-btn" data-page="meteogram" onclick="mobileOpenMeteogram()"><span class="ico">⌁</span><span>Meteogram</span></button>
-    <button class="mobile-nav-btn" data-page="more" onclick="mobileShowPage('more')"><span class="ico">☰</span><span>More</span></button>
-  </nav>
+<div class="brand-group">
+<div class="brand" onclick="switchTab('forecast')">
+<span class="first">Vayu</span><span class="second">Sarathi</span>
+<!-- Bolder Animated Weather Graphic -->
+<div aria-label="Animated weather emblem" class="weather-emblem">
+<svg class="emblem-sun" fill="none" height="26" viewbox="0 0 24 24" width="26">
+<circle cx="12" cy="12" fill="url(#sunGrad)" r="5.5" stroke="#d97706" stroke-width="1.2"></circle>
+<path d="M12 1.5V4M12 20V22.5M1.5 12H4M20 12H22.5M4.5 4.5L6.4 6.4M17.6 17.6L19.5 19.5M4.5 19.5L6.4 17.6M17.6 6.4L19.5 4.5" stroke="#f59e0b" stroke-linecap="round" stroke-width="2.8"></path>
+<defs>
+<radialgradient cx="0.5" cy="0.5" id="sunGrad" r="0.5">
+<stop offset="0%" stop-color="#fffbeb"></stop>
+<stop offset="60%" stop-color="#fef08a"></stop>
+<stop offset="100%" stop-color="#f59e0b"></stop>
+</radialgradient>
+</defs>
+</svg>
+<svg class="emblem-cloud" fill="none" height="23" viewbox="0 0 24 16" width="34">
+<path d="M19.35 6.04C18.67 2.59 15.64 0 12 0C9.11 0 6.6 1.64 5.35 4.04C2.34 4.36 0 6.91 0 10C0 13.31 2.69 16 6 16H19C21.76 16 24 13.76 24 11C24 8.36 21.95 6.22 19.35 6.04Z" fill="url(#cloudGrad)" stroke="#0284c7" stroke-width="1.3"></path>
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="cloudGrad" x1="0" x2="24" y1="0" y2="16">
+<stop stop-color="#ffffff"></stop>
+<stop offset="45%" stop-color="#bae6fd"></stop>
+<stop offset="100%" stop-color="#0284c7"></stop>
+</lineargradient>
+</defs>
+</svg>
+<svg class="emblem-lightning" fill="none" height="22" viewbox="0 0 24 24" width="16">
+<path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#eab308" stroke="#ca8a04" stroke-linejoin="round" stroke-width="1.6"></path>
+</svg>
+<svg class="emblem-rain-1" height="10" viewbox="0 0 2 8" width="4"><line x1="1" x2="1" y1="0" y2="8"></line></svg>
+<svg class="emblem-rain-2" height="10" viewbox="0 0 2 8" width="4"><line x1="1" x2="1" y1="0" y2="8"></line></svg>
+<svg class="emblem-rain-3" height="10" viewbox="0 0 2 8" width="4"><line x1="1" x2="1" y1="0" y2="8"></line></svg>
 </div>
-<button class="mobile-legacy-back" type="button" onclick="mobileReturnHome()">← Mobile home</button>
-
-<aside id="desktopSidebar" aria-label="Desktop workspace navigation">
-  <div class="desktop-side-brand">
-    <div class="desktop-side-mark">✈</div>
-    <div><strong>VayuSarathi</strong><small>AVIATION WX OPERATIONS</small></div>
-  </div>
-  <div class="desktop-side-location">
-    <span class="desktop-side-eyebrow">ACTIVE FLIGHT WX DESK</span>
-    <strong id="desktopActiveView">Weather overview</strong>
-    <small id="desktopActiveLocation">Location follows the main search</small>
-  </div>
-  <nav class="desktop-side-nav" aria-label="Main modules">
-    <div class="desktop-nav-group-label">OPERATIONS</div>
-    <button class="desktop-nav-item active" type="button" data-view="forecast" title="Weather overview" aria-label="Weather overview" onclick="switchTab('forecast')"><span class="desktop-nav-icon">⌂</span><span>Weather overview</span></button>
-    <button class="desktop-nav-item" type="button" data-view="forecast-guidance" title="Forecast guidance" aria-label="Forecast guidance" onclick="switchTab('forecast-guidance')"><span class="desktop-nav-icon">▥</span><span>Forecast guidance</span></button>
-    <button class="desktop-nav-item" type="button" data-view="aviation-forecast" title="Aviation forecast" aria-label="Aviation forecast" onclick="switchTab('aviation-forecast')"><span class="desktop-nav-icon">✈</span><span>Aviation forecast</span></button>
-    <button class="desktop-nav-item" type="button" data-view="multi-metar" title="METAR / TAF" aria-label="METAR / TAF" onclick="switchTab('multi-metar')"><span class="desktop-nav-icon">◉</span><span>METAR / TAF</span></button>
-
-    <div class="desktop-nav-group-label">ANALYSIS &amp; VERIFICATION</div>
-    <button class="desktop-nav-item" type="button" data-view="verification-learning" title="Forecast validation" aria-label="Forecast validation" onclick="switchTab('verification-learning')"><span class="desktop-nav-icon">▤</span><span>Forecast validation</span></button>
-    <button class="desktop-nav-item" type="button" data-view="thunderstorm" title="Thunderstorm analysis" aria-label="Thunderstorm analysis" onclick="switchTab('thunderstorm')"><span class="desktop-nav-icon">ϟ</span><span>Thunderstorm analysis</span></button>
-    <button class="desktop-nav-item" type="button" data-view="tropical-watch" title="Tropical system watch" aria-label="Tropical system watch" onclick="switchTab('tropical-watch')"><span class="desktop-nav-icon">◌</span><span>Tropical system watch</span></button>
-    <button class="desktop-nav-item" type="button" data-view="fits" title="FITS assessment" aria-label="FITS assessment" onclick="switchTab('fits')"><span class="desktop-nav-icon">◈</span><span>FITS assessment</span></button>
-
-    <div class="desktop-nav-group-label">ATMOSPHERE &amp; MARINE</div>
-    <button class="desktop-nav-item" type="button" data-view="marine" title="Marine & sea state" aria-label="Marine & sea state" onclick="switchTab('marine')"><span class="desktop-nav-icon">≈</span><span>Marine &amp; sea state</span></button>
-    <button class="desktop-nav-item" type="button" data-view="upper" title="Upper winds" aria-label="Upper winds" onclick="switchTab('upper')"><span class="desktop-nav-icon">↟</span><span>Upper winds</span></button>
-    <button class="desktop-nav-item" type="button" data-view="satellites" title="Satellite imagery" aria-label="Satellite imagery" onclick="switchTab('satellites')"><span class="desktop-nav-icon">◎</span><span>Satellite imagery</span></button>
-    <button class="desktop-nav-item" type="button" data-view="route" title="Route briefing" aria-label="Route briefing" onclick="switchTab('route')"><span class="desktop-nav-icon">⌁</span><span>Route briefing</span></button>
-    <button class="desktop-nav-item" type="button" data-view="nwp" title="IMD NWP portal" aria-label="IMD NWP portal" onclick="switchTab('nwp')"><span class="desktop-nav-icon">▦</span><span>IMD NWP portal</span></button>
-  </nav>
-  <div class="desktop-side-footer">
-    <span class="desktop-footer-dot"></span>
-    <div><strong>AVIATION WX DESK</strong><small>Forecast • Observation • Analysis</small></div>
-  </div>
-</aside>
-
-<main>
-<section id="forecast" class="view active">
-  <div class="section-tag tag-cyan">Telemetry • Atmospheric Guidance</div>
-  
-  <div class="forecast-top-layout">
-    <div class="hero-weather-card" id="heroCard">
-      <canvas id="fxCanvas"></canvas>
-      
-      <div class="hero-content">
-        <div class="hero-left">
-          <h1 id="heroName">Select a location</h1>
-          <div class="coords" id="heroCoords">Coordinate telemetry pending…</div>
-          <div class="hero-wx-badge" id="heroWxBadge">
-            <span id="heroWxIcon">🌤️</span>
-            <span id="heroWxDesc">Awaiting atmospheric data</span>
-          </div>
-        </div>
-        <div class="hero-temp-box">
-          <div class="hero-temp" id="heroTemp">—°C</div>
-          <div class="hero-feels" id="heroFeels">Apparent: —°C</div>
-        </div>
-      </div>
-
-      <div class="solar-cycle" id="solarCycle" aria-label="Dynamic sun and moon times">
-        <div class="solar-scene day" id="solarScene">
-          <div class="solar-stars" aria-hidden="true"></div>
-          <div class="solar-orb" id="solarOrb">☀️</div>
-          <div class="solar-info">
-            <div><strong id="solarPhase">DAYLIGHT</strong></div>
-            <span id="solarPhaseSub">Sun above horizon</span>
-          </div>
-        </div>
-
-        <div class="solar-events">
-          <div class="solar-event sunrise">
-            <span class="event-label">☀️ Next Sunrise</span>
-            <b class="event-value" id="nextSunrise">—</b>
-            <span class="event-sub" id="nextSunriseSub">Waiting for location</span>
-          </div>
-          <div class="solar-event sunset">
-            <span class="event-label">🌇 Next Sunset</span>
-            <b class="event-value" id="nextSunset">—</b>
-            <span class="event-sub" id="nextSunsetSub">Waiting for location</span>
-          </div>
-          <div class="solar-event moonrise">
-            <span class="event-label">🌙 Next Moonrise</span>
-            <b class="event-value" id="nextMoonrise">—</b>
-            <span class="event-sub" id="nextMoonriseSub">Waiting for location</span>
-          </div>
-          <div class="solar-event moonset">
-            <span class="event-label">🌘 Next Moonset</span>
-            <b class="event-value" id="nextMoonset">—</b>
-            <span class="event-sub" id="nextMoonsetSub">Waiting for location</span>
-          </div>
-        </div>
-      </div>
-      <div class="solar-engine-note"><span>Sun/Moon rise-set times use atmospheric refraction and top-limb visibility corrections.</span></div>
-
-      <div class="convective-bar">
-        <div class="prob-pill">
-          <div style="flex:1;margin-right:10px">
-            <span class="prob-label">THUNDERSTORM (PoTS)</span>
-            <div class="prob-bar-bg"><div id="tsBar" class="prob-bar-fill" style="width:0%;background:linear-gradient(90deg, #9333ea, #c084fc)"></div></div>
-          </div>
-          <b id="heroTsProb" style="color:var(--ts-purple)">—%</b>
-        </div>
-
-        <div class="prob-pill">
-          <div style="flex:1;margin-right:10px">
-            <span class="prob-label">PRECIPITATION (PoP)</span>
-            <div class="prob-bar-bg"><div id="rainBar" class="prob-bar-fill" style="width:0%;background:linear-gradient(90deg, #0284c7, #10b981)"></div></div>
-          </div>
-          <b id="heroRainProb" style="color:var(--accent)">—%</b>
-        </div>
-
-        <div class="prob-pill">
-          <div>
-            <span class="prob-label">FITS STRESS INDEX</span>
-            <b id="heroFitsVal" style="color:#db2777">—°C</b>
-          </div>
-          <span id="heroFitsRisk" class="badge" style="border:1px solid #10b981;color:#047857;background:var(--green-light)">Safe</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="map-sidebar-card">
-      <div class="card-heading heading-cyan" style="margin:0 0 8px 0">Active Location</div>
-      <div id="map"></div>
-      <div class="map-note">Click map to change forecast telemetry point.</div>
-    </div>
-  </div>
-
-  <div id="forecastAlert" class="alert">Forecast data will appear after selecting a location.</div>
-
-  <div class="grid-5">
-    <div class="card card-metric-wind">
-      <h3 class="card-heading heading-cyan">Surface Wind & Gusts</h3>
-      <div class="metric" id="nowWind" style="color:#0284c7">—</div>
-      <div id="nowDir" class="muted">—</div>
-    </div>
-    <div class="card card-metric-rain">
-      <h3 class="card-heading heading-cyan">Precipitation Rate</h3>
-      <div class="metric" id="nowRain" style="color:#2563eb">—</div>
-      <div id="nowRainAccum" class="muted">Hourly rate</div>
-    </div>
-    <div class="card card-metric-cloud">
-      <h3 class="card-heading heading-purple">Cloud Cover Levels & Height</h3>
-      <div style="font-size:12px; font-weight:700; color:#475569; margin-top:4px; line-height:1.4">
-        <div>☁️ Low: <span id="nowCloudLow" style="color:#0f172a">—</span></div>
-        <div>⛅ Mid: <span id="nowCloudMid" style="color:#0f172a">—</span></div>
-        <div>☁️ High: <span id="nowCloudHigh" style="color:#0f172a">—</span></div>
-      </div>
-    </div>
-    <div class="card card-metric-humidity">
-      <h3 class="card-heading heading-emerald">Relative Humidity & Wet Bulb</h3>
-      <div class="metric" id="nowHumidity" style="color:#059669">—</div>
-      <div id="nowWetBulb" class="muted" style="font-weight:700;margin-top:2px;color:#047857">—</div>
-      <div id="nowDew" class="muted" style="font-size:11px;margin-top:2px">—</div>
-    </div>
-    <div class="card card-metric-pressure">
-      <h3 class="card-heading heading-amber">Pressure Telemetry</h3>
-      <div class="metric" id="nowPressureQNH" style="font-size:20px;color:#d97706">—</div>
-      <div id="pressureSub" class="muted" style="font-size:11px;line-height:1.45;margin-top:4px">—</div>
-    </div>
-
-    
-
-    
-    
-    
-
-    
-    <div class="card wide" id="openMeteoMainForecastCard" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 249, 255, 0.9));">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-        <h3 class="card-heading heading-purple" style="margin:0">72-Hour Hourly Forecast &amp; Aviation Parameters (Open-Meteo)</h3>
-        <span class="muted" style="font-size:12px">Animated &amp; synchronized • IST • Open-Meteo forecast</span>
-      </div>
-      <div class="hourly-scroll-container" id="openMeteoMainStrip">
-        <div class="muted" style="padding:20px;">Awaiting Open-Meteo forecast telemetry…</div>
-      </div>
-    </div>
-
-
-    <div class="card wide">
-      <h3 class="card-heading heading-amber">External Regional Portals</h3>
-      <div class="source-grid" id="sources"></div>
-    </div>
-  </div>
+</div>
+<div class="sub">AVIATION METEOROLOGY  /  FLIGHT OPERATIONS WEATHER DESK</div>
+</div>
+<div class="header-right-tools">
+<div class="digital-clock-banner" id="liveClock">🕒 UTC: — | IST: —</div>
+<div class="menu-container">
+<button aria-label="Navigation Menu" class="hamburger-btn">
+<span class="hamburger-bar"></span>
+<span class="hamburger-bar"></span>
+<span class="hamburger-bar"></span>
+</button>
+<div class="nav-dropdown">
+<div class="tab active" data-view="forecast">Current Weather &amp; Location Map</div>
+<div class="tab" data-view="forecast-guidance">Forecast Guidance • 3 Methods</div>
+<div class="tab" data-view="verification-learning">📊 Forecast Verification &amp; Learning</div>
+<div class="tab" data-view="tropical-watch">🌀 Tropical System Watch</div>
+<div class="tab" data-view="marine">🌊 Marine &amp; Sea State (Ocean Telemetry)</div>
+<div class="tab" data-view="thunderstorm">⛈️ Thunderstorm Hotspot • 50 km</div>
+<div class="tab" data-view="upper">Upper Winds / Temp</div>
+<div class="tab" data-view="aviation-forecast">Aviation Forecast</div>
+<div class="tab" data-view="multi-metar">✈️ Multi METAR / TAF</div>
+<div class="tab" data-view="fits">Fighter Index of Thermal Stress (FITS)</div>
+<div class="tab" data-view="route">Route Briefing &amp; Upper Air</div>
+<div class="tab" data-view="satellites">Live Satellite Imagery</div>
+<div class="tab" data-view="nwp">IMD NWP Portal</div>
+</div>
+</div>
+</div>
+<form class="searchbar" id="searchForm" onsubmit="return false;" role="search" style="width: 100%;">
+<div class="searchwrap">
+<input autocomplete="off" id="search" placeholder="Search city, airport, port, coastal zone or coordinates…"/>
+<div class="suggestions" hidden="" id="suggestions"></div>
+</div>
+<button id="searchButton" title="Search and load the first matching result" type="submit">Enter</button>
+</form>
+</header>
+<div aria-label="VayuSarathi mobile dashboard" id="mobileApp">
+<div class="mobile-top">
+<div class="mobile-brandline">
+<div class="mobile-brand"><span class="mark">☁</span><span>VayuSarathi</span></div>
+<div class="mobile-time" id="mobileClock">IST • —</div>
+</div>
+<form autocomplete="off" class="mobile-search" id="mobileSearchForm">
+<input aria-label="Search location" id="mobileSearchInput" placeholder="Search city, airport or coordinates" type="search"/>
+<button type="submit">Search</button>
+<div hidden="" id="mobileSuggestions"></div>
+</form>
+</div>
+<main class="mobile-main">
+<section class="mobile-page active" id="mobilePageHome">
+<div class="mobile-section-head"><h2>Weather now</h2><span id="mobileUpdated">Loading forecast…</span></div>
+<div class="mobile-hero">
+<div class="mobile-location" id="mobileLocation">Kalaikunda / Selected location</div>
+<div class="mobile-coords" id="mobileCoords">22.670°N, 87.016°E</div>
+<div class="mobile-current-row"><div><div class="mobile-temp" id="mobileTemp">—°C</div><div class="mobile-condition" id="mobileCondition">Waiting for forecast…</div><div class="mobile-feels" id="mobileFeels">Feels like —°C</div></div><div class="mobile-weather-icon" id="mobileWeatherIcon">🌤️</div></div>
+</div>
+<div class="mobile-data-grid">
+<div class="mobile-data-card"><div class="k">Dew point</div><div class="v" id="mobileDew">—°C</div><div class="s">Moisture level</div></div>
+<div class="mobile-data-card"><div class="k">Relative humidity</div><div class="v" id="mobileHumidity">—%</div><div class="s">Near-surface RH</div></div>
+<div class="mobile-data-card"><div class="k">Wind</div><div class="v" id="mobileWind">— kt</div><div class="s" id="mobileWindDir">Direction —</div></div>
+<div class="mobile-data-card"><div class="k">Rain probability</div><div class="v" id="mobileRainProb">—%</div><div class="s" id="mobileRainNow">Rainfall — mm/h</div></div>
+</div>
+<div class="mobile-card">
+<div class="mobile-card-title"><span>Next 5 days</span><button onclick="mobileShowPage('forecast')" type="button">Full forecast →</button></div>
+<div class="mobile-day-list" id="mobileHomeDays"><div class="mobile-empty">Waiting for forecast data…</div></div>
+</div>
+<div class="mobile-actions">
+<button class="mobile-action" onclick="mobileOpenMeteogram()" type="button"><span class="ico">📈</span><span><b>5-day meteogram</b><small>Rain, dry bulb and dew point</small></span></button>
+<button class="mobile-action" onclick="mobileOpenClassic('multi-metar')" type="button"><span class="ico">✈️</span><span><b>METAR / TAF</b><small>Aviation observations</small></span></button>
+</div>
 </section>
-
-
-<!-- ========================= THUNDERSTORM OCCURRENCE ANALYSIS TAB ========================= -->
-
-<section id="forecast-guidance" class="view">
-  <div class="section-tag tag-cyan">Forecast Guidance • 72 Hours • IST</div>
-  <div class="card wide forecast-guidance-intro">
-    <h2 style="margin:0 0 6px;color:var(--text,#0f172a)">Forecast Guidance</h2>
-    <p class="muted" style="margin:0;line-height:1.55">Three complementary views for the selected location: the animated hourly aviation forecast, the four-model median consensus, and an observation-calibrated guidance layer when a recent nearby METAR is available.</p>
-    <div id="forecastGuidanceLocation" class="muted" style="margin-top:8px;font-weight:800">Location will follow the Home-page search.</div>
-  </div>
-  <div class="card wide" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 249, 255, 0.9));">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-        <h3 class="card-heading heading-purple" style="margin:0">72-Hour Hourly Forecast & Aviation Parameters (Animated & Synchronized, IST)</h3>
-        <span class="muted" style="font-size:12px">← Scroll horizontally to view full 72 hours forecast & aviation metadata →</span>
-      </div>
-      <div class="hourly-scroll-container" id="hourlyStrip">
-        <div class="muted" style="padding:20px;">Awaiting forecast telemetry to generate combined hourly strip and aviation guidance…</div>
-      </div>
-    </div>
-
-  <details id="multiModelHomeDetails" class="card wide mm-home-collapsible">
-          <summary class="mm-home-summary">
-            <span class="mm-home-summary-title">72-Hour Guidance • Multi-Model Median</span>
-            <span class="mm-home-summary-sub">Open to view 72-hour median aviation guidance from four forecast models</span>
-            <span class="mm-home-chevron" aria-hidden="true">⌄</span>
-          </summary>
-          <div class="mm-home-content">
-    <div class="mm-shell">
-        <div class="mm-card mm-guidance-card">
-          <div class="mm-guidance-head">
-            <div>
-              <h3 style="margin:0">Interactive Hourly Forecast Guidance</h3>
-              <div class="mm-small">Median consensus • 72 hours • IST • Animated &amp; synchronized</div>
-            </div>
-            <div class="mm-guidance-nav">
-              <label class="mm-label" style="margin:0 4px 0 0">Search element</label>
-              <select class="mm-select" id="mmElement" aria-label="Search a forecast element">
-                <option value="">Select element…</option>
-                <option value="temperature_2m">Temperature</option>
-                <option value="dew_point_2m">Dew Point</option>
-                <option value="relative_humidity_2m">Relative Humidity</option>
-                <option value="precipitation">Precipitation</option>
-                <option value="cloud_cover">Total Cloud Cover</option>
-                <option value="cloud_cover_low">Low Cloud</option>
-                <option value="cloud_cover_mid">Medium Cloud</option>
-                <option value="cloud_cover_high">High Cloud</option>
-                <option value="wind_speed_10m">Wind Speed + Direction</option>
-                <option value="wind_gusts_10m">Wind Gust</option>
-                <option value="visibility">Visibility</option>
-                <option value="surface_pressure">Pressure (Surface)</option>
-                <option value="cape">CAPE</option>
-                <option value="wind_direction_10m">Wind Direction</option>
-              </select>
-              <button type="button" class="mm-button" id="mmPrevHour">‹ Previous</button>
-              <select class="mm-select" id="mmGuidanceHour" aria-label="Guidance hour"></select>
-              <button type="button" class="mm-button" id="mmNextHour">Next ›</button>
-            </div>
-          </div>
-          <div class="mm-guidance-scroll hourly-scroll-container" id="mmGuidanceStrip" aria-label="72-hour median aviation guidance"></div>
-          <div id="mmGuidanceText" class="mm-guidance-message" style="margin-top:10px">Forecasts load automatically from the Home-page location.</div>
-    
-          <div id="mmElementDetail" class="mm-element-detail" style="display:none;margin-top:16px">
-            <div class="mm-title-row" style="margin-bottom:8px">
-              <h3 id="mmTableTitle" style="margin:0">Element — Model / Mean / Median</h3>
-              <button type="button" class="mm-button secondary" id="mmCloseElement">Hide detail</button>
-            </div>
-            <div class="mm-table-wrap"><table id="mmForecastTable"></table></div>
-          </div>
-        </div>
-      </div>
-          </div>
-        </details>
-
-  
-  <div class="card wide obs-cal-card" id="observationCalibratedLayer">
-    <div class="obs-cal-head">
-      <div>
-        <h3 class="card-heading heading-emerald" style="margin:0">72-Hour Observation-Calibrated Guidance Layer</h3>
-        <p class="muted" style="margin:6px 0 0;line-height:1.5">Hour-by-hour guidance for the next 72 hours in IST. Uses the nearest recent METAR to adjust the multi-model median for temperature, dew point, wind, pressure and visibility; the observational correction tapers with forecast lead time.</p>
-      </div>
-      <button type="button" class="source-btn" id="obsCalRefreshBtn" style="white-space:nowrap">↻ Refresh observation</button>
-    </div>
-    <div id="obsCalStatus" class="alert marine-notice" role="status" style="margin-top:12px">Waiting for the selected location and multi-model forecast…</div>
-    <div id="obsCalMeta" class="obs-cal-meta">No observation loaded yet.</div>
-    <div id="obsCalBiasGrid" class="obs-cal-bias-grid">
-      <div class="obs-cal-bias"><span>Temperature adjustment</span><b>—</b></div>
-      <div class="obs-cal-bias"><span>Dew-point adjustment</span><b>—</b></div>
-      <div class="obs-cal-bias"><span>Wind-speed adjustment</span><b>—</b></div>
-      <div class="obs-cal-bias"><span>Pressure adjustment</span><b>—</b></div>
-      <div class="obs-cal-bias"><span>Visibility adjustment</span><b>—</b></div>
-    </div>
-    <div id="obsCalHorizonNote" class="muted" style="margin:12px 0 8px;font-size:12px;font-weight:800">72-hour horizon • hourly steps • IST</div>
-    <div class="obs-cal-animated-wrap">
-      <div class="obs-cal-animated-head">
-        <h4>72-Hour Observation-Calibrated Animated Forecast Strip</h4>
-        <span>Hourly • IST • scroll horizontally</span>
-      </div>
-      <p class="muted obs-cal-animated-note">Wind speed/direction and visibility use the METAR-residual correction when available. Weather animation and 3+1 cloud groups remain the multi-model baseline. If calibration is unavailable, wind and visibility display the unadjusted median.</p>
-      <div id="obsCalAnimatedStrip" class="hourly-scroll-container" aria-label="72-hour observation-calibrated winds, visibility, clouds and weather">
-        <div class="muted" style="padding:20px">Waiting for observation-calibrated forecast data…</div>
-      </div>
-    </div>
-
-    <div class="table-wrap obs-cal-table-wrap">
-      <table class="table" id="obsCalTable">
-        <thead><tr><th>Forecast Time (IST)</th><th>Temperature (°C)</th><th>Dew Point (°C)</th><th>Wind (kt / direction)</th><th>MSL Pressure (hPa)</th><th>Visibility (km)</th><th>Correction Weight</th></tr></thead>
-        <tbody id="obsCalBody"><tr><td colspan="7" class="muted" style="padding:18px">Waiting for forecast data…</td></tr></tbody>
-      </table>
-    </div>
-    <p class="muted obs-cal-note"><b>Method and limitation:</b> This first version applies a bounded, exponentially decaying correction from the latest nearby METAR residual; it is not a retrained NWP model and has not yet been verified against a historical station/model training set. If no sufficiently recent station observation is found, the layer will show the median baseline without labelling it calibrated. Weather codes, cloud layers and FITS remain the multi-model baseline in this version.</p>
-  </div>
-
+<section class="mobile-page" id="mobilePageForecast">
+<div class="mobile-section-head"><h2>5-day forecast</h2><span>GFS guidance</span></div>
+<div class="mobile-card"><div class="mobile-card-title">Daily temperature and rainfall</div><div class="mobile-day-list" id="mobileForecastDays"><div class="mobile-empty">Waiting for forecast data…</div></div></div>
+<div class="mobile-card"><div class="mobile-card-title">Detailed meteogram <button onclick="mobileOpenMeteogram()" type="button">Open →</button></div><div style="font-size:11px;color:#718096;line-height:1.5">View hourly rainfall, dry-bulb temperature and dew-point temperature for the next 5 days, including daily maximum and minimum temperatures.</div></div>
 </section>
-<section id="tropical-watch" class="view">
-  <div class="tw-wrap">
-    <div class="tw-topline">
-      <div><h2 class="tw-title"><span class="tw-title-icon">🌀</span> Tropical System / Cyclogenesis Watch</h2><div class="tw-subtitle">Automatic screening of official tropical-cyclone guidance plus GFS, ECMWF and ICON model signals for the Bay of Bengal and Arabian Sea. This layer is updated in near-real-time.</div></div>
-      <div class="tw-livebox"><span class="tw-livepill"><span class="dot"></span><span id="twLastUpdated">Last updated: —</span></span><button class="tw-toggle" type="button" onclick="toggleTropicalAutoRefresh()">Auto refresh (30 min) <span id="twRefreshSwitch" class="tw-switch on"></span></button></div>
-    </div>
-    <div class="tw-controls"><button class="tw-btn primary" type="button" onclick="refreshTropicalWatch()">↻ Refresh watch</button><button class="tw-btn" type="button" onclick="enableTropicalNotifications()">🔔 Browser notifications</button><button class="tw-btn info" type="button" onclick="openTropicalInfo()">ⓘ Info</button></div>
-
-    <div class="tw-hero">
-      <div class="tw-hero-banner">
-        <div class="tw-hero-icon">🌀</div><div class="tw-hero-label" id="twHeroLabel">OFFICIAL TROPICAL SYSTEM ALERT</div><div class="tw-hero-name" id="twHeroName">Checking latest official guidance…</div><div class="tw-hero-basin" id="twHeroBasin">Over the Bay of Bengal.</div><button class="tw-hero-button" type="button" onclick="openTropicalOfficial()">▣ View Official Bulletin ↗</button>
-      </div>
-      <div class="tw-kpi-grid">
-        <div class="tw-kpi alert"><span class="tw-kpi-label">System</span><b class="tw-kpi-value" id="twSystemName">—</b></div><div class="tw-kpi"><span class="tw-kpi-label">Basin</span><b class="tw-kpi-value" id="twBasin">—</b></div><div class="tw-kpi alert"><span class="tw-kpi-label">Current intensity</span><b class="tw-kpi-value" id="twIntensity">—</b></div><div class="tw-kpi"><span class="tw-kpi-label">Location (latest)</span><b class="tw-kpi-value" id="twPosition">—</b></div><div class="tw-kpi"><span class="tw-kpi-label">Movement</span><b class="tw-kpi-value" id="twMovement">—</b></div><div class="tw-kpi"><span class="tw-kpi-label">Max sustained wind</span><b class="tw-kpi-value" id="twWind">—</b></div><div class="tw-kpi"><span class="tw-kpi-label">Central pressure</span><b class="tw-kpi-value" id="twPressure">—</b></div>
-      </div>
-    </div>
-
-    <div class="tw-section"><h3 class="tw-section-title">CURRENT / FORECAST SYSTEMS</h3><div class="tw-table-wrap"><table class="tw-table"><thead><tr><th>System</th><th>Basin</th><th>Status</th><th>Position (Lat, Lon)</th><th>Intensity</th><th>Movement</th><th>Forecast (Next 24–72 h)</th><th>Confidence</th></tr></thead><tbody id="twSystemsBody"><tr><td colspan="8" style="padding:18px">Waiting for the latest official bulletin…</td></tr></tbody></table></div><div class="tw-status" id="twStatus">Official tropical-system guidance and model support are being checked server-side.</div></div>
-
-    <div class="tw-lower">
-      <div class="tw-panel"><h3 class="tw-panel-title cyan">LATEST SATELLITE (IR) <span id="twSatTime" style="margin-left:auto;font-size:9px;color:#64748b">INSAT-3D/3DR</span></h3><div class="tw-sat"><iframe id="twSatFrame" src="https://embed.windy.com/embed2.html?lat=13&lon=85&detailLat=13&detailLon=85&width=650&height=450&zoom=5&level=surface&overlay=satellite&product=ecmwf&menu=&message=false&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=kt&metricTemp=%C2%B0C" loading="lazy" title="Live satellite view"></iframe><div class="tw-sat-badge">LIVE SATELLITE VIEW</div></div></div>
-      <div class="tw-panel"><h3 class="tw-panel-title cyan">LATEST OFFICIAL POSITION (RSMC)</h3><div class="tw-map"><svg viewBox="0 0 600 250" preserveAspectRatio="none" aria-label="Schematic Bay of Bengal map with the latest official cyclone position"><path d="M0 0H185C170 25 175 45 190 65C205 85 195 110 180 125C160 145 150 170 135 190C118 214 105 235 88 250H0Z" fill="#16733c"/><path d="M210 0C195 35 205 55 215 72C226 91 220 110 207 125C192 142 190 165 180 185C171 204 165 226 150 250H600V0Z" fill="#063e69" opacity=".62"/><path d="M0 0H600V250H0Z" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1"/><text x="90" y="40" fill="#fff" font-size="12" font-weight="700">Kolkata</text><text x="78" y="86" fill="#fff" font-size="12" font-weight="700">Bhubaneswar</text><text x="45" y="145" fill="#fff" font-size="12" font-weight="700">Visakhapatnam</text><g id="twTrackGraphic" style="display:none"><circle id="twTrackPoint" cx="300" cy="125" r="8" fill="#ef4444" stroke="#fff" stroke-width="3"/><text id="twTrackStormName" x="315" y="115" fill="#ffe600" font-size="13" font-weight="900"></text></g></svg><div class="tw-map-legend"><b>Legend</b><br><span style="color:#ef4444">●</span> Official latest position<br><span style="color:#cbd5e1">—</span> Schematic Bay of Bengal coastline<br><small>Only the latest official position is plotted; no forecast path is invented.</small></div><div class="tw-map-label" style="left:58%;top:55%" id="twTrackCurrent">No active system</div></div></div>
-      <div class="tw-panel"><h3 class="tw-panel-title purple">LATEST OFFICIAL GUIDANCE</h3><div class="tw-guidance"><div class="tw-guidance-item"><strong>▣ <span id="twOfficialTitle">RSMC New Delhi Bulletin</span></strong><span id="twOfficialSummary">Waiting for the latest official information.</span></div><div class="tw-guidance-item"><strong>↗ Forecast</strong><span id="twForecastText">—</span></div><div class="tw-guidance-item"><strong>⚠ Potential Impact</strong><span id="twImpactText">Follow the latest official cyclone bulletin for rainfall, wind, sea-state and coastal warning information.</span></div></div></div>
-    </div>
-    <div class="tw-details-grid">
-      <div class="tw-panel tw-detail-panel">
-        <h3 class="tw-panel-title purple">OFFICIAL BULLETIN DETAILS</h3>
-        <div class="tw-detail-list">
-          <div><span>Bulletin</span><b id="twBulletinTitle">—</b></div>
-          <div><span>Issued</span><b id="twIssueTime">—</b></div>
-          <div><span>Bulletin date</span><b id="twBulletinDate">—</b></div>
-          <div><span>Valid period</span><b id="twBulletinValidity">—</b></div>
-          <div><span>Source</span><b id="twBulletinSource">—</b></div>
-        </div>
-        <div class="tw-subcard"><b>Latest synoptic situation</b><div id="twSynopticText">Waiting for the latest official synoptic situation…</div></div><div class="tw-subcard"><b>Official bulletin text</b><div id="twRawBulletin" class="tw-raw-bulletin">Waiting for the latest official bulletin…</div></div>
-      </div>
-      <div class="tw-panel tw-detail-panel">
-        <h3 class="tw-panel-title cyan">FORECAST &amp; POTENTIAL IMPACT</h3>
-        <div class="tw-subcard"><b>Forecast</b><div id="twDetailedForecast">—</div></div>
-        <div class="tw-subcard"><b>Warnings / advisories</b><div id="twWarningText">—</div></div>
-        <div class="tw-subcard"><b>Potential impact</b><div id="twDetailedImpact">—</div></div>
-        <div class="tw-subcard"><b>Latest observation</b><div id="twLatestObservation">—</div></div>
-      </div>
-      <div class="tw-panel tw-detail-panel">
-        <h3 class="tw-panel-title purple">MODEL GUIDANCE</h3>
-        <div id="twModelDetail" class="tw-model-detail">Waiting for GFS, ECMWF and ICON guidance…</div>
-        <div class="tw-track-model-panel">
-          <div class="tw-track-model-head"><div><div class="tw-track-model-title">MODEL FORECAST TRACKS</div><div class="tw-track-model-sub">GFS • ECMWF • ICON &nbsp;|&nbsp; 0–120 h pressure-minimum proxy</div></div><span class="tw-pill purple">NWP TRACK</span></div>
-          <div id="twTrackBasinControls" class="tw-track-model-controls"></div>
-          <div id="twModelTrackMap" class="tw-track-model-map"><div class="tw-track-empty">Waiting for model track guidance…</div></div>
-          <div class="tw-track-disclaimer"><b>How to read:</b> each line follows the lowest-MSLP grid point in that model at successive forecast times. Because the current NWP sampling grid is relatively coarse, this is a <b>model low-centre proxy track</b>, not an official cyclone track or a guarantee of the storm centre.</div>
-        </div>
-        <div class="tw-model-note" id="twModelNote">Model guidance is advisory and does not replace official cyclone bulletins.</div>
-      </div>
-    </div>
-    <div class="tw-panel tw-detail-panel tw-source-details">
-      <h3 class="tw-panel-title cyan">SOURCE &amp; DATA STATUS</h3>
-      <div id="twCheckedSources" class="tw-source-grid">Waiting for source checks…</div>
-    </div>
-    <div class="tw-sourcebar">ⓘ &nbsp;Source: <span id="twSourceName">RSMC New Delhi / IMD</span> (Latest Tropical Cyclone Bulletin) &nbsp; | &nbsp; Model support: GFS, ECMWF, ICON &nbsp; | &nbsp; Note: Track, intensity and impacts are based on the latest official guidance and model consensus. <a id="twSourceLink" href="https://mausam.imd.gov.in/index_en.php" target="_blank" rel="noopener">Open official source ↗</a></div>
-  </div>
-</section>
-
-<section id="verification-learning" class="view">
-  <div class="section-tag tag-emerald">Forecast Verification • Continuous Learning Dataset</div>
-  <div class="card wide">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap">
-      <div>
-        <h2 style="margin:0 0 6px;color:var(--text,#0f172a)">Forecast Verification &amp; Learning</h2>
-        <p class="muted" style="margin:0;line-height:1.55">VayuSarathi automatically records forecast snapshots, matches them with later observations when available, calculates forecast errors, and builds the historical dataset for the future ML correction layer.</p>
-      </div>
-      <button type="button" class="source-btn" id="verificationRefreshBtn">↻ Refresh verification</button>
-    </div>
-    <div id="verificationStatus" class="alert marine-notice" style="margin-top:12px">Waiting for forecast verification data…</div>
-    <div class="obs-cal-bias-grid" id="verificationKpiGrid" style="margin-top:12px">
-      <div class="obs-cal-bias"><span>Matched cases</span><b id="verMatched">0</b></div>
-      <div class="obs-cal-bias"><span>Forecast snapshots</span><b id="verSnapshots">0</b></div>
-      <div class="obs-cal-bias"><span>Refinement stage</span><b id="verReadiness">Collecting</b></div>
-      <div class="obs-cal-bias"><span>Best temperature MAE</span><b id="verTempMae">—</b></div>
-      <div class="obs-cal-bias"><span>Best wind MAE</span><b id="verWindMae">—</b></div>
-    </div>
-  </div>
-  <div class="card wide">
-    <h3 class="card-heading heading-purple">Automatic Forecast vs Observation Performance</h3>
-    <p class="muted" style="margin:0 0 10px">Scores are calculated only from matched forecast/observation pairs. The ML model is not allowed to replace the current forecast until it demonstrates better validation performance.</p>
-    <div class="table-wrap">
-      <table class="table" id="verificationModelTable">
-        <thead><tr><th>Parameter</th><th>GFS MAE</th><th>ECMWF MAE</th><th>ICON MAE</th><th>Open-Meteo MAE</th><th>VayuSarathi MAE</th><th>Max valid pairs</th></tr></thead>
-        <tbody><tr><td colspan="7" class="muted" style="padding:18px">No verified cases yet. The database will populate automatically as forecasts age into observation time.</td></tr></tbody>
-      </table>
-    </div>
-    <p class="muted" style="margin:10px 0 0;line-height:1.55">Quality note: pressure is scored as mean-sea-level pressure (MSLP) only when a coded METAR sea-level pressure value is available; QNH/altimeter setting is never substituted. Cloud cover is estimated from METAR cloud-group categories (FEW/SCT/BKN/OVC) using category midpoints, so it is an approximate categorical observation. Missing cloud or pressure observations are excluded rather than treated as zero.</p>
-  </div>
-  <div class="card wide">
-    <h3 class="card-heading heading-purple">Significant Weather Verification</h3>
-    <p class="muted" style="margin:0 0 10px">Significant-weather events are verified separately from numerical parameters using Hit, Miss, False Alarm and Correct Negative classification. Scores include POD, FAR and CSI.</p>
-    <div class="fv-event-list" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"><span class="fv-event">⛈️ Thunderstorm / TS</span><span class="fv-event">🌧️ Rain / Showers</span><span class="fv-event">🌫️ Fog / Mist</span><span class="fv-event">❄️ Snow</span><span class="fv-event">🧊 Freezing precip</span><span class="fv-event">🌪️ Dust / Sand</span></div>
-    <div class="table-wrap">
-      <table class="table" id="verificationWeatherTable">
-        <thead><tr><th>Weather event</th><th>Cases</th><th>Hits</th><th>Misses</th><th>False alarms</th><th>Correct neg.</th><th>POD</th><th>FAR</th><th>CSI</th></tr></thead>
-        <tbody id="verificationWeatherBody"><tr><td colspan="9" class="muted" style="padding:18px">No matched significant-weather cases yet.</td></tr></tbody>
-      </table>
-    </div>
-  </div>
-  <div class="card wide">
-    <h3 class="card-heading heading-cyan">Learning Dataset Status</h3>
-    <div id="verificationDatasetMessage" class="muted" style="line-height:1.6">The first stage collects forecast → observation → error records. At 500+ matched cases, begin offline experimental refinement review. At 2,000+ cases, begin operational validation review. These are review milestones, not automatic ML activation: each parameter/model pair must independently meet its sample requirement, use a chronological 20% holdout (minimum 100 validation pairs experimentally / 400 operationally), cover at least 30 / 60 distinct days, and show at least 5% lower holdout MAE without degrading critical aviation-weather event scores. No correction is applied automatically.</div>
-    <p id="verificationQualityGateSummary" class="muted" style="margin:8px 0 0;line-height:1.55">Per-parameter/model sample gates will appear as valid comparisons are collected. Corrections remain disabled.</p>
-    <div style="margin-top:14px;background:#e2e8f0;border-radius:999px;height:12px;overflow:hidden"><div id="verificationProgress" style="height:100%;width:0%;background:linear-gradient(90deg,#06b6d4,#10b981);transition:width .4s"></div></div>
-    <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:12px;font-weight:800"><span id="verificationProgressText">0 / 2,000 matched cases</span><span id="verificationTrainText">Training pipeline: collecting data</span></div>
-  </div>
-</section>
-
-<section id="thunderstorm" class="view">
-  <div class="section-tag tag-purple">Thunderstorm Nowcasting • 0–3 Hour Spatial Guidance</div>
-
-  <div class="location-card">
-    <div>
-      <div class="loc-title">Most Probable Thunderstorm Occurrence Within 50 km</div>
-      <div class="coords" id="tsLoc">Select a location by search or click on a map point.</div>
-    </div>
-    <div class="badges">
-      <span class="badge" style="border-color:#c4b5fd;color:#6d28d9;background:#f5f3ff;">GFS SPATIAL GRID</span>
-      <span class="badge" style="border-color:#f0abfc;color:#be185d;background:#fdf2f8;">49 SAMPLE POINTS</span>
-      <span class="badge" style="border-color:#7dd3fc;color:#0369a1;background:#f0f9ff;">50 KM RADIUS</span>
-    </div>
-  </div>
-
-  <div class="ts-analysis-toolbar">
-    <div style="font-size:12px;font-weight:800;color:#475569;display:flex;align-items:center;gap:8px;">
-      <span>NOWCAST WINDOW</span><span class="badge" style="border-color:#f97316;color:#c2410c;background:#fff7ed;">0–3 HOURS</span>
-    </div>
-    <button onclick="analyzeThunderstormRisk()">⛈️ Run 3-Hour Thunderstorm Nowcast</button>
-    <span id="tsLastUpdated" class="ts-pill">Waiting for analysis</span>
-  </div>
-
-  <div id="tsAlert" class="alert marine-notice">
-    Select a location or run the analysis to generate a forecast-based thunderstorm hotspot field.
-  </div>
-
-  <div class="ts-analysis-layout">
-    <div class="ts-map-card">
-      <div class="ts-status-row">
-        <h3 class="card-heading heading-purple" style="margin:0">50 km Convective Search Domain</h3>
-        <span class="muted" style="font-size:11px">Click anywhere on this map to move the analysis point.</span>
-      </div>
-      <div id="tsMap" style="margin-top:10px"></div>
-      <div class="ts-map-legend">
-        <span><i class="ts-legend-dot" style="background:#10b981"></i>Low</span>
-        <span><i class="ts-legend-dot" style="background:#f59e0b"></i>Moderate</span>
-        <span><i class="ts-legend-dot" style="background:#f97316"></i>High</span>
-        <span><i class="ts-legend-dot" style="background:#dc2626"></i>Very high</span>
-        <span>• Circle = 50 km radius • Line = strongest forecast hotspot</span>
-      </div>
-    </div>
-
-    <div class="ts-hotspot-panel">
-      <div class="ts-kpi-grid">
-        <div class="ts-kpi"><div class="label">Most probable direction</div><div class="value" id="tsDirection">—</div><div class="sub" id="tsDirectionSub">Awaiting spatial analysis</div></div>
-        <div class="ts-kpi"><div class="label">Estimated distance</div><div class="value" id="tsDistance">—</div><div class="sub">from selected point</div></div>
-        <div class="ts-kpi"><div class="label">Peak TS score</div><div class="value" id="tsPeakScore">—</div><div class="sub">composite forecast signal</div></div>
-        <div class="ts-kpi"><div class="label">Peak occurrence</div><div class="value" id="tsPeakTime">—</div><div class="sub" id="tsPeakDate">IST</div></div>
-      </div>
-
-      <div class="card" style="padding:14px">
-        <h3 class="card-heading heading-pink">Hotspot Vector</h3>
-        <div class="ts-direction-arrow" id="tsArrowPanel">
-          <div class="compass-ring">N</div>
-          <div class="needle" id="tsNeedle" style="transform:rotate(0deg)"></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:11px;font-weight:800;color:#64748b">
-          <span id="tsSectorLabel">Sector: —</span>
-          <span id="tsBearingLabel">Bearing: —°</span>
-        </div>
-      </div>
-
-      <div class="card" style="padding:14px">
-        <h3 class="card-heading heading-amber">Operational Interpretation</h3>
-        <div id="tsInterpretation" class="ts-method-note">Spatial forecast interpretation will appear here.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card wide" style="margin-bottom:18px">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-      <h3 class="card-heading heading-purple" style="margin:0">Direction / Distance Occurrence Distribution</h3>
-      <span class="muted" style="font-size:11px">Scores aggregated across the next three forecast hours and sampled locations.</span>
-    </div>
-    <div class="ts-table-wrap" style="margin-top:12px">
-      <table class="ts-table">
-        <thead><tr><th>Sector</th><th>Representative bearing</th><th>Mean distance</th><th>Peak score</th><th>Time of peak</th><th>Forecast signal</th></tr></thead>
-        <tbody id="tsSectorBody"><tr><td colspan="6" class="muted" style="padding:18px">Awaiting analysis…</td></tr></tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="card wide" style="margin-bottom:18px">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-      <h3 class="card-heading heading-cyan" style="margin:0">Hourly Hotspot Evolution</h3>
-      <span class="muted" style="font-size:11px">The strongest point in the 50 km field at each forecast hour through the next 3 hours.</span>
-    </div>
-    <div id="tsHourStrip" class="ts-hour-strip">
-      <div class="muted" style="padding:18px">Awaiting spatial forecast telemetry…</div>
-    </div>
-  </div>
-
-  <div class="card wide" style="margin-bottom:18px">
-    <h3 class="card-heading heading-emerald">Peak Hotspot • Full Convective Parameter Set</h3>
-    <div id="tsPeakParameterWrap" class="table-wrap">
-      <table class="table" style="min-width:980px">
-        <thead><tr><th>Parameter</th><th>Forecast value</th><th>Interpretation</th><th>Parameter</th><th>Forecast value</th><th>Interpretation</th></tr></thead>
-        <tbody id="tsPeakParameterBody"><tr><td colspan="6" class="muted" style="padding:20px">Run the analysis to populate the peak hotspot sounding / surface diagnostics.</td></tr></tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="card wide">
-    <h3 class="card-heading heading-blue">Method & Data Provenance</h3>
-    <div class="ts-method-note">
-      This is a <b>0–3 hour thunderstorm nowcast-style guidance product</b>. It samples 49 forecast points (selected point + 16 bearings × 20/35/50 km) around the selected coordinate. Each point is scored hour-by-hour over the next three hours using weather code, precipitation probability, CAPE, lifted index, convective inhibition, precipitation/showers, humidity, cloud structure and low/mid/high-level steering winds. The displayed direction and range identify the strongest <b>persistent spatial convective hotspot within the next three hours</b>; they are <b>model guidance, not a deterministic storm-cell track</b>. For operational nowcasting, compare this field with current radar, satellite and lightning observations, especially when convective cells are already present. The spatial forecast is based on the GFS endpoint used elsewhere in this page, with the same selected coordinate as the main forecast.
-      <div style="margin-top:8px"><a href="https://open-meteo.com/en/docs/gfs-api" target="_blank" rel="noopener">Open-Meteo GFS API documentation ↗</a></div>
-    </div>
-  </div>
-</section>
-
-<!-- ========================= MARINE & SEA STATE TAB ========================= -->
-<section id="marine" class="view">
-  <div class="section-tag tag-blue">Oceanography • Wave Dynamics & Marine Safety</div>
-  
-  <div class="location-card">
-    <div>
-      <div class="loc-title">Sea State, Wave Dynamics & Ocean Currents Telemetry</div>
-      <div class="coords" id="marineLoc">Select a location on the map to evaluate sea state.</div>
-    </div>
-    <div class="badges">
-      <span class="badge" style="border-color:#38bdf8;color:#0284c7;">DOUGLAS SEA SCALE</span>
-      <span class="badge" style="border-color:#10b981;color:#047857;">ECMWF WAM / GFS-WAVE</span>
-      <span class="badge" style="border-color:#6366f1;color:#4338ca;">INCOIS OSF</span>
-    </div>
-  </div>
-
-  <div id="marineAlert" class="alert marine-notice">
-    Fetching oceanographic wave models and current vectors for coordinates…
-  </div>
-
-  <div class="marine-location-picker">
-    <div class="marine-location-picker-head">
-      <div class="marine-location-picker-title">📍 Select Marine Forecast Location</div>
-      <div class="marine-location-picker-note">Click anywhere on the map • Coastal/offshore points recommended</div>
-    </div>
-    <div id="marineSelectMap"></div>
-    <div id="marineMapCoords" class="marine-map-coords">Current point: —</div>
-  </div>
-
-  <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
-    <span style="font-size:12px; font-weight:800; color:#0369a1;">🌊 Test Coastal & Offshore Points:</span>
-    <button class="quick-hotspot-btn" onclick="selectCoords(21.62, 87.51, 'Bay of Bengal (Digha/Sundarbans)')">Bay of Bengal (21.62°N, 87.51°E)</button>
-    <button class="quick-hotspot-btn" onclick="selectCoords(18.90, 72.75, 'Arabian Sea (Mumbai Offshore)')">Arabian Sea (18.90°N, 72.75°E)</button>
-    <button class="quick-hotspot-btn" onclick="selectCoords(8.05, 77.55, 'Indian Ocean (Kanyakumari Coast)')">Kanyakumari (8.05°N, 77.55°E)</button>
-    <button class="quick-hotspot-btn" onclick="selectCoords(13.08, 80.35, 'Chennai Offshore Waters')">Chennai Offshore (13.08°N, 80.35°E)</button>
-    <button class="quick-hotspot-btn" onclick="selectCoords(15.45, 73.70, 'Goa Coastal Waters')">Goa Offshore (15.45°N, 73.70°E)</button>
-  </div>
-
-  <div class="grid-5">
-    <div class="card card-metric-marine">
-      <h3 class="card-heading heading-cyan">Significant Wave Height (Hs)</h3>
-      <div class="metric" id="marineWaveHeight" style="color:#0284c7">—</div>
-      <div id="marineSeaState" class="muted" style="margin-top:4px; font-weight:800">—</div>
-      <div id="marineWaveDirPeriod" class="muted" style="font-size:11px; margin-top:3px">—</div>
-    </div>
-
-    <div class="card card-metric-wind">
-      <h3 class="card-heading heading-blue">Ocean Current Velocity</h3>
-      <div class="metric" id="marineCurrentSpeed" style="color:#1d4ed8">—</div>
-      <div id="marineCurrentDir" class="muted" style="margin-top:4px; font-weight:700">—</div>
-      <div id="marineCurrentFlow" class="muted" style="font-size:11px; margin-top:3px">Flow vector</div>
-    </div>
-
-    <div class="card card-metric-rain">
-      <h3 class="card-heading heading-cyan">Wind Waves (Local Chop)</h3>
-      <div class="metric" id="marineWindWave" style="color:#2563eb">—</div>
-      <div id="marineWindWavePeriod" class="muted" style="margin-top:4px; font-weight:700">—</div>
-      <div id="marineWindWaveDir" class="muted" style="font-size:11px; margin-top:3px">—</div>
-    </div>
-
-    <div class="card card-metric-cloud">
-      <h3 class="card-heading heading-purple">Swell Waves (Groundswell)</h3>
-      <div class="metric" id="marineSwellWave" style="color:#7c3aed">—</div>
-      <div id="marineSwellPeriod" class="muted" style="margin-top:4px; font-weight:700">—</div>
-      <div id="marineSwellDir" class="muted" style="font-size:11px; margin-top:3px">—</div>
-    </div>
-
-    <div class="card card-metric-humidity">
-      <h3 class="card-heading heading-emerald">Sea Surface Temp (SST)</h3>
-      <div class="metric" id="marineSST" style="color:#059669">—</div>
-      <div id="marineSSTNote" class="muted" style="margin-top:4px; font-weight:700">Open-ocean water thermal state</div>
-      <div class="muted" style="font-size:11px; margin-top:3px">Bathymetric surface layer</div>
-    </div>
-
-    <div class="card wide" style="padding:0; overflow:hidden;">
-      <div class="windy-live-wrapper" style="height:540px;">
-        <div class="windy-live-header">
-          <div class="windy-brand-title">
-            <h4>🌊 Interactive Ocean Waves & Currents Streamlines (Windy Live)</h4>
-            <span class="live-badge-red"><span class="live-dot-pulse"></span> LIVE</span>
-          </div>
-          <div class="windy-layer-controls">
-            <button class="windy-btn active" onclick="setMarineWindyOverlay('waves', this)">🌊 Waves (Height)</button>
-            <button class="windy-btn" onclick="setMarineWindyOverlay('swell', this)">🌊 Swell 1</button>
-            <button class="windy-btn" onclick="setMarineWindyOverlay('currents', this)">🌀 Currents</button>
-            <button class="windy-btn" onclick="setMarineWindyOverlay('sst', this)">🌡️ Sea Temp (SST)</button>
-          </div>
-        </div>
-        <div class="windy-map-container">
-          <iframe 
-            id="windy-marine-feed" 
-            src="https://embed.windy.com/embed2.html?lat=21.62&lon=87.51&detailLat=21.62&detailLon=87.51&width=650&height=450&zoom=6&level=surface&overlay=waves&product=ecmwfWaves&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1"
-            allowfullscreen>
-          </iframe>
-        </div>
-      </div>
-    </div>
-
-    <div class="card wide">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <h3 class="card-heading heading-blue" style="margin:0">Hourly Marine & Oceanographic Telemetry Table (Next 72 Hours)</h3>
-        <span class="muted" style="font-size:12px">Times displayed in Indian Standard Time (IST)</span>
-      </div>
-      <div class="table-wrap">
-        <table class="table" id="marineForecastTable">
-          <thead>
-            <tr>
-              <th>Time (IST)</th>
-              <th>Sea State (Douglas)</th>
-              <th>Significant Wave Height</th>
-              <th>Wave Direction & Period</th>
-              <th>Wind Wave (Chop)</th>
-              <th>Swell Wave</th>
-              <th>Ocean Current Velocity</th>
-              <th>Current Flow Direction</th>
-              <th>Sea Temp (SST)</th>
-            </tr>
-          </thead>
-          <tbody id="marineForecastBody">
-            <tr><td colspan="9" class="muted" style="padding:20px;">Awaiting location selection…</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="card wide">
-      <h3 class="card-heading heading-emerald">Trustworthy Oceanographic Agencies & Wave Portals</h3>
-      <div class="source-grid">
-        <div class="source">
-          <b>INCOIS Ocean Portal</b>
-          <p style="font-size:11px;color:var(--muted);margin:4px 0 8px 0;">Indian National Centre for Ocean Information Services: Official wave surge, swell alerts, and High Wave Advisories for Indian waters.</p>
-          <a href="https://incois.gov.in/portal/osf/osf.jsp" target="_blank" rel="noopener">Open INCOIS OSF ↗</a>
-        </div>
-        <div class="source">
-          <b>Copernicus Marine (CMEMS)</b>
-          <p style="font-size:11px;color:var(--muted);margin:4px 0 8px 0;">European Union Earth Observation Marine Service: Global high-resolution ocean physical analysis and real-time currents.</p>
-          <a href="https://marine.copernicus.eu/" target="_blank" rel="noopener">Open Copernicus Marine ↗</a>
-        </div>
-        <div class="source">
-          <b>Open-Meteo Marine API</b>
-          <p style="font-size:11px;color:var(--muted);margin:4px 0 8px 0;">Global multi-model ensemble ingesting ECMWF WAM, NOAA GFS-Wave, and MFWAM wave spectrum simulations.</p>
-          <a href="https://open-meteo.com/en/docs/marine-weather-api" target="_blank" rel="noopener">Open API Documentation ↗</a>
-        </div>
-        <div class="source">
-          <b>NOAA Ocean Prediction Center</b>
-          <p style="font-size:11px;color:var(--muted);margin:4px 0 8px 0;">US National Weather Service marine weather, wave period analyses, and global high-seas hazard forecasts.</p>
-          <a href="https://ocean.weather.gov/" target="_blank" rel="noopener">Open NOAA OPC ↗</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="upper" class="view">
-  <div class="section-tag tag-purple">Point Sounding • Isobaric Levels</div>
-  <div class="location-card">
-    <div>
-      <div class="loc-title">Upper Winds & Temperature — Point Profile (v2.1)</div>
-      <div class="coords" id="upperLoc">Select a location first.</div>
-    </div>
-  </div>
-  
-  <div class="card" style="margin-bottom:16px">
-    <div class="toolbar">
-      <label>Start (UTC) <input type="datetime-local" id="upperStart"></label>
-      <label>End (UTC) <input type="datetime-local" id="upperEnd"></label>
-      <label>Interval <select id="upperInterval"><option value="1">1 hour</option><option value="3">3 hours</option><option value="6">6 hours</option></select></label>
-      <label>Wind <select id="windUnit"><option value="kt">kt</option><option value="ms">m/s</option><option value="kmh">km/h</option></select></label>
-      <button class="source-btn" onclick="loadUpper(true)">Get upper-air data</button>
-    </div>
-    <div style="margin-top: 10px;">
-      <div style="font-size: 12px; font-weight: 800; color: #0369a1; margin-bottom: 6px;">Select Altitude Levels (ft & hPa):</div>
-      <div class="pressure-selector-box" id="pressureSelectorBox">
-        <!-- Dynamically populated checkboxes -->
-      </div>
-    </div>
-    <div class="muted" style="font-size:12px; margin-top:6px;">Select specific levels. Each time column shows wind in standard format (`DIR / SPD`) and corresponding temperature.</div>
-  </div>
-
-  <div class="card wide">
-    <h3 class="card-heading heading-purple">Isobaric Sounding Matrix</h3>
-    <div class="table-wrap"><table class="table" id="upperMatrix"><thead id="upperHead"></thead><tbody id="upperTable"></tbody></table></div>
-  </div>
-</section>
-
-<section id="aviation-forecast" class="view">
-  <div class="section-tag tag-emerald">Synthetic Aviation Forecast • Standardized Parameters</div>
-  <div class="location-card">
-    <div>
-      <div class="loc-title">Standardized Aviation Briefing (Hourly Breakdown Table, IST)</div>
-      <div class="coords" id="avForecastLoc">Select a location to generate standardized aviation forecast.</div>
-    </div>
-  </div>
-
-  <div class="card wide">
-    <h3 class="card-heading heading-emerald">Aviation Forecast Parameters Table</h3>
-    <div class="table-wrap">
-      <table class="table" id="aviationForecastTable">
-        <thead>
-          <tr>
-            <th>Time (IST)</th>
-            <th>Weather Condition</th>
-            <th>Cloud Layers (FEW/SCT/BKN/OVC + CB)</th>
-            <th>Wind (Rounded 10° / 5 kt)</th>
-            <th>Visibility (Meters)</th>
-            <th>MINTRA Level (Minimum Trail Altitude)</th>
-            <th>Freezing Level</th>
-          </tr>
-        </thead>
-        <tbody id="aviationForecastBody">
-          <tr><td colspan="7" class="muted" style="padding:20px;">Awaiting location selection…</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<section id="multi-metar" class="view">
-  <div class="section-tag tag-emerald">Aviation Weather • Multi-station Observations</div>
-  <div class="card" style="background:linear-gradient(135deg,rgba(255,255,255,.96),rgba(236,253,245,.72));border-left:4px solid #0f766e;">
-    <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;">
-      <div>
-        <h2 style="margin:0 0 4px;font-size:24px;color:#0f172a;">Multi METAR / TAF Console</h2>
-        <div class="muted" style="font-size:12px;">Fetch METARs for multiple ICAO stations in one request. Choose a look-back window for historical observations and optionally include the current TAF for each station.</div>
-      </div>
-      <div class="badge" style="background:#ecfdf5;color:#047857;border-color:#86efac;">Source: AviationWeather.gov Data API</div>
-    </div>
-
-    <form id="multiMetarForm" class="multi-metar-toolbar" novalidate>
-      <div class="multi-metar-input-wrap">
-        <label class="multi-metar-label" for="multiMetarICAO">ICAO locations</label>
-        <textarea id="multiMetarICAO" class="multi-metar-textarea" placeholder="VECC, VOBG, VOHS&#10;Separate codes with commas, spaces or new lines." spellcheck="false" aria-label="ICAO locations"></textarea>
-      </div>
-      <div class="multi-metar-control">
-        <label class="multi-metar-label" for="multiMetarHours">METAR look-back</label>
-        <select id="multiMetarHours" class="multi-metar-select">
-          <option value="0" selected>Latest available</option>
-          <option value="1">Past 1 hour</option>
-          <option value="3">Past 3 hours</option>
-          <option value="6">Past 6 hours</option>
-          <option value="12">Past 12 hours</option>
-          <option value="24">Past 24 hours</option>
-          <option value="48">Past 48 hours</option>
-          <option value="72">Past 72 hours</option>
-          <option value="96">Past 96 hours</option>
-        </select>
-      </div>
-      <div class="multi-metar-control">
-        <span class="multi-metar-label">Additional product</span>
-        <label class="multi-metar-check"><input id="multiMetarIncludeTAF" type="checkbox"> Include current TAF</label>
-      </div>
-      <div class="multi-metar-actions">
-        <button id="multiMetarGet" class="multi-metar-btn" type="submit">✈️ Get METARs</button>
-        <button id="multiMetarClear" class="multi-metar-btn secondary" type="button">Clear</button>
-      </div>
-    </form>
-
-    <div id="multiMetarStatus" class="multi-metar-status" aria-live="polite">Enter ICAO code(s) and retrieve the selected observation window.</div>
-
-    <div class="multi-metar-legend">
-      <span class="multi-metar-chip" style="background:#fee2e2;color:#b91c1c;border-color:#f87171"><i style="background:#dc2626"></i>WEATHER WARNING</span>
-      <span class="multi-metar-chip" style="background:#fef3c7;color:#b45309;border-color:#fbbf24"><i style="background:#f59e0b"></i>CAUTIONARY MET REPORT</span>
-      <span class="multi-metar-chip" style="background:#dcfce7;color:#15803d;border-color:#4ade80"><i style="background:#16a34a"></i>NO CRITERIA</span>
-      <span class="multi-metar-chip" style="background:#f5f3ff;color:#6d28d9;border-color:#c4b5fd"><i style="background:#7c3aed"></i>TAF</span>
-    </div>
-
-    <div id="multiMetarResults" class="multi-metar-grid">
-      <div class="multi-no-report" style="grid-column:1/-1">No reports loaded yet. Add one or more ICAO codes above.</div>
-    </div>
-  </div>
-</section>
-
-<section id="fits" class="view">
-  <div class="section-tag tag-pink">Aviation Safety • Fighter Index of Thermal Stress (FITS)</div>
-  <div class="location-card">
-    <div>
-      <div class="loc-title">Next 24 Hours Fighter Index of Thermal Stress (FITS) Analysis (IST)</div>
-      <div class="coords" id="fitsLoc">Select a location to generate 24-hour FITS briefing.</div>
-    </div>
-  </div>
-
-  <div class="card wide">
-    <h3 class="card-heading heading-pink">Hourly FITS Table & Operational Safety Zones (Next 24 Hours)</h3>
-    <div class="table-wrap">
-      <table class="table" id="fitsTable">
-        <thead>
-          <tr>
-            <th>Time (IST)</th>
-            <th>Dry Bulb Temp (°C)</th>
-            <th>Dew Point (°C)</th>
-            <th>Wet-Bulb Temp (°C)</th>
-            <th>Total Cloud Cover (%)</th>
-            <th>FITS Value (°C)</th>
-            <th>Operational Zone</th>
-          </tr>
-        </thead>
-        <tbody id="fitsBody">
-          <tr><td colspan="7" class="muted" style="padding:20px;">Awaiting location selection…</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<section id="route" class="view">
-  <div class="section-tag tag-pink">Flight Planning • Waypoint Briefing</div>
-  <div class="location-card">
-    <div>
-      <div class="loc-title">Flight Route Weather & Upper-Air Briefing</div>
-      <div class="coords">Plan waypoint routes, surface/profile guidance, and pressure-level soundings for each point.</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="toolbar">
-      <button class="source-btn" onclick="addCurrentWaypoint()">＋ Add current location</button>
-      <button class="source-btn" onclick="addMapPointMode()">＋ Add map waypoint</button>
-      <button class="source-btn" onclick="clearRoute()">Clear route</button>
-      <label>Briefing Duration <select id="routeDuration"><option value="6">6 h</option><option value="12">12 h</option><option value="24" selected>24 h</option><option value="36">36 h</option><option value="48">48 h</option><option value="72">72 h</option></select></label>
-      <label>Interval <select id="routeInterval"><option value="1" selected>1 h</option><option value="2">2 h</option><option value="3">3 h</option></select></label>
-      
-      <label>Desired Altitude (ft): <input type="number" id="customRouteAltitude" value="18000" step="500" min="0" max="50000" style="width: 90px;" oninput="updateAltitudePressureHint()"></label>
-      <span id="altitudePressureHint" class="badge" style="background:#e0f2fe; color:#0369a1; border-color:#7dd3fc;">Equiv: 18,200 ft (500 hPa)</span>
-
-      <label>Wind unit <select id="routeWindUnit"><option value="kt" selected>kt</option><option value="ms">m/s</option><option value="kmh">km/h</option></select></label>
-      <button class="source-btn" onclick="loadRouteWeather()">Generate briefing</button>
-    </div>
-    
-    <div style="margin-top: 10px;">
-      <div style="font-size: 12px; font-weight: 800; color: #0369a1; margin-bottom: 6px;">Select Additional Altitudes / Pressure Levels for Route Upper Winds:</div>
-      <div class="pressure-selector-box" id="routePressureSelectorBox">
-        <!-- Dynamically populated checkboxes -->
-      </div>
-    </div>
-
-    <div id="routeStatus" class="alert">Add two or more waypoints. Search a location, add it, then search the next location and add it.</div>
-    <div id="waypointList" class="table-wrap"></div>
-  </div>
-
-  <div class="card" style="margin-top:16px">
-    <h3 class="card-heading heading-cyan">Route Track Map</h3>
-    <div id="routeMap" class="route-map"></div>
-  </div>
-  
-  <div class="card" style="margin-top:16px">
-    <h3 class="card-heading heading-emerald">Flight Navigation Summary</h3>
-    <div id="routeSummary" class="route-summary">
-      <div class="route-kpi"><span class="muted">Distance</span><b>—</b></div>
-      <div class="route-kpi"><span class="muted">Waypoints</span><b>—</b></div>
-      <div class="route-kpi"><span class="muted">Period</span><b>—</b></div>
-      <div class="route-kpi"><span class="muted">Briefing level</span><b>—</b></div>
-    </div>
-  </div>
-  
-  <div class="card" style="margin-top:16px">
-    <h3 class="card-heading heading-amber">Along-Route Surface & Atmospheric Assessment (Timewise Horizontal Breakdown)</h3>
-    <div id="routeTable"><div class="muted">No route briefing generated.</div></div>
-  </div>
-  
-  <div class="card" style="margin-top:16px">
-    <h3 class="card-heading heading-purple">Upper Wind Matrix: Custom Altitude (± 2 Levels) + Additional Selected Levels</h3>
-    <div class="route-upper-controls" style="margin-bottom:12px;">
-      <label>Start (UTC)<input type="datetime-local" id="routeUpperStart"></label>
-      <label>End (UTC)<input type="datetime-local" id="routeUpperEnd"></label>
-      <label>Interval
-        <select id="routeUpperInterval"><option value="1">1 hour</option><option value="3" selected>3 hours</option><option value="6">6 hours</option></select>
-      </label>
-      <button class="source-btn" onclick="loadRouteUpperAir()">Update Route Upper Winds</button>
-    </div>
-    <div class="route-upper-help" style="margin-bottom:12px; font-size:12px; color:var(--muted)">
-      Extracts levels centered on the standard level closest to your entered altitude plus any extra checked levels. Wind and temp are shown clearly in formatted columns (`DIR / SPD` followed by temperature).
-    </div>
-    <div id="routeUpperStatus" class="alert" style="margin-top:12px">Add waypoints above to generate soundings.</div>
-    <div id="routeUpperTables" class="route-upper-grid"></div>
-  </div>
-</section>
-
-<section id="satellites" class="view">
-  <div class="section-tag tag-cyan">Remote Sensing • Multispectral Feeds & Live Radar</div>
-  <div class="location-card">
-    <div>
-      <div class="loc-title">Live Satellite, ILDN Lightning & WeatherRadar Imagery</div>
-      <div class="coords">Direct high-resolution geostationary imagery, real-time Indian Lightning Detection Network (ILDN), and radar feeds.</div>
-    </div>
-    <div class="badges"><span class="badge">ILDN LIGHTNING</span><span class="badge">WEATHERRADAR LIVE</span></div>
-  </div>
-
-  <div class="card wide" style="padding:0; overflow:hidden; margin-bottom:20px;">
-    <div class="windy-live-wrapper">
-      <div class="windy-live-header">
-        <div class="windy-brand-title">
-          <h4>🛰️ Windy Satellite Live Feed</h4>
-          <span class="live-badge-red"><span class="live-dot-pulse"></span> LIVE</span>
-        </div>
-        <div class="windy-layer-controls">
-          <button class="windy-btn active" onclick="setOverlay('satellite', this)">🛰️ Satellite</button>
-          <button class="windy-btn" onclick="setOverlay('clouds', this)">☁️ Cloud Cover</button>
-          <button class="windy-btn" onclick="setOverlay('radar', this)">📡 Weather Radar</button>
-          <button class="windy-btn" onclick="setOverlay('wind', this)">💨 Wind Streamlines</button>
-          <button class="windy-btn windy-btn-action" onclick="refreshWindyLive()">↻ Refresh</button>
-        </div>
-      </div>
-      <div class="windy-map-container">
-        <iframe 
-          id="windy-live-feed" 
-          src="https://embed.windy.com/embed2.html?lat=22.67&lon=87.01&detailLat=22.67&detailLon=87.01&width=650&height=450&zoom=6&level=surface&overlay=satellite&product=ecmwf&menu=&message=true&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1"
-          allowfullscreen>
-        </iframe>
-      </div>
-    </div>
-  </div>
-
-  <div class="live-grid">
-    <div class="live-card">
-      <div class="live-head">
-        <span class="card-heading heading-cyan" style="margin:0">WeatherRadar – Rain, snow, storms and clouds live</span>
-        <small class="tag-cyan section-tag" style="margin:0">Live Radar</small>
-      </div>
-      <iframe id="weatherRadarFrame" class="live-frame" src="https://www.weatherandradar.in/weather-map?zoom=8&layer=wr&center=22.6700,87.0160&placemark=22.6700,87.0160&tz=Asia%2FKolkata" loading="lazy" allowfullscreen></iframe>
-      <div class="live-note">Weather & Radar real-time interactive precipitation, storm tracking, and cloud development (Synchronized with location).</div>
-    </div>
-
-    <div class="live-card">
-      <div class="live-head">
-        <span class="card-heading heading-amber" style="margin:0">ILDN Live Lightning Alert Feed</span>
-        <small class="tag-amber section-tag" style="margin:0">ILDN Live</small>
-      </div>
-      <iframe 
-        id="ildn-live-feed" 
-        class="live-frame"
-        src="https://ildnapp.vvsindia.com/" 
-        title="ILDN Live Lightning Feed"
-        allowfullscreen>
-      </iframe>
-      <div class="live-note">Indian Lightning Detection Network real-time storm strike monitoring.</div>
-    </div>
-  </div>
-
-  <div class="live-actions" style="margin-top:16px;">
-    <a href="https://ildn.in/" target="_blank" rel="noopener">ILDN Official Portal ↗</a>
-    <a id="weatherRadarExtLink" href="https://www.weatherandradar.in/weather-map?zoom=8&layer=wr&center=22.6700,87.0160&placemark=22.6700,87.0160&tz=Asia%2FKolkata" target="_blank" rel="noopener">WeatherRadar India Live ↗</a>
-  </div>
-</section>
-
-<section id="nwp" class="view">
-  <div class="section-tag tag-purple">Operational Guidance • IMD NWP Division</div>
-  <div class="location-card">
-    <div>
-      <div class="loc-title">IMD Numerical Weather Prediction (NWP) Dashboard</div>
-      <div class="coords">Direct access wrapper for operational model guidance and numerical products.</div>
-    </div>
-    <div class="badges">
-      <a href="https://nwp.imd.gov.in/" target="_blank" class="badge" style="text-decoration:none; background:#4338ca; color:#fff; border-color:#4338ca;">Open Official NWP Home ↗</a>
-    </div>
-  </div>
-
-  <div class="alert" style="background: linear-gradient(135deg, #fef3c7, #fde68a); border-color: #f59e0b; color: #78350f;">
-    <strong>Note on Direct Embedding:</strong> Official security policies on the IMD NWP server restrict direct embedding inside custom web pages (iframes). Use the direct action cards below to launch the respective model pages safely.
-  </div>
-
-  <div class="grid-5" style="grid-template-columns: repeat(3, minmax(0, 1fr));">
-    <div class="card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(238, 242, 254, 0.9)); border-left: 4px solid #2563eb;">
-      <h3 class="card-heading heading-cyan">GFS Meteograms</h3>
-      <p class="muted" style="font-size:12px; margin: 8px 0 16px 0;">Station & District forecast time-series graphs for surface temperature, wind vectors, pressure, and rainfall trends.</p>
-      <a href="https://nwp.imd.gov.in/gfs_meteograms_mausam.php" target="_blank" class="source-btn" style="display:block; text-align:center; text-decoration:none;">Launch Meteograms ↗</a>
-    </div>
-
-    <div class="card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(209, 250, 229, 0.7)); border-left: 4px solid #059669;">
-      <h3 class="card-heading heading-emerald">GFS (T-1534) Products</h3>
-      <p class="muted" style="font-size:12px; margin: 8px 0 16px 0;">Access primary operational global weather maps, wind profiles, and temperature anomalies.</p>
-      <a href="https://nwp.imd.gov.in/gfsproducts_current_all_mausam.php" target="_blank" class="source-btn" style="display:block; text-align:center; text-decoration:none; background: linear-gradient(135deg, #059669 0%, #047857 100%);">Launch GFS Products ↗</a>
-    </div>
-
-    <div class="card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(243, 232, 255, 0.7)); border-left: 4px solid #9333ea;">
-      <h3 class="card-heading heading-purple">WRF & Short Range</h3>
-      <p class="muted" style="font-size:12px; margin: 8px 0 16px 0;">Explore high-resolution regional weather model forecasts designed for short-range planning.</p>
-      <a href="https://nwp.imd.gov.in/wrf_HRRR_nwp_ne_mausam.php" target="_blank" class="source-btn" style="display:block; text-align:center; text-decoration:none; background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%);">Launch WRF Models ↗</a>
-    </div>
-  </div>
+<section class="mobile-page" id="mobilePageMore">
+<div class="mobile-section-head"><h2>More tools</h2><span>Full dashboard modules</span></div>
+<div class="mobile-actions">
+<button class="mobile-action" onclick="mobileOpenClassic('tropical-watch')" type="button"><span class="ico">🌀</span><span><b>Tropical Watch</b><small>Official alerts and model guidance</small></span></button>
+<button class="mobile-action" onclick="mobileOpenClassic('verification-learning')" type="button"><span class="ico">📊</span><span><b>Forecast Validation</b><small>Model errors and quality scores</small></span></button>
+<button class="mobile-action" onclick="mobileOpenClassic('aviation-forecast')" type="button"><span class="ico">🛫</span><span><b>Aviation Forecast</b><small>Operational weather guidance</small></span></button>
+<button class="mobile-action" onclick="mobileOpenClassic('marine')" type="button"><span class="ico">🌊</span><span><b>Marine &amp; Sea State</b><small>Waves and ocean conditions</small></span></button>
+<button class="mobile-action" onclick="mobileOpenClassic('upper')" type="button"><span class="ico">💨</span><span><b>Upper Winds</b><small>Winds and temperatures aloft</small></span></button>
+<button class="mobile-action" onclick="mobileOpenClassic('satellites')" type="button"><span class="ico">🛰️</span><span><b>Satellite Imagery</b><small>Live satellite feeds</small></span></button>
+<button class="mobile-action" onclick="mobileOpenClassic('thunderstorm')" type="button"><span class="ico">⛈️</span><span><b>Thunderstorm Hotspot</b><small>0–3 hour spatial guidance</small></span></button>
+<button class="mobile-action" onclick="mobileOpenClassic('fits')" type="button"><span class="ico">🌡️</span><span><b>FITS</b><small>Thermal stress assessment</small></span></button>
+</div>
+<div class="mobile-card"><div class="mobile-card-title">About this view</div><div style="font-size:11px;color:#718096;line-height:1.55">This simplified interface is shown on narrow mobile screens. The full VayuSarathi dashboard remains available from each tool link and continues to be used on desktop.</div></div>
 </section>
 </main>
-
+<nav aria-label="Mobile navigation" class="mobile-bottom-nav">
+<button class="mobile-nav-btn active" data-page="home" onclick="mobileShowPage('home')"><span class="ico">⌂</span><span>Home</span></button>
+<button class="mobile-nav-btn" data-page="forecast" onclick="mobileShowPage('forecast')"><span class="ico">▦</span><span>5-day</span></button>
+<button class="mobile-nav-btn" data-page="meteogram" onclick="mobileOpenMeteogram()"><span class="ico">⌁</span><span>Meteogram</span></button>
+<button class="mobile-nav-btn" data-page="more" onclick="mobileShowPage('more')"><span class="ico">☰</span><span>More</span></button>
+</nav>
+</div>
+<button class="mobile-legacy-back" onclick="mobileReturnHome()" type="button">← Mobile home</button>
+<aside aria-label="Desktop workspace navigation" id="desktopSidebar">
+<div class="desktop-side-brand">
+<div class="desktop-side-mark">✈</div>
+<div><strong>VayuSarathi</strong><small>AVIATION WX OPERATIONS</small></div>
+</div>
+<div class="desktop-side-location">
+<span class="desktop-side-eyebrow">ACTIVE FLIGHT WX DESK</span>
+<strong id="desktopActiveView">Weather overview</strong>
+<small id="desktopActiveLocation">Location follows the main search</small>
+</div>
+<nav aria-label="Main modules" class="desktop-side-nav">
+<div class="desktop-nav-group-label">OPERATIONS</div>
+<button aria-label="Weather overview" class="desktop-nav-item active" data-view="forecast" onclick="switchTab('forecast')" title="Weather overview" type="button"><span class="desktop-nav-icon">⌂</span><span>Weather overview</span></button>
+<button aria-label="Forecast guidance" class="desktop-nav-item" data-view="forecast-guidance" onclick="switchTab('forecast-guidance')" title="Forecast guidance" type="button"><span class="desktop-nav-icon">▥</span><span>Forecast guidance</span></button>
+<button aria-label="Aviation forecast" class="desktop-nav-item" data-view="aviation-forecast" onclick="switchTab('aviation-forecast')" title="Aviation forecast" type="button"><span class="desktop-nav-icon">✈</span><span>Aviation forecast</span></button>
+<button aria-label="METAR / TAF" class="desktop-nav-item" data-view="multi-metar" onclick="switchTab('multi-metar')" title="METAR / TAF" type="button"><span class="desktop-nav-icon">◉</span><span>METAR / TAF</span></button>
+<div class="desktop-nav-group-label">ANALYSIS &amp; VERIFICATION</div>
+<button aria-label="Forecast validation" class="desktop-nav-item" data-view="verification-learning" onclick="switchTab('verification-learning')" title="Forecast validation" type="button"><span class="desktop-nav-icon">▤</span><span>Forecast validation</span></button>
+<button aria-label="Thunderstorm analysis" class="desktop-nav-item" data-view="thunderstorm" onclick="switchTab('thunderstorm')" title="Thunderstorm analysis" type="button"><span class="desktop-nav-icon">ϟ</span><span>Thunderstorm analysis</span></button>
+<button aria-label="Tropical system watch" class="desktop-nav-item" data-view="tropical-watch" onclick="switchTab('tropical-watch')" title="Tropical system watch" type="button"><span class="desktop-nav-icon">◌</span><span>Tropical system watch</span></button>
+<button aria-label="FITS assessment" class="desktop-nav-item" data-view="fits" onclick="switchTab('fits')" title="FITS assessment" type="button"><span class="desktop-nav-icon">◈</span><span>FITS assessment</span></button>
+<div class="desktop-nav-group-label">ATMOSPHERE &amp; MARINE</div>
+<button aria-label="Marine &amp; sea state" class="desktop-nav-item" data-view="marine" onclick="switchTab('marine')" title="Marine &amp; sea state" type="button"><span class="desktop-nav-icon">≈</span><span>Marine &amp; sea state</span></button>
+<button aria-label="Upper winds" class="desktop-nav-item" data-view="upper" onclick="switchTab('upper')" title="Upper winds" type="button"><span class="desktop-nav-icon">↟</span><span>Upper winds</span></button>
+<button aria-label="Satellite imagery" class="desktop-nav-item" data-view="satellites" onclick="switchTab('satellites')" title="Satellite imagery" type="button"><span class="desktop-nav-icon">◎</span><span>Satellite imagery</span></button>
+<button aria-label="Route briefing" class="desktop-nav-item" data-view="route" onclick="switchTab('route')" title="Route briefing" type="button"><span class="desktop-nav-icon">⌁</span><span>Route briefing</span></button>
+<button aria-label="IMD NWP portal" class="desktop-nav-item" data-view="nwp" onclick="switchTab('nwp')" title="IMD NWP portal" type="button"><span class="desktop-nav-icon">▦</span><span>IMD NWP portal</span></button>
+</nav>
+<div class="desktop-side-footer">
+<span class="desktop-footer-dot"></span>
+<div><strong>AVIATION WX DESK</strong><small>Forecast • Observation • Analysis</small></div>
+</div>
+</aside>
+<main>
+<section class="view active" id="forecast">
+<div class="section-tag tag-cyan">Telemetry • Atmospheric Guidance</div>
+<div class="forecast-top-layout">
+<div class="hero-weather-card" id="heroCard">
+<canvas id="fxCanvas"></canvas>
+<div class="hero-content">
+<div class="hero-left">
+<h1 id="heroName">Select a location</h1>
+<div class="coords" id="heroCoords">Coordinate telemetry pending…</div>
+<div class="hero-wx-badge" id="heroWxBadge">
+<span id="heroWxIcon">🌤️</span>
+<span id="heroWxDesc">Awaiting atmospheric data</span>
+</div>
+</div>
+<div class="hero-temp-box">
+<div class="hero-temp" id="heroTemp">—°C</div>
+<div class="hero-feels" id="heroFeels">Apparent: —°C</div>
+</div>
+</div>
+<div aria-label="Dynamic sun and moon times" class="solar-cycle" id="solarCycle">
+<div class="solar-scene day" id="solarScene">
+<div aria-hidden="true" class="solar-stars"></div>
+<div class="solar-orb" id="solarOrb">☀️</div>
+<div class="solar-info">
+<div><strong id="solarPhase">DAYLIGHT</strong></div>
+<span id="solarPhaseSub">Sun above horizon</span>
+</div>
+</div>
+<div class="solar-events">
+<div class="solar-event sunrise">
+<span class="event-label">☀️ Next Sunrise</span>
+<b class="event-value" id="nextSunrise">—</b>
+<span class="event-sub" id="nextSunriseSub">Waiting for location</span>
+</div>
+<div class="solar-event sunset">
+<span class="event-label">🌇 Next Sunset</span>
+<b class="event-value" id="nextSunset">—</b>
+<span class="event-sub" id="nextSunsetSub">Waiting for location</span>
+</div>
+<div class="solar-event moonrise">
+<span class="event-label">🌙 Next Moonrise</span>
+<b class="event-value" id="nextMoonrise">—</b>
+<span class="event-sub" id="nextMoonriseSub">Waiting for location</span>
+</div>
+<div class="solar-event moonset">
+<span class="event-label">🌘 Next Moonset</span>
+<b class="event-value" id="nextMoonset">—</b>
+<span class="event-sub" id="nextMoonsetSub">Waiting for location</span>
+</div>
+</div>
+</div>
+<div class="solar-engine-note"><span>Sun/Moon rise-set times use atmospheric refraction and top-limb visibility corrections.</span></div>
+<div class="convective-bar">
+<div class="prob-pill">
+<div style="flex:1;margin-right:10px">
+<span class="prob-label">THUNDERSTORM (PoTS)</span>
+<div class="prob-bar-bg"><div class="prob-bar-fill" id="tsBar" style="width:0%;background:linear-gradient(90deg, #9333ea, #c084fc)"></div></div>
+</div>
+<b id="heroTsProb" style="color:var(--ts-purple)">—%</b>
+</div>
+<div class="prob-pill">
+<div style="flex:1;margin-right:10px">
+<span class="prob-label">PRECIPITATION (PoP)</span>
+<div class="prob-bar-bg"><div class="prob-bar-fill" id="rainBar" style="width:0%;background:linear-gradient(90deg, #0284c7, #10b981)"></div></div>
+</div>
+<b id="heroRainProb" style="color:var(--accent)">—%</b>
+</div>
+<div class="prob-pill">
+<div>
+<span class="prob-label">FITS STRESS INDEX</span>
+<b id="heroFitsVal" style="color:#db2777">—°C</b>
+</div>
+<span class="badge" id="heroFitsRisk" style="border:1px solid #10b981;color:#047857;background:var(--green-light)">Safe</span>
+</div>
+</div>
+</div>
+<div class="map-sidebar-card">
+<div class="card-heading heading-cyan" style="margin:0 0 8px 0">Active Location</div>
+<div id="map"></div>
+<div class="map-note">Click map to change forecast telemetry point.</div>
+</div>
+</div>
+<div class="alert" id="forecastAlert">Forecast data will appear after selecting a location.</div>
+<div class="grid-5">
+<div class="card card-metric-wind">
+<h3 class="card-heading heading-cyan">Surface Wind &amp; Gusts</h3>
+<div class="metric" id="nowWind" style="color:#0284c7">—</div>
+<div class="muted" id="nowDir">—</div>
+</div>
+<div class="card card-metric-rain">
+<h3 class="card-heading heading-cyan">Precipitation Rate</h3>
+<div class="metric" id="nowRain" style="color:#2563eb">—</div>
+<div class="muted" id="nowRainAccum">Hourly rate</div>
+</div>
+<div class="card card-metric-cloud">
+<h3 class="card-heading heading-purple">Cloud Cover Levels &amp; Height</h3>
+<div style="font-size:12px; font-weight:700; color:#475569; margin-top:4px; line-height:1.4">
+<div>☁️ Low: <span id="nowCloudLow" style="color:#0f172a">—</span></div>
+<div>⛅ Mid: <span id="nowCloudMid" style="color:#0f172a">—</span></div>
+<div>☁️ High: <span id="nowCloudHigh" style="color:#0f172a">—</span></div>
+</div>
+</div>
+<div class="card card-metric-humidity">
+<h3 class="card-heading heading-emerald">Relative Humidity &amp; Wet Bulb</h3>
+<div class="metric" id="nowHumidity" style="color:#059669">—</div>
+<div class="muted" id="nowWetBulb" style="font-weight:700;margin-top:2px;color:#047857">—</div>
+<div class="muted" id="nowDew" style="font-size:11px;margin-top:2px">—</div>
+</div>
+<div class="card card-metric-pressure">
+<h3 class="card-heading heading-amber">Pressure Telemetry</h3>
+<div class="metric" id="nowPressureQNH" style="font-size:20px;color:#d97706">—</div>
+<div class="muted" id="pressureSub" style="font-size:11px;line-height:1.45;margin-top:4px">—</div>
+</div>
+<div class="card wide" id="openMeteoMainForecastCard" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 249, 255, 0.9));">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+<h3 class="card-heading heading-purple" style="margin:0">72-Hour Hourly Forecast &amp; Aviation Parameters (Open-Meteo)</h3>
+<span class="muted" style="font-size:12px">Animated &amp; synchronized • IST • Open-Meteo forecast</span>
+</div>
+<div class="hourly-scroll-container" id="openMeteoMainStrip">
+<div class="muted" style="padding:20px;">Awaiting Open-Meteo forecast telemetry…</div>
+</div>
+</div>
+<div class="card wide">
+<h3 class="card-heading heading-amber">External Regional Portals</h3>
+<div class="source-grid" id="sources"></div>
+</div>
+</div>
+</section>
+<!-- ========================= THUNDERSTORM OCCURRENCE ANALYSIS TAB ========================= -->
+<section class="view" id="forecast-guidance">
+<div class="section-tag tag-cyan">Forecast Guidance • 72 Hours • IST</div>
+<div class="card wide forecast-guidance-intro">
+<h2 style="margin:0 0 6px;color:var(--text,#0f172a)">Forecast Guidance</h2>
+<p class="muted" style="margin:0;line-height:1.55">Three complementary views for the selected location: the animated hourly aviation forecast, the four-model median consensus, and an observation-calibrated guidance layer when a recent nearby METAR is available.</p>
+<div class="muted" id="forecastGuidanceLocation" style="margin-top:8px;font-weight:800">Location will follow the Home-page search.</div>
+</div>
+<div class="card wide" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 249, 255, 0.9));">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+<h3 class="card-heading heading-purple" style="margin:0">72-Hour Hourly Forecast &amp; Aviation Parameters (Animated &amp; Synchronized, IST)</h3>
+<span class="muted" style="font-size:12px">← Scroll horizontally to view full 72 hours forecast &amp; aviation metadata →</span>
+</div>
+<div class="hourly-scroll-container" id="hourlyStrip">
+<div class="muted" style="padding:20px;">Awaiting forecast telemetry to generate combined hourly strip and aviation guidance…</div>
+</div>
+</div>
+<details class="card wide mm-home-collapsible" id="multiModelHomeDetails">
+<summary class="mm-home-summary">
+<span class="mm-home-summary-title">72-Hour Guidance • Multi-Model Median</span>
+<span class="mm-home-summary-sub">Open to view 72-hour median aviation guidance from four forecast models</span>
+<span aria-hidden="true" class="mm-home-chevron">⌄</span>
+</summary>
+<div class="mm-home-content">
+<div class="mm-shell">
+<div class="mm-card mm-guidance-card">
+<div class="mm-guidance-head">
+<div>
+<h3 style="margin:0">Interactive Hourly Forecast Guidance</h3>
+<div class="mm-small">Median consensus • 72 hours • IST • Animated &amp; synchronized</div>
+</div>
+<div class="mm-guidance-nav">
+<label class="mm-label" style="margin:0 4px 0 0">Search element</label>
+<select aria-label="Search a forecast element" class="mm-select" id="mmElement">
+<option value="">Select element…</option>
+<option value="temperature_2m">Temperature</option>
+<option value="dew_point_2m">Dew Point</option>
+<option value="relative_humidity_2m">Relative Humidity</option>
+<option value="precipitation">Precipitation</option>
+<option value="cloud_cover">Total Cloud Cover</option>
+<option value="cloud_cover_low">Low Cloud</option>
+<option value="cloud_cover_mid">Medium Cloud</option>
+<option value="cloud_cover_high">High Cloud</option>
+<option value="wind_speed_10m">Wind Speed + Direction</option>
+<option value="wind_gusts_10m">Wind Gust</option>
+<option value="visibility">Visibility</option>
+<option value="surface_pressure">Pressure (Surface)</option>
+<option value="cape">CAPE</option>
+<option value="wind_direction_10m">Wind Direction</option>
+</select>
+<button class="mm-button" id="mmPrevHour" type="button">‹ Previous</button>
+<select aria-label="Guidance hour" class="mm-select" id="mmGuidanceHour"></select>
+<button class="mm-button" id="mmNextHour" type="button">Next ›</button>
+</div>
+</div>
+<div aria-label="72-hour median aviation guidance" class="mm-guidance-scroll hourly-scroll-container" id="mmGuidanceStrip"></div>
+<div class="mm-guidance-message" id="mmGuidanceText" style="margin-top:10px">Forecasts load automatically from the Home-page location.</div>
+<div class="mm-element-detail" id="mmElementDetail" style="display:none;margin-top:16px">
+<div class="mm-title-row" style="margin-bottom:8px">
+<h3 id="mmTableTitle" style="margin:0">Element — Model / Mean / Median</h3>
+<button class="mm-button secondary" id="mmCloseElement" type="button">Hide detail</button>
+</div>
+<div class="mm-table-wrap"><table id="mmForecastTable"></table></div>
+</div>
+</div>
+</div>
+</div>
+</details>
+<div class="card wide obs-cal-card" id="observationCalibratedLayer">
+<div class="obs-cal-head">
+<div>
+<h3 class="card-heading heading-emerald" style="margin:0">72-Hour Observation-Calibrated Guidance Layer</h3>
+<p class="muted" style="margin:6px 0 0;line-height:1.5">Hour-by-hour guidance for the next 72 hours in IST. Uses the nearest recent METAR to adjust the multi-model median for temperature, dew point, wind, pressure and visibility; the observational correction tapers with forecast lead time.</p>
+</div>
+<button class="source-btn" id="obsCalRefreshBtn" style="white-space:nowrap" type="button">↻ Refresh observation</button>
+</div>
+<div class="alert marine-notice" id="obsCalStatus" role="status" style="margin-top:12px">Waiting for the selected location and multi-model forecast…</div>
+<div class="obs-cal-meta" id="obsCalMeta">No observation loaded yet.</div>
+<div class="obs-cal-bias-grid" id="obsCalBiasGrid">
+<div class="obs-cal-bias"><span>Temperature adjustment</span><b>—</b></div>
+<div class="obs-cal-bias"><span>Dew-point adjustment</span><b>—</b></div>
+<div class="obs-cal-bias"><span>Wind-speed adjustment</span><b>—</b></div>
+<div class="obs-cal-bias"><span>Pressure adjustment</span><b>—</b></div>
+<div class="obs-cal-bias"><span>Visibility adjustment</span><b>—</b></div>
+</div>
+<div class="muted" id="obsCalHorizonNote" style="margin:12px 0 8px;font-size:12px;font-weight:800">72-hour horizon • hourly steps • IST</div>
+<div class="obs-cal-animated-wrap">
+<div class="obs-cal-animated-head">
+<h4>72-Hour Observation-Calibrated Animated Forecast Strip</h4>
+<span>Hourly • IST • scroll horizontally</span>
+</div>
+<p class="muted obs-cal-animated-note">Wind speed/direction and visibility use the METAR-residual correction when available. Weather animation and 3+1 cloud groups remain the multi-model baseline. If calibration is unavailable, wind and visibility display the unadjusted median.</p>
+<div aria-label="72-hour observation-calibrated winds, visibility, clouds and weather" class="hourly-scroll-container" id="obsCalAnimatedStrip">
+<div class="muted" style="padding:20px">Waiting for observation-calibrated forecast data…</div>
+</div>
+</div>
+<div class="table-wrap obs-cal-table-wrap">
+<table class="table" id="obsCalTable">
+<thead><tr><th>Forecast Time (IST)</th><th>Temperature (°C)</th><th>Dew Point (°C)</th><th>Wind (kt / direction)</th><th>MSL Pressure (hPa)</th><th>Visibility (km)</th><th>Correction Weight</th></tr></thead>
+<tbody id="obsCalBody"><tr><td class="muted" colspan="7" style="padding:18px">Waiting for forecast data…</td></tr></tbody>
+</table>
+</div>
+<p class="muted obs-cal-note"><b>Method and limitation:</b> This first version applies a bounded, exponentially decaying correction from the latest nearby METAR residual; it is not a retrained NWP model and has not yet been verified against a historical station/model training set. If no sufficiently recent station observation is found, the layer will show the median baseline without labelling it calibrated. Weather codes, cloud layers and FITS remain the multi-model baseline in this version.</p>
+</div>
+</section>
+<section class="view" id="tropical-watch">
+<div class="tw-wrap">
+<div class="tw-topline">
+<div><h2 class="tw-title"><span class="tw-title-icon">🌀</span> Tropical System / Cyclogenesis Watch</h2><div class="tw-subtitle">Automatic screening of official tropical-cyclone guidance plus GFS, ECMWF and ICON model signals for the Bay of Bengal and Arabian Sea. This layer is updated in near-real-time.</div></div>
+<div class="tw-livebox"><span class="tw-livepill"><span class="dot"></span><span id="twLastUpdated">Last updated: —</span></span><button class="tw-toggle" onclick="toggleTropicalAutoRefresh()" type="button">Auto refresh (30 min) <span class="tw-switch on" id="twRefreshSwitch"></span></button></div>
+</div>
+<div class="tw-controls"><button class="tw-btn primary" onclick="refreshTropicalWatch()" type="button">↻ Refresh watch</button><button class="tw-btn" onclick="enableTropicalNotifications()" type="button">🔔 Browser notifications</button><button class="tw-btn info" onclick="openTropicalInfo()" type="button">ⓘ Info</button></div>
+<div class="tw-hero">
+<div class="tw-hero-banner">
+<div class="tw-hero-icon">🌀</div><div class="tw-hero-label" id="twHeroLabel">OFFICIAL TROPICAL SYSTEM ALERT</div><div class="tw-hero-name" id="twHeroName">Checking latest official guidance…</div><div class="tw-hero-basin" id="twHeroBasin">Over the Bay of Bengal.</div><button class="tw-hero-button" onclick="openTropicalOfficial()" type="button">▣ View Official Bulletin ↗</button>
+</div>
+<div class="tw-kpi-grid">
+<div class="tw-kpi alert"><span class="tw-kpi-label">System</span><b class="tw-kpi-value" id="twSystemName">—</b></div><div class="tw-kpi"><span class="tw-kpi-label">Basin</span><b class="tw-kpi-value" id="twBasin">—</b></div><div class="tw-kpi alert"><span class="tw-kpi-label">Current intensity</span><b class="tw-kpi-value" id="twIntensity">—</b></div><div class="tw-kpi"><span class="tw-kpi-label">Location (latest)</span><b class="tw-kpi-value" id="twPosition">—</b></div><div class="tw-kpi"><span class="tw-kpi-label">Movement</span><b class="tw-kpi-value" id="twMovement">—</b></div><div class="tw-kpi"><span class="tw-kpi-label">Max sustained wind</span><b class="tw-kpi-value" id="twWind">—</b></div><div class="tw-kpi"><span class="tw-kpi-label">Central pressure</span><b class="tw-kpi-value" id="twPressure">—</b></div>
+</div>
+</div>
+<div class="tw-section"><h3 class="tw-section-title">CURRENT / FORECAST SYSTEMS</h3><div class="tw-table-wrap"><table class="tw-table"><thead><tr><th>System</th><th>Basin</th><th>Status</th><th>Position (Lat, Lon)</th><th>Intensity</th><th>Movement</th><th>Forecast (Next 24–72 h)</th><th>Confidence</th></tr></thead><tbody id="twSystemsBody"><tr><td colspan="8" style="padding:18px">Waiting for the latest official bulletin…</td></tr></tbody></table></div><div class="tw-status" id="twStatus">Official tropical-system guidance and model support are being checked server-side.</div></div>
+<div class="tw-lower">
+<div class="tw-panel"><h3 class="tw-panel-title cyan">LATEST SATELLITE (IR) <span id="twSatTime" style="margin-left:auto;font-size:9px;color:#64748b">INSAT-3D/3DR</span></h3><div class="tw-sat"><iframe id="twSatFrame" loading="lazy" src="https://embed.windy.com/embed2.html?lat=13&amp;lon=85&amp;detailLat=13&amp;detailLon=85&amp;width=650&amp;height=450&amp;zoom=5&amp;level=surface&amp;overlay=satellite&amp;product=ecmwf&amp;menu=&amp;message=false&amp;marker=true&amp;calendar=now&amp;pressure=&amp;type=map&amp;location=coordinates&amp;detail=&amp;metricWind=kt&amp;metricTemp=%C2%B0C" title="Live satellite view"></iframe><div class="tw-sat-badge">LIVE SATELLITE VIEW</div></div></div>
+<div class="tw-panel"><h3 class="tw-panel-title cyan">LATEST OFFICIAL POSITION (RSMC)</h3><div class="tw-map"><svg aria-label="Schematic Bay of Bengal map with the latest official cyclone position" preserveaspectratio="none" viewbox="0 0 600 250"><path d="M0 0H185C170 25 175 45 190 65C205 85 195 110 180 125C160 145 150 170 135 190C118 214 105 235 88 250H0Z" fill="#16733c"></path><path d="M210 0C195 35 205 55 215 72C226 91 220 110 207 125C192 142 190 165 180 185C171 204 165 226 150 250H600V0Z" fill="#063e69" opacity=".62"></path><path d="M0 0H600V250H0Z" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1"></path><text fill="#fff" font-size="12" font-weight="700" x="90" y="40">Kolkata</text><text fill="#fff" font-size="12" font-weight="700" x="78" y="86">Bhubaneswar</text><text fill="#fff" font-size="12" font-weight="700" x="45" y="145">Visakhapatnam</text><g id="twTrackGraphic" style="display:none"><circle cx="300" cy="125" fill="#ef4444" id="twTrackPoint" r="8" stroke="#fff" stroke-width="3"></circle><text fill="#ffe600" font-size="13" font-weight="900" id="twTrackStormName" x="315" y="115"></text></g></svg><div class="tw-map-legend"><b>Legend</b><br/><span style="color:#ef4444">●</span> Official latest position<br/><span style="color:#cbd5e1">—</span> Schematic Bay of Bengal coastline<br/><small>Only the latest official position is plotted; no forecast path is invented.</small></div><div class="tw-map-label" id="twTrackCurrent" style="left:58%;top:55%">No active system</div></div></div>
+<div class="tw-panel"><h3 class="tw-panel-title purple">LATEST OFFICIAL GUIDANCE</h3><div class="tw-guidance"><div class="tw-guidance-item"><strong>▣ <span id="twOfficialTitle">RSMC New Delhi Bulletin</span></strong><span id="twOfficialSummary">Waiting for the latest official information.</span></div><div class="tw-guidance-item"><strong>↗ Forecast</strong><span id="twForecastText">—</span></div><div class="tw-guidance-item"><strong>⚠ Potential Impact</strong><span id="twImpactText">Follow the latest official cyclone bulletin for rainfall, wind, sea-state and coastal warning information.</span></div></div></div>
+</div>
+<div class="tw-details-grid">
+<div class="tw-panel tw-detail-panel">
+<h3 class="tw-panel-title purple">OFFICIAL BULLETIN DETAILS</h3>
+<div class="tw-detail-list">
+<div><span>Bulletin</span><b id="twBulletinTitle">—</b></div>
+<div><span>Issued</span><b id="twIssueTime">—</b></div>
+<div><span>Bulletin date</span><b id="twBulletinDate">—</b></div>
+<div><span>Valid period</span><b id="twBulletinValidity">—</b></div>
+<div><span>Source</span><b id="twBulletinSource">—</b></div>
+</div>
+<div class="tw-subcard"><b>Latest synoptic situation</b><div id="twSynopticText">Waiting for the latest official synoptic situation…</div></div><div class="tw-subcard"><b>Official bulletin text</b><div class="tw-raw-bulletin" id="twRawBulletin">Waiting for the latest official bulletin…</div></div>
+</div>
+<div class="tw-panel tw-detail-panel">
+<h3 class="tw-panel-title cyan">FORECAST &amp; POTENTIAL IMPACT</h3>
+<div class="tw-subcard"><b>Forecast</b><div id="twDetailedForecast">—</div></div>
+<div class="tw-subcard"><b>Warnings / advisories</b><div id="twWarningText">—</div></div>
+<div class="tw-subcard"><b>Potential impact</b><div id="twDetailedImpact">—</div></div>
+<div class="tw-subcard"><b>Latest observation</b><div id="twLatestObservation">—</div></div>
+</div>
+<div class="tw-panel tw-detail-panel">
+<h3 class="tw-panel-title purple">MODEL GUIDANCE</h3>
+<div class="tw-model-detail" id="twModelDetail">Waiting for GFS, ECMWF and ICON guidance…</div>
+<div class="tw-track-model-panel">
+<div class="tw-track-model-head"><div><div class="tw-track-model-title">MODEL FORECAST TRACKS</div><div class="tw-track-model-sub">GFS • ECMWF • ICON  |  0–120 h pressure-minimum proxy</div></div><span class="tw-pill purple">NWP TRACK</span></div>
+<div class="tw-track-model-controls" id="twTrackBasinControls"></div>
+<div class="tw-track-model-map" id="twModelTrackMap"><div class="tw-track-empty">Waiting for model track guidance…</div></div>
+<div class="tw-track-disclaimer"><b>How to read:</b> each line follows the lowest-MSLP grid point in that model at successive forecast times. Because the current NWP sampling grid is relatively coarse, this is a <b>model low-centre proxy track</b>, not an official cyclone track or a guarantee of the storm centre.</div>
+</div>
+<div class="tw-model-note" id="twModelNote">Model guidance is advisory and does not replace official cyclone bulletins.</div>
+</div>
+</div>
+<div class="tw-panel tw-detail-panel tw-source-details">
+<h3 class="tw-panel-title cyan">SOURCE &amp; DATA STATUS</h3>
+<div class="tw-source-grid" id="twCheckedSources">Waiting for source checks…</div>
+</div>
+<div class="tw-sourcebar">ⓘ  Source: <span id="twSourceName">RSMC New Delhi / IMD</span> (Latest Tropical Cyclone Bulletin)   |   Model support: GFS, ECMWF, ICON   |   Note: Track, intensity and impacts are based on the latest official guidance and model consensus. <a href="https://mausam.imd.gov.in/index_en.php" id="twSourceLink" rel="noopener" target="_blank">Open official source ↗</a></div>
+</div>
+</section>
+<section class="view" id="verification-learning">
+<div class="section-tag tag-emerald">Forecast Verification • Continuous Learning Dataset</div>
+<div class="card wide">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap">
+<div>
+<h2 style="margin:0 0 6px;color:var(--text,#0f172a)">Forecast Verification &amp; Learning</h2>
+<p class="muted" style="margin:0;line-height:1.55">VayuSarathi automatically records forecast snapshots, matches them with later observations when available, calculates forecast errors, and builds the historical dataset for the future ML correction layer.</p>
+</div>
+<button class="source-btn" id="verificationRefreshBtn" type="button">↻ Refresh verification</button>
+</div>
+<div class="alert marine-notice" id="verificationStatus" style="margin-top:12px">Waiting for forecast verification data…</div>
+<div class="obs-cal-bias-grid" id="verificationKpiGrid" style="margin-top:12px">
+<div class="obs-cal-bias"><span>Matched cases</span><b id="verMatched">0</b></div>
+<div class="obs-cal-bias"><span>Forecast snapshots</span><b id="verSnapshots">0</b></div>
+<div class="obs-cal-bias"><span>Refinement stage</span><b id="verReadiness">Collecting</b></div>
+<div class="obs-cal-bias"><span>Best temperature MAE</span><b id="verTempMae">—</b></div>
+<div class="obs-cal-bias"><span>Best wind MAE</span><b id="verWindMae">—</b></div>
+</div>
+</div>
+<div class="card wide">
+<h3 class="card-heading heading-purple">Automatic Forecast vs Observation Performance</h3>
+<p class="muted" style="margin:0 0 10px">Scores are calculated only from matched forecast/observation pairs. The ML model is not allowed to replace the current forecast until it demonstrates better validation performance.</p>
+<div class="table-wrap">
+<table class="table" id="verificationModelTable">
+<thead><tr><th>Parameter</th><th>GFS MAE</th><th>ECMWF MAE</th><th>ICON MAE</th><th>Open-Meteo MAE</th><th>VayuSarathi MAE</th><th>Max valid pairs</th></tr></thead>
+<tbody><tr><td class="muted" colspan="7" style="padding:18px">No verified cases yet. The database will populate automatically as forecasts age into observation time.</td></tr></tbody>
+</table>
+</div>
+<p class="muted" style="margin:10px 0 0;line-height:1.55">Quality note: pressure is scored as mean-sea-level pressure (MSLP) only when a coded METAR sea-level pressure value is available; QNH/altimeter setting is never substituted. Cloud cover is estimated from METAR cloud-group categories (FEW/SCT/BKN/OVC) using category midpoints, so it is an approximate categorical observation. Missing cloud or pressure observations are excluded rather than treated as zero.</p>
+</div>
+<div class="card wide">
+<h3 class="card-heading heading-purple">Significant Weather Verification</h3>
+<p class="muted" style="margin:0 0 10px">Significant-weather events are verified separately from numerical parameters using Hit, Miss, False Alarm and Correct Negative classification. Scores include POD, FAR and CSI.</p>
+<div class="fv-event-list" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"><span class="fv-event">⛈️ Thunderstorm / TS</span><span class="fv-event">🌧️ Rain / Showers</span><span class="fv-event">🌫️ Fog / Mist</span><span class="fv-event">❄️ Snow</span><span class="fv-event">🧊 Freezing precip</span><span class="fv-event">🌪️ Dust / Sand</span></div>
+<div class="table-wrap">
+<table class="table" id="verificationWeatherTable">
+<thead><tr><th>Weather event</th><th>Cases</th><th>Hits</th><th>Misses</th><th>False alarms</th><th>Correct neg.</th><th>POD</th><th>FAR</th><th>CSI</th></tr></thead>
+<tbody id="verificationWeatherBody"><tr><td class="muted" colspan="9" style="padding:18px">No matched significant-weather cases yet.</td></tr></tbody>
+</table>
+</div>
+</div>
+<div class="card wide">
+<h3 class="card-heading heading-cyan">Learning Dataset Status</h3>
+<div class="muted" id="verificationDatasetMessage" style="line-height:1.6">The first stage collects forecast → observation → error records. At 500+ matched cases, begin offline experimental refinement review. At 2,000+ cases, begin operational validation review. These are review milestones, not automatic ML activation: each parameter/model pair must independently meet its sample requirement, use a chronological 20% holdout (minimum 100 validation pairs experimentally / 400 operationally), cover at least 30 / 60 distinct days, and show at least 5% lower holdout MAE without degrading critical aviation-weather event scores. No correction is applied automatically.</div>
+<p class="muted" id="verificationQualityGateSummary" style="margin:8px 0 0;line-height:1.55">Per-parameter/model sample gates will appear as valid comparisons are collected. Corrections remain disabled.</p>
+<div style="margin-top:14px;background:#e2e8f0;border-radius:999px;height:12px;overflow:hidden"><div id="verificationProgress" style="height:100%;width:0%;background:linear-gradient(90deg,#06b6d4,#10b981);transition:width .4s"></div></div>
+<div style="display:flex;justify-content:space-between;margin-top:6px;font-size:12px;font-weight:800"><span id="verificationProgressText">0 / 2,000 matched cases</span><span id="verificationTrainText">Training pipeline: collecting data</span></div>
+</div>
+</section>
+<section class="view" id="thunderstorm">
+<div class="section-tag tag-purple">Thunderstorm Nowcasting • 0–3 Hour Spatial Guidance</div>
+<div class="location-card">
+<div>
+<div class="loc-title">Most Probable Thunderstorm Occurrence Within 50 km</div>
+<div class="coords" id="tsLoc">Select a location by search or click on a map point.</div>
+</div>
+<div class="badges">
+<span class="badge" style="border-color:#c4b5fd;color:#6d28d9;background:#f5f3ff;">GFS SPATIAL GRID</span>
+<span class="badge" style="border-color:#f0abfc;color:#be185d;background:#fdf2f8;">49 SAMPLE POINTS</span>
+<span class="badge" style="border-color:#7dd3fc;color:#0369a1;background:#f0f9ff;">50 KM RADIUS</span>
+</div>
+</div>
+<div class="ts-analysis-toolbar">
+<div style="font-size:12px;font-weight:800;color:#475569;display:flex;align-items:center;gap:8px;">
+<span>NOWCAST WINDOW</span><span class="badge" style="border-color:#f97316;color:#c2410c;background:#fff7ed;">0–3 HOURS</span>
+</div>
+<button onclick="analyzeThunderstormRisk()">⛈️ Run 3-Hour Thunderstorm Nowcast</button>
+<span class="ts-pill" id="tsLastUpdated">Waiting for analysis</span>
+</div>
+<div class="alert marine-notice" id="tsAlert">
+    Select a location or run the analysis to generate a forecast-based thunderstorm hotspot field.
+  </div>
+<div class="ts-analysis-layout">
+<div class="ts-map-card">
+<div class="ts-status-row">
+<h3 class="card-heading heading-purple" style="margin:0">50 km Convective Search Domain</h3>
+<span class="muted" style="font-size:11px">Click anywhere on this map to move the analysis point.</span>
+</div>
+<div id="tsMap" style="margin-top:10px"></div>
+<div class="ts-map-legend">
+<span><i class="ts-legend-dot" style="background:#10b981"></i>Low</span>
+<span><i class="ts-legend-dot" style="background:#f59e0b"></i>Moderate</span>
+<span><i class="ts-legend-dot" style="background:#f97316"></i>High</span>
+<span><i class="ts-legend-dot" style="background:#dc2626"></i>Very high</span>
+<span>• Circle = 50 km radius • Line = strongest forecast hotspot</span>
+</div>
+</div>
+<div class="ts-hotspot-panel">
+<div class="ts-kpi-grid">
+<div class="ts-kpi"><div class="label">Most probable direction</div><div class="value" id="tsDirection">—</div><div class="sub" id="tsDirectionSub">Awaiting spatial analysis</div></div>
+<div class="ts-kpi"><div class="label">Estimated distance</div><div class="value" id="tsDistance">—</div><div class="sub">from selected point</div></div>
+<div class="ts-kpi"><div class="label">Peak TS score</div><div class="value" id="tsPeakScore">—</div><div class="sub">composite forecast signal</div></div>
+<div class="ts-kpi"><div class="label">Peak occurrence</div><div class="value" id="tsPeakTime">—</div><div class="sub" id="tsPeakDate">IST</div></div>
+</div>
+<div class="card" style="padding:14px">
+<h3 class="card-heading heading-pink">Hotspot Vector</h3>
+<div class="ts-direction-arrow" id="tsArrowPanel">
+<div class="compass-ring">N</div>
+<div class="needle" id="tsNeedle" style="transform:rotate(0deg)"></div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:11px;font-weight:800;color:#64748b">
+<span id="tsSectorLabel">Sector: —</span>
+<span id="tsBearingLabel">Bearing: —°</span>
+</div>
+</div>
+<div class="card" style="padding:14px">
+<h3 class="card-heading heading-amber">Operational Interpretation</h3>
+<div class="ts-method-note" id="tsInterpretation">Spatial forecast interpretation will appear here.</div>
+</div>
+</div>
+</div>
+<div class="card wide" style="margin-bottom:18px">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+<h3 class="card-heading heading-purple" style="margin:0">Direction / Distance Occurrence Distribution</h3>
+<span class="muted" style="font-size:11px">Scores aggregated across the next three forecast hours and sampled locations.</span>
+</div>
+<div class="ts-table-wrap" style="margin-top:12px">
+<table class="ts-table">
+<thead><tr><th>Sector</th><th>Representative bearing</th><th>Mean distance</th><th>Peak score</th><th>Time of peak</th><th>Forecast signal</th></tr></thead>
+<tbody id="tsSectorBody"><tr><td class="muted" colspan="6" style="padding:18px">Awaiting analysis…</td></tr></tbody>
+</table>
+</div>
+</div>
+<div class="card wide" style="margin-bottom:18px">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+<h3 class="card-heading heading-cyan" style="margin:0">Hourly Hotspot Evolution</h3>
+<span class="muted" style="font-size:11px">The strongest point in the 50 km field at each forecast hour through the next 3 hours.</span>
+</div>
+<div class="ts-hour-strip" id="tsHourStrip">
+<div class="muted" style="padding:18px">Awaiting spatial forecast telemetry…</div>
+</div>
+</div>
+<div class="card wide" style="margin-bottom:18px">
+<h3 class="card-heading heading-emerald">Peak Hotspot • Full Convective Parameter Set</h3>
+<div class="table-wrap" id="tsPeakParameterWrap">
+<table class="table" style="min-width:980px">
+<thead><tr><th>Parameter</th><th>Forecast value</th><th>Interpretation</th><th>Parameter</th><th>Forecast value</th><th>Interpretation</th></tr></thead>
+<tbody id="tsPeakParameterBody"><tr><td class="muted" colspan="6" style="padding:20px">Run the analysis to populate the peak hotspot sounding / surface diagnostics.</td></tr></tbody>
+</table>
+</div>
+</div>
+<div class="card wide">
+<h3 class="card-heading heading-blue">Method &amp; Data Provenance</h3>
+<div class="ts-method-note">
+      This is a <b>0–3 hour thunderstorm nowcast-style guidance product</b>. It samples 49 forecast points (selected point + 16 bearings × 20/35/50 km) around the selected coordinate. Each point is scored hour-by-hour over the next three hours using weather code, precipitation probability, CAPE, lifted index, convective inhibition, precipitation/showers, humidity, cloud structure and low/mid/high-level steering winds. The displayed direction and range identify the strongest <b>persistent spatial convective hotspot within the next three hours</b>; they are <b>model guidance, not a deterministic storm-cell track</b>. For operational nowcasting, compare this field with current radar, satellite and lightning observations, especially when convective cells are already present. The spatial forecast is based on the GFS endpoint used elsewhere in this page, with the same selected coordinate as the main forecast.
+      <div style="margin-top:8px"><a href="https://open-meteo.com/en/docs/gfs-api" rel="noopener" target="_blank">Open-Meteo GFS API documentation ↗</a></div>
+</div>
+</div>
+</section>
+<!-- ========================= MARINE & SEA STATE TAB ========================= -->
+<section class="view" id="marine">
+<div class="section-tag tag-blue">Oceanography • Wave Dynamics &amp; Marine Safety</div>
+<div class="location-card">
+<div>
+<div class="loc-title">Sea State, Wave Dynamics &amp; Ocean Currents Telemetry</div>
+<div class="coords" id="marineLoc">Select a location on the map to evaluate sea state.</div>
+</div>
+<div class="badges">
+<span class="badge" style="border-color:#38bdf8;color:#0284c7;">DOUGLAS SEA SCALE</span>
+<span class="badge" style="border-color:#10b981;color:#047857;">ECMWF WAM / GFS-WAVE</span>
+<span class="badge" style="border-color:#6366f1;color:#4338ca;">INCOIS OSF</span>
+</div>
+</div>
+<div class="alert marine-notice" id="marineAlert">
+    Fetching oceanographic wave models and current vectors for coordinates…
+  </div>
+<div class="marine-location-picker">
+<div class="marine-location-picker-head">
+<div class="marine-location-picker-title">📍 Select Marine Forecast Location</div>
+<div class="marine-location-picker-note">Click anywhere on the map • Coastal/offshore points recommended</div>
+</div>
+<div id="marineSelectMap"></div>
+<div class="marine-map-coords" id="marineMapCoords">Current point: —</div>
+</div>
+<div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
+<span style="font-size:12px; font-weight:800; color:#0369a1;">🌊 Test Coastal &amp; Offshore Points:</span>
+<button class="quick-hotspot-btn" onclick="selectCoords(21.62, 87.51, 'Bay of Bengal (Digha/Sundarbans)')">Bay of Bengal (21.62°N, 87.51°E)</button>
+<button class="quick-hotspot-btn" onclick="selectCoords(18.90, 72.75, 'Arabian Sea (Mumbai Offshore)')">Arabian Sea (18.90°N, 72.75°E)</button>
+<button class="quick-hotspot-btn" onclick="selectCoords(8.05, 77.55, 'Indian Ocean (Kanyakumari Coast)')">Kanyakumari (8.05°N, 77.55°E)</button>
+<button class="quick-hotspot-btn" onclick="selectCoords(13.08, 80.35, 'Chennai Offshore Waters')">Chennai Offshore (13.08°N, 80.35°E)</button>
+<button class="quick-hotspot-btn" onclick="selectCoords(15.45, 73.70, 'Goa Coastal Waters')">Goa Offshore (15.45°N, 73.70°E)</button>
+</div>
+<div class="grid-5">
+<div class="card card-metric-marine">
+<h3 class="card-heading heading-cyan">Significant Wave Height (Hs)</h3>
+<div class="metric" id="marineWaveHeight" style="color:#0284c7">—</div>
+<div class="muted" id="marineSeaState" style="margin-top:4px; font-weight:800">—</div>
+<div class="muted" id="marineWaveDirPeriod" style="font-size:11px; margin-top:3px">—</div>
+</div>
+<div class="card card-metric-wind">
+<h3 class="card-heading heading-blue">Ocean Current Velocity</h3>
+<div class="metric" id="marineCurrentSpeed" style="color:#1d4ed8">—</div>
+<div class="muted" id="marineCurrentDir" style="margin-top:4px; font-weight:700">—</div>
+<div class="muted" id="marineCurrentFlow" style="font-size:11px; margin-top:3px">Flow vector</div>
+</div>
+<div class="card card-metric-rain">
+<h3 class="card-heading heading-cyan">Wind Waves (Local Chop)</h3>
+<div class="metric" id="marineWindWave" style="color:#2563eb">—</div>
+<div class="muted" id="marineWindWavePeriod" style="margin-top:4px; font-weight:700">—</div>
+<div class="muted" id="marineWindWaveDir" style="font-size:11px; margin-top:3px">—</div>
+</div>
+<div class="card card-metric-cloud">
+<h3 class="card-heading heading-purple">Swell Waves (Groundswell)</h3>
+<div class="metric" id="marineSwellWave" style="color:#7c3aed">—</div>
+<div class="muted" id="marineSwellPeriod" style="margin-top:4px; font-weight:700">—</div>
+<div class="muted" id="marineSwellDir" style="font-size:11px; margin-top:3px">—</div>
+</div>
+<div class="card card-metric-humidity">
+<h3 class="card-heading heading-emerald">Sea Surface Temp (SST)</h3>
+<div class="metric" id="marineSST" style="color:#059669">—</div>
+<div class="muted" id="marineSSTNote" style="margin-top:4px; font-weight:700">Open-ocean water thermal state</div>
+<div class="muted" style="font-size:11px; margin-top:3px">Bathymetric surface layer</div>
+</div>
+<div class="card wide" style="padding:0; overflow:hidden;">
+<div class="windy-live-wrapper" style="height:540px;">
+<div class="windy-live-header">
+<div class="windy-brand-title">
+<h4>🌊 Interactive Ocean Waves &amp; Currents Streamlines (Windy Live)</h4>
+<span class="live-badge-red"><span class="live-dot-pulse"></span> LIVE</span>
+</div>
+<div class="windy-layer-controls">
+<button class="windy-btn active" onclick="setMarineWindyOverlay('waves', this)">🌊 Waves (Height)</button>
+<button class="windy-btn" onclick="setMarineWindyOverlay('swell', this)">🌊 Swell 1</button>
+<button class="windy-btn" onclick="setMarineWindyOverlay('currents', this)">🌀 Currents</button>
+<button class="windy-btn" onclick="setMarineWindyOverlay('sst', this)">🌡️ Sea Temp (SST)</button>
+</div>
+</div>
+<div class="windy-map-container">
+<iframe allowfullscreen="" id="windy-marine-feed" src="https://embed.windy.com/embed2.html?lat=21.62&amp;lon=87.51&amp;detailLat=21.62&amp;detailLon=87.51&amp;width=650&amp;height=450&amp;zoom=6&amp;level=surface&amp;overlay=waves&amp;product=ecmwfWaves&amp;menu=&amp;message=&amp;marker=&amp;calendar=now&amp;pressure=&amp;type=map&amp;location=coordinates&amp;detail=&amp;metricWind=km%2Fh&amp;metricTemp=%C2%B0C&amp;radarRange=-1">
+</iframe>
+</div>
+</div>
+</div>
+<div class="card wide">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+<h3 class="card-heading heading-blue" style="margin:0">Hourly Marine &amp; Oceanographic Telemetry Table (Next 72 Hours)</h3>
+<span class="muted" style="font-size:12px">Times displayed in Indian Standard Time (IST)</span>
+</div>
+<div class="table-wrap">
+<table class="table" id="marineForecastTable">
+<thead>
+<tr>
+<th>Time (IST)</th>
+<th>Sea State (Douglas)</th>
+<th>Significant Wave Height</th>
+<th>Wave Direction &amp; Period</th>
+<th>Wind Wave (Chop)</th>
+<th>Swell Wave</th>
+<th>Ocean Current Velocity</th>
+<th>Current Flow Direction</th>
+<th>Sea Temp (SST)</th>
+</tr>
+</thead>
+<tbody id="marineForecastBody">
+<tr><td class="muted" colspan="9" style="padding:20px;">Awaiting location selection…</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="card wide">
+<h3 class="card-heading heading-emerald">Trustworthy Oceanographic Agencies &amp; Wave Portals</h3>
+<div class="source-grid">
+<div class="source">
+<b>INCOIS Ocean Portal</b>
+<p style="font-size:11px;color:var(--muted);margin:4px 0 8px 0;">Indian National Centre for Ocean Information Services: Official wave surge, swell alerts, and High Wave Advisories for Indian waters.</p>
+<a href="https://incois.gov.in/portal/osf/osf.jsp" rel="noopener" target="_blank">Open INCOIS OSF ↗</a>
+</div>
+<div class="source">
+<b>Copernicus Marine (CMEMS)</b>
+<p style="font-size:11px;color:var(--muted);margin:4px 0 8px 0;">European Union Earth Observation Marine Service: Global high-resolution ocean physical analysis and real-time currents.</p>
+<a href="https://marine.copernicus.eu/" rel="noopener" target="_blank">Open Copernicus Marine ↗</a>
+</div>
+<div class="source">
+<b>Open-Meteo Marine API</b>
+<p style="font-size:11px;color:var(--muted);margin:4px 0 8px 0;">Global multi-model ensemble ingesting ECMWF WAM, NOAA GFS-Wave, and MFWAM wave spectrum simulations.</p>
+<a href="https://open-meteo.com/en/docs/marine-weather-api" rel="noopener" target="_blank">Open API Documentation ↗</a>
+</div>
+<div class="source">
+<b>NOAA Ocean Prediction Center</b>
+<p style="font-size:11px;color:var(--muted);margin:4px 0 8px 0;">US National Weather Service marine weather, wave period analyses, and global high-seas hazard forecasts.</p>
+<a href="https://ocean.weather.gov/" rel="noopener" target="_blank">Open NOAA OPC ↗</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="view" id="upper">
+<div class="section-tag tag-purple">Point Sounding • Isobaric Levels</div>
+<div class="location-card">
+<div>
+<div class="loc-title">Upper Winds &amp; Temperature — Point Profile (v2.1)</div>
+<div class="coords" id="upperLoc">Select a location first.</div>
+</div>
+</div>
+<div class="card" style="margin-bottom:16px">
+<div class="toolbar">
+<label>Start (UTC) <input id="upperStart" type="datetime-local"/></label>
+<label>End (UTC) <input id="upperEnd" type="datetime-local"/></label>
+<label>Interval <select id="upperInterval"><option value="1">1 hour</option><option value="3">3 hours</option><option value="6">6 hours</option></select></label>
+<label>Wind <select id="windUnit"><option value="kt">kt</option><option value="ms">m/s</option><option value="kmh">km/h</option></select></label>
+<button class="source-btn" onclick="loadUpper(true)">Get upper-air data</button>
+</div>
+<div style="margin-top: 10px;">
+<div style="font-size: 12px; font-weight: 800; color: #0369a1; margin-bottom: 6px;">Select Altitude Levels (ft &amp; hPa):</div>
+<div class="pressure-selector-box" id="pressureSelectorBox">
+<!-- Dynamically populated checkboxes -->
+</div>
+</div>
+<div class="muted" style="font-size:12px; margin-top:6px;">Select specific levels. Each time column shows wind in standard format (`DIR / SPD`) and corresponding temperature.</div>
+</div>
+<div class="card wide">
+<h3 class="card-heading heading-purple">Isobaric Sounding Matrix</h3>
+<div class="table-wrap"><table class="table" id="upperMatrix"><thead id="upperHead"></thead><tbody id="upperTable"></tbody></table></div>
+</div>
+</section>
+<section class="view" id="aviation-forecast">
+<div class="section-tag tag-emerald">Synthetic Aviation Forecast • Standardized Parameters</div>
+<div class="location-card">
+<div>
+<div class="loc-title">Standardized Aviation Briefing (Hourly Breakdown Table, IST)</div>
+<div class="coords" id="avForecastLoc">Select a location to generate standardized aviation forecast.</div>
+</div>
+</div>
+<div class="card wide">
+<h3 class="card-heading heading-emerald">Aviation Forecast Parameters Table</h3>
+<div class="table-wrap">
+<table class="table" id="aviationForecastTable">
+<thead>
+<tr>
+<th>Time (IST)</th>
+<th>Weather Condition</th>
+<th>Cloud Layers (FEW/SCT/BKN/OVC + CB)</th>
+<th>Wind (Rounded 10° / 5 kt)</th>
+<th>Visibility (Meters)</th>
+<th>MINTRA Level (Minimum Trail Altitude)</th>
+<th>Freezing Level</th>
+</tr>
+</thead>
+<tbody id="aviationForecastBody">
+<tr><td class="muted" colspan="7" style="padding:20px;">Awaiting location selection…</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section class="view" id="multi-metar">
+<div class="section-tag tag-emerald">Aviation Weather • Multi-station Observations</div>
+<div class="card" style="background:linear-gradient(135deg,rgba(255,255,255,.96),rgba(236,253,245,.72));border-left:4px solid #0f766e;">
+<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;">
+<div>
+<h2 style="margin:0 0 4px;font-size:24px;color:#0f172a;">Multi METAR / TAF Console</h2>
+<div class="muted" style="font-size:12px;">Fetch METARs for multiple ICAO stations in one request. Choose a look-back window for historical observations and optionally include the current TAF for each station.</div>
+</div>
+<div class="badge" style="background:#ecfdf5;color:#047857;border-color:#86efac;">Source: AviationWeather.gov Data API</div>
+</div>
+<form class="multi-metar-toolbar" id="multiMetarForm" novalidate="">
+<div class="multi-metar-input-wrap">
+<label class="multi-metar-label" for="multiMetarICAO">ICAO locations</label>
+<textarea aria-label="ICAO locations" class="multi-metar-textarea" id="multiMetarICAO" placeholder="VECC, VOBG, VOHS
+Separate codes with commas, spaces or new lines." spellcheck="false"></textarea>
+</div>
+<div class="multi-metar-control">
+<label class="multi-metar-label" for="multiMetarHours">METAR look-back</label>
+<select class="multi-metar-select" id="multiMetarHours">
+<option selected="" value="0">Latest available</option>
+<option value="1">Past 1 hour</option>
+<option value="3">Past 3 hours</option>
+<option value="6">Past 6 hours</option>
+<option value="12">Past 12 hours</option>
+<option value="24">Past 24 hours</option>
+<option value="48">Past 48 hours</option>
+<option value="72">Past 72 hours</option>
+<option value="96">Past 96 hours</option>
+</select>
+</div>
+<div class="multi-metar-control">
+<span class="multi-metar-label">Additional product</span>
+<label class="multi-metar-check"><input id="multiMetarIncludeTAF" type="checkbox"/> Include current TAF</label>
+</div>
+<div class="multi-metar-actions">
+<button class="multi-metar-btn" id="multiMetarGet" type="submit">✈️ Get METARs</button>
+<button class="multi-metar-btn secondary" id="multiMetarClear" type="button">Clear</button>
+</div>
+</form>
+<div aria-live="polite" class="multi-metar-status" id="multiMetarStatus">Enter ICAO code(s) and retrieve the selected observation window.</div>
+<div class="multi-metar-legend">
+<span class="multi-metar-chip" style="background:#fee2e2;color:#b91c1c;border-color:#f87171"><i style="background:#dc2626"></i>WEATHER WARNING</span>
+<span class="multi-metar-chip" style="background:#fef3c7;color:#b45309;border-color:#fbbf24"><i style="background:#f59e0b"></i>CAUTIONARY MET REPORT</span>
+<span class="multi-metar-chip" style="background:#dcfce7;color:#15803d;border-color:#4ade80"><i style="background:#16a34a"></i>NO CRITERIA</span>
+<span class="multi-metar-chip" style="background:#f5f3ff;color:#6d28d9;border-color:#c4b5fd"><i style="background:#7c3aed"></i>TAF</span>
+</div>
+<div class="multi-metar-grid" id="multiMetarResults">
+<div class="multi-no-report" style="grid-column:1/-1">No reports loaded yet. Add one or more ICAO codes above.</div>
+</div>
+</div>
+</section>
+<section class="view" id="fits">
+<div class="section-tag tag-pink">Aviation Safety • Fighter Index of Thermal Stress (FITS)</div>
+<div class="location-card">
+<div>
+<div class="loc-title">Next 24 Hours Fighter Index of Thermal Stress (FITS) Analysis (IST)</div>
+<div class="coords" id="fitsLoc">Select a location to generate 24-hour FITS briefing.</div>
+</div>
+</div>
+<div class="card wide">
+<h3 class="card-heading heading-pink">Hourly FITS Table &amp; Operational Safety Zones (Next 24 Hours)</h3>
+<div class="table-wrap">
+<table class="table" id="fitsTable">
+<thead>
+<tr>
+<th>Time (IST)</th>
+<th>Dry Bulb Temp (°C)</th>
+<th>Dew Point (°C)</th>
+<th>Wet-Bulb Temp (°C)</th>
+<th>Total Cloud Cover (%)</th>
+<th>FITS Value (°C)</th>
+<th>Operational Zone</th>
+</tr>
+</thead>
+<tbody id="fitsBody">
+<tr><td class="muted" colspan="7" style="padding:20px;">Awaiting location selection…</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section class="view" id="route">
+<div class="section-tag tag-pink">Flight Planning • Waypoint Briefing</div>
+<div class="location-card">
+<div>
+<div class="loc-title">Flight Route Weather &amp; Upper-Air Briefing</div>
+<div class="coords">Plan waypoint routes, surface/profile guidance, and pressure-level soundings for each point.</div>
+</div>
+</div>
+<div class="card">
+<div class="toolbar">
+<button class="source-btn" onclick="addCurrentWaypoint()">＋ Add current location</button>
+<button class="source-btn" onclick="addMapPointMode()">＋ Add map waypoint</button>
+<button class="source-btn" onclick="clearRoute()">Clear route</button>
+<label>Briefing Duration <select id="routeDuration"><option value="6">6 h</option><option value="12">12 h</option><option selected="" value="24">24 h</option><option value="36">36 h</option><option value="48">48 h</option><option value="72">72 h</option></select></label>
+<label>Interval <select id="routeInterval"><option selected="" value="1">1 h</option><option value="2">2 h</option><option value="3">3 h</option></select></label>
+<label>Desired Altitude (ft): <input id="customRouteAltitude" max="50000" min="0" oninput="updateAltitudePressureHint()" step="500" style="width: 90px;" type="number" value="18000"/></label>
+<span class="badge" id="altitudePressureHint" style="background:#e0f2fe; color:#0369a1; border-color:#7dd3fc;">Equiv: 18,200 ft (500 hPa)</span>
+<label>Wind unit <select id="routeWindUnit"><option selected="" value="kt">kt</option><option value="ms">m/s</option><option value="kmh">km/h</option></select></label>
+<button class="source-btn" onclick="loadRouteWeather()">Generate briefing</button>
+</div>
+<div style="margin-top: 10px;">
+<div style="font-size: 12px; font-weight: 800; color: #0369a1; margin-bottom: 6px;">Select Additional Altitudes / Pressure Levels for Route Upper Winds:</div>
+<div class="pressure-selector-box" id="routePressureSelectorBox">
+<!-- Dynamically populated checkboxes -->
+</div>
+</div>
+<div class="alert" id="routeStatus">Add two or more waypoints. Search a location, add it, then search the next location and add it.</div>
+<div class="table-wrap" id="waypointList"></div>
+</div>
+<div class="card" style="margin-top:16px">
+<h3 class="card-heading heading-cyan">Route Track Map</h3>
+<div class="route-map" id="routeMap"></div>
+</div>
+<div class="card" style="margin-top:16px">
+<h3 class="card-heading heading-emerald">Flight Navigation Summary</h3>
+<div class="route-summary" id="routeSummary">
+<div class="route-kpi"><span class="muted">Distance</span><b>—</b></div>
+<div class="route-kpi"><span class="muted">Waypoints</span><b>—</b></div>
+<div class="route-kpi"><span class="muted">Period</span><b>—</b></div>
+<div class="route-kpi"><span class="muted">Briefing level</span><b>—</b></div>
+</div>
+</div>
+<div class="card" style="margin-top:16px">
+<h3 class="card-heading heading-amber">Along-Route Surface &amp; Atmospheric Assessment (Timewise Horizontal Breakdown)</h3>
+<div id="routeTable"><div class="muted">No route briefing generated.</div></div>
+</div>
+<div class="card" style="margin-top:16px">
+<h3 class="card-heading heading-purple">Upper Wind Matrix: Custom Altitude (± 2 Levels) + Additional Selected Levels</h3>
+<div class="route-upper-controls" style="margin-bottom:12px;">
+<label>Start (UTC)<input id="routeUpperStart" type="datetime-local"/></label>
+<label>End (UTC)<input id="routeUpperEnd" type="datetime-local"/></label>
+<label>Interval
+        <select id="routeUpperInterval"><option value="1">1 hour</option><option selected="" value="3">3 hours</option><option value="6">6 hours</option></select>
+</label>
+<button class="source-btn" onclick="loadRouteUpperAir()">Update Route Upper Winds</button>
+</div>
+<div class="route-upper-help" style="margin-bottom:12px; font-size:12px; color:var(--muted)">
+      Extracts levels centered on the standard level closest to your entered altitude plus any extra checked levels. Wind and temp are shown clearly in formatted columns (`DIR / SPD` followed by temperature).
+    </div>
+<div class="alert" id="routeUpperStatus" style="margin-top:12px">Add waypoints above to generate soundings.</div>
+<div class="route-upper-grid" id="routeUpperTables"></div>
+</div>
+</section>
+<section class="view" id="satellites">
+<div class="section-tag tag-cyan">Remote Sensing • Multispectral Feeds &amp; Live Radar</div>
+<div class="location-card">
+<div>
+<div class="loc-title">Live Satellite, ILDN Lightning &amp; WeatherRadar Imagery</div>
+<div class="coords">Direct high-resolution geostationary imagery, real-time Indian Lightning Detection Network (ILDN), and radar feeds.</div>
+</div>
+<div class="badges"><span class="badge">ILDN LIGHTNING</span><span class="badge">WEATHERRADAR LIVE</span></div>
+</div>
+<div class="card wide" style="padding:0; overflow:hidden; margin-bottom:20px;">
+<div class="windy-live-wrapper">
+<div class="windy-live-header">
+<div class="windy-brand-title">
+<h4>🛰️ Windy Satellite Live Feed</h4>
+<span class="live-badge-red"><span class="live-dot-pulse"></span> LIVE</span>
+</div>
+<div class="windy-layer-controls">
+<button class="windy-btn active" onclick="setOverlay('satellite', this)">🛰️ Satellite</button>
+<button class="windy-btn" onclick="setOverlay('clouds', this)">☁️ Cloud Cover</button>
+<button class="windy-btn" onclick="setOverlay('radar', this)">📡 Weather Radar</button>
+<button class="windy-btn" onclick="setOverlay('wind', this)">💨 Wind Streamlines</button>
+<button class="windy-btn windy-btn-action" onclick="refreshWindyLive()">↻ Refresh</button>
+</div>
+</div>
+<div class="windy-map-container">
+<iframe allowfullscreen="" id="windy-live-feed" src="https://embed.windy.com/embed2.html?lat=22.67&amp;lon=87.01&amp;detailLat=22.67&amp;detailLon=87.01&amp;width=650&amp;height=450&amp;zoom=6&amp;level=surface&amp;overlay=satellite&amp;product=ecmwf&amp;menu=&amp;message=true&amp;marker=true&amp;calendar=now&amp;pressure=&amp;type=map&amp;location=coordinates&amp;detail=&amp;metricWind=km%2Fh&amp;metricTemp=%C2%B0C&amp;radarRange=-1">
+</iframe>
+</div>
+</div>
+</div>
+<div class="live-grid">
+<div class="live-card">
+<div class="live-head">
+<span class="card-heading heading-cyan" style="margin:0">WeatherRadar – Rain, snow, storms and clouds live</span>
+<small class="tag-cyan section-tag" style="margin:0">Live Radar</small>
+</div>
+<iframe allowfullscreen="" class="live-frame" id="weatherRadarFrame" loading="lazy" src="https://www.weatherandradar.in/weather-map?zoom=8&amp;layer=wr&amp;center=22.6700,87.0160&amp;placemark=22.6700,87.0160&amp;tz=Asia%2FKolkata"></iframe>
+<div class="live-note">Weather &amp; Radar real-time interactive precipitation, storm tracking, and cloud development (Synchronized with location).</div>
+</div>
+<div class="live-card">
+<div class="live-head">
+<span class="card-heading heading-amber" style="margin:0">ILDN Live Lightning Alert Feed</span>
+<small class="tag-amber section-tag" style="margin:0">ILDN Live</small>
+</div>
+<iframe allowfullscreen="" class="live-frame" id="ildn-live-feed" src="https://ildnapp.vvsindia.com/" title="ILDN Live Lightning Feed">
+</iframe>
+<div class="live-note">Indian Lightning Detection Network real-time storm strike monitoring.</div>
+</div>
+</div>
+<div class="live-actions" style="margin-top:16px;">
+<a href="https://ildn.in/" rel="noopener" target="_blank">ILDN Official Portal ↗</a>
+<a href="https://www.weatherandradar.in/weather-map?zoom=8&amp;layer=wr&amp;center=22.6700,87.0160&amp;placemark=22.6700,87.0160&amp;tz=Asia%2FKolkata" id="weatherRadarExtLink" rel="noopener" target="_blank">WeatherRadar India Live ↗</a>
+</div>
+</section>
+<section class="view" id="nwp">
+<div class="section-tag tag-purple">Operational Guidance • IMD NWP Division</div>
+<div class="location-card">
+<div>
+<div class="loc-title">IMD Numerical Weather Prediction (NWP) Dashboard</div>
+<div class="coords">Direct access wrapper for operational model guidance and numerical products.</div>
+</div>
+<div class="badges">
+<a class="badge" href="https://nwp.imd.gov.in/" style="text-decoration:none; background:#4338ca; color:#fff; border-color:#4338ca;" target="_blank">Open Official NWP Home ↗</a>
+</div>
+</div>
+<div class="alert" style="background: linear-gradient(135deg, #fef3c7, #fde68a); border-color: #f59e0b; color: #78350f;">
+<strong>Note on Direct Embedding:</strong> Official security policies on the IMD NWP server restrict direct embedding inside custom web pages (iframes). Use the direct action cards below to launch the respective model pages safely.
+  </div>
+<div class="grid-5" style="grid-template-columns: repeat(3, minmax(0, 1fr));">
+<div class="card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(238, 242, 254, 0.9)); border-left: 4px solid #2563eb;">
+<h3 class="card-heading heading-cyan">GFS Meteograms</h3>
+<p class="muted" style="font-size:12px; margin: 8px 0 16px 0;">Station &amp; District forecast time-series graphs for surface temperature, wind vectors, pressure, and rainfall trends.</p>
+<a class="source-btn" href="https://nwp.imd.gov.in/gfs_meteograms_mausam.php" style="display:block; text-align:center; text-decoration:none;" target="_blank">Launch Meteograms ↗</a>
+</div>
+<div class="card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(209, 250, 229, 0.7)); border-left: 4px solid #059669;">
+<h3 class="card-heading heading-emerald">GFS (T-1534) Products</h3>
+<p class="muted" style="font-size:12px; margin: 8px 0 16px 0;">Access primary operational global weather maps, wind profiles, and temperature anomalies.</p>
+<a class="source-btn" href="https://nwp.imd.gov.in/gfsproducts_current_all_mausam.php" style="display:block; text-align:center; text-decoration:none; background: linear-gradient(135deg, #059669 0%, #047857 100%);" target="_blank">Launch GFS Products ↗</a>
+</div>
+<div class="card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(243, 232, 255, 0.7)); border-left: 4px solid #9333ea;">
+<h3 class="card-heading heading-purple">WRF &amp; Short Range</h3>
+<p class="muted" style="font-size:12px; margin: 8px 0 16px 0;">Explore high-resolution regional weather model forecasts designed for short-range planning.</p>
+<a class="source-btn" href="https://nwp.imd.gov.in/wrf_HRRR_nwp_ne_mausam.php" style="display:block; text-align:center; text-decoration:none; background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%);" target="_blank">Launch WRF Models ↗</a>
+</div>
+</div>
+</section>
+</main>
 <!-- Global tropical-system alert: fixed to the left edge and independent of tab visibility. -->
-<div class="tw-main-notice tw-floating-alert" id="tropicalWatchBanner" role="button" tabindex="0" aria-live="assertive" aria-atomic="true" aria-label="Open Tropical System Watch" hidden onclick="openTropicalWatch()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTropicalWatch();}">
-  <div class="tw-main-notice-inner">
-    <button class="floating-minimize-control" type="button" aria-label="Minimize Tropical System alert" onclick="event.stopPropagation();toggleFloatingMinimize('tropicalWatchBanner','tropical')">−</button>
-    <div class="tw-main-notice-icon">🌀</div>
-    <div class="tw-main-notice-copy">
-      <div class="tw-main-notice-title" id="twBannerTitle">Tropical System Alert</div>
-      <div class="tw-main-notice-text" id="twBannerText">Checking latest official tropical-system guidance…</div>
-    </div>
-    <div class="tw-main-notice-meta" id="twBannerTime">Checking…</div>
-    <div class="tw-main-notice-arrow">›</div>
-  </div>
+<div aria-atomic="true" aria-label="Open Tropical System Watch" aria-live="assertive" class="tw-main-notice tw-floating-alert" hidden="" id="tropicalWatchBanner" onclick="openTropicalWatch()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTropicalWatch();}" role="button" tabindex="0">
+<div class="tw-main-notice-inner">
+<button aria-label="Minimize Tropical System alert" class="floating-minimize-control" onclick="event.stopPropagation();toggleFloatingMinimize('tropicalWatchBanner','tropical')" type="button">−</button>
+<div class="tw-main-notice-icon">🌀</div>
+<div class="tw-main-notice-copy">
+<div class="tw-main-notice-title" id="twBannerTitle">Tropical System Alert</div>
+<div class="tw-main-notice-text" id="twBannerText">Checking latest official tropical-system guidance…</div>
+</div>
+<div class="tw-main-notice-meta" id="twBannerTime">Checking…</div>
+<div class="tw-main-notice-arrow">›</div>
+</div>
 </div>
 
-<div class="floating-meteogram-tab" id="floatingMeteogramTab" role="button" tabindex="0" onclick="toggleMeteogram(true)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMeteogram(true)}" aria-label="Open weather meteogram">📊 Meteogram<span class="floating-minimize-control" role="button" tabindex="0" aria-label="Minimize Meteogram" onclick="event.stopPropagation();toggleFloatingMinimize('floatingMeteogramTab','meteogram')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();toggleFloatingMinimize('floatingMeteogramTab','meteogram')}">−</span></div>
+<!-- Single desktop floating launcher: Meteogram -->
+<button aria-label="Open 5-day Meteogram" class="floating-meteogram-tab" id="floatingMeteogramTab" onclick="toggleMeteogram(true)" title="Open 5-day Meteogram" type="button">METEOGRAM<span aria-label="Minimize Meteogram" class="floating-minimize-control" onclick="event.stopPropagation();toggleFloatingMinimize('floatingMeteogramTab','meteogram')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();toggleFloatingMinimize('floatingMeteogramTab','meteogram')}" role="button" tabindex="0">−</span></button>
 
-<aside class="meteogram-panel" id="meteogramPanel" aria-label="Weather meteogram panel">
-  <div class="meteogram-head">
-    <div class="meteogram-head-left">
-      <div class="meteogram-head-icon">🌧️</div>
-      <div>
-        <div class="meteogram-title" id="meteogramTitle">Rainfall Meteogram</div>
-        <div class="meteogram-sub" id="meteogramLocation">Selected location • forecast pending</div>
-      </div>
-    </div>
-    <button class="meteogram-close" onclick="toggleMeteogram(false)" aria-label="Close meteogram">×</button>
-  </div>
-  <div class="meteogram-body">
-    <div class="meteogram-toolbar">
-      <div class="range-wrap">
-        <span class="range-label">Parameter</span>
-        <select id="meteogramParameter" class="meteogram-select" onchange="renderMeteogram()" aria-label="Meteogram parameter">
-          <option value="rainfall" selected>Rainfall</option>
-          <option value="temperature_2m">Dry-bulb temperature</option>
-          <option value="dew_point_2m">Dew-point temperature</option>
-        </select>
-        <span class="range-label">Forecast</span>
-        <select id="meteogramRange" class="meteogram-select" onchange="renderMeteogram()" aria-label="Forecast range">
-          <option value="24">Next 24 h</option><option value="48">Next 48 h</option><option value="72">Next 72 h</option><option value="120" selected>Next 5 days</option>
-        </select>
-      </div>
-      <button class="source-btn" style="padding:8px 12px" onclick="loadMeteogram()">↻ Refresh</button>
-    </div>
-
-    <div class="meteogram-guide" id="meteogramGuide">
-      <div class="meteogram-guide-card conv"><div class="icon">⛈️</div><div><b>Convective rain / showers</b><span>Storm-driven component</span></div></div>
-      <div class="meteogram-guide-card nonconv"><div class="icon">🌧️</div><div><b>Non-convective rain</b><span>Large-scale precipitation</span></div></div>
-    </div>
-
-    <div id="meteogramAlert" class="alert marine-notice meteogram-alert">Waiting for forecast telemetry…</div>
-
-    <div class="meteogram-summary">
-      <div class="meteogram-stat"><div class="label">Total</div><div class="value" id="mgTotal">—</div></div>
-      <div class="meteogram-stat conv"><div class="label">Convective</div><div class="value" id="mgConvective">—</div></div>
-      <div class="meteogram-stat nonconv"><div class="label">Non-convective</div><div class="value" id="mgNonConv">—</div></div>
-      <div class="meteogram-stat peak"><div class="label">Peak 1-h</div><div class="value" id="mgPeakHour">—</div></div>
-    </div>
-
-    <div class="meteogram-legend" id="meteogramLegend">
-      <span class="meteogram-key"><i class="meteogram-swatch" style="background:#7c3aed"></i>Convective</span>
-      <span class="meteogram-key"><i class="meteogram-swatch" style="background:#93c5fd"></i>Non-convective</span>
-      <span class="meteogram-key"><i class="meteogram-swatch" style="background:#0f766e"></i>Probability of rain</span>
-    </div>
-    <div class="meteogram-chart-wrap"><canvas id="meteogramChart"></canvas></div>
-    <div class="meteogram-chart-caption" id="meteogramChartCaption"><span>Bars = hourly rainfall • line = probability</span><span class="tip">Darker purple = storm-related component</span></div>
-
-    <div class="card meteogram-table-card">
-      <h3 class="card-heading heading-cyan" id="meteogramTableTitle">Hourly Rainfall Detail</h3>
-      <div class="table-wrap"><table class="table" style="min-width:660px"><thead id="meteogramTableHead"><tr><th>Time</th><th>Total</th><th>Convective</th><th>Non-conv.</th><th>PoP</th><th>CAPE</th><th>Weather</th></tr></thead><tbody id="meteogramTableBody"></tbody></table></div>
-    </div>
-
-    <div class="meteogram-note" id="meteogramNote" style="margin-top:10px"><b>How to read:</b> darker purple bars indicate the convective/showers component; light-blue bars indicate large-scale rain. The separation is model guidance from the GFS forecast, not an observed radar classification.</div>
-  </div>
+<aside aria-label="Weather meteogram panel" class="meteogram-panel" id="meteogramPanel">
+<div class="meteogram-head">
+<div class="meteogram-head-left">
+<div class="meteogram-head-icon">🌧️</div>
+<div>
+<div class="meteogram-title" id="meteogramTitle">Rainfall Meteogram</div>
+<div class="meteogram-sub" id="meteogramLocation">Selected location • forecast pending</div>
+</div>
+</div>
+<button aria-label="Close meteogram" class="meteogram-close" onclick="toggleMeteogram(false)">×</button>
+</div>
+<div class="meteogram-body">
+<div class="meteogram-toolbar">
+<div class="range-wrap">
+<span class="range-label">Parameter</span>
+<select aria-label="Meteogram parameter" class="meteogram-select" id="meteogramParameter" onchange="renderMeteogram()">
+<option selected="" value="rainfall">Rainfall</option>
+<option value="temperature_2m">Dry-bulb temperature</option>
+<option value="dew_point_2m">Dew-point temperature</option>
+</select>
+<span class="range-label">Forecast</span>
+<select aria-label="Forecast range" class="meteogram-select" id="meteogramRange" onchange="renderMeteogram()">
+<option value="24">Next 24 h</option><option value="48">Next 48 h</option><option value="72">Next 72 h</option><option selected="" value="120">Next 5 days</option>
+</select>
+</div>
+<button class="source-btn" onclick="loadMeteogram()" style="padding:8px 12px">↻ Refresh</button>
+</div>
+<div class="meteogram-guide" id="meteogramGuide">
+<div class="meteogram-guide-card conv"><div class="icon">⛈️</div><div><b>Convective rain / showers</b><span>Storm-driven component</span></div></div>
+<div class="meteogram-guide-card nonconv"><div class="icon">🌧️</div><div><b>Non-convective rain</b><span>Large-scale precipitation</span></div></div>
+</div>
+<div class="alert marine-notice meteogram-alert" id="meteogramAlert">Waiting for forecast telemetry…</div>
+<div class="meteogram-summary">
+<div class="meteogram-stat"><div class="label">Total</div><div class="value" id="mgTotal">—</div></div>
+<div class="meteogram-stat conv"><div class="label">Convective</div><div class="value" id="mgConvective">—</div></div>
+<div class="meteogram-stat nonconv"><div class="label">Non-convective</div><div class="value" id="mgNonConv">—</div></div>
+<div class="meteogram-stat peak"><div class="label">Peak 1-h</div><div class="value" id="mgPeakHour">—</div></div>
+</div>
+<div class="meteogram-legend" id="meteogramLegend">
+<span class="meteogram-key"><i class="meteogram-swatch" style="background:#7c3aed"></i>Convective</span>
+<span class="meteogram-key"><i class="meteogram-swatch" style="background:#93c5fd"></i>Non-convective</span>
+<span class="meteogram-key"><i class="meteogram-swatch" style="background:#0f766e"></i>Probability of rain</span>
+</div>
+<div class="meteogram-chart-wrap"><canvas id="meteogramChart"></canvas></div>
+<div class="meteogram-chart-caption" id="meteogramChartCaption"><span>Bars = hourly rainfall • line = probability</span><span class="tip">Darker purple = storm-related component</span></div>
+<div class="card meteogram-table-card">
+<h3 class="card-heading heading-cyan" id="meteogramTableTitle">Hourly Rainfall Detail</h3>
+<div class="table-wrap"><table class="table" style="min-width:660px"><thead id="meteogramTableHead"><tr><th>Time</th><th>Total</th><th>Convective</th><th>Non-conv.</th><th>PoP</th><th>CAPE</th><th>Weather</th></tr></thead><tbody id="meteogramTableBody"></tbody></table></div>
+</div>
+<div class="meteogram-note" id="meteogramNote" style="margin-top:10px"><b>How to read:</b> darker purple bars indicate the convective/showers component; light-blue bars indicate large-scale rain. The separation is model guidance from the GFS forecast, not an observed radar classification.</div>
+</div>
 </aside>
-
-
-<!-- VayuSarathi METAR/TAF tab — positioned directly below the Meteogram tab -->
-<div id="vsMetarLauncher" class="floating-metar-tab" role="button" tabindex="0" title="Open Multi METAR / TAF tab" aria-label="Open Multi METAR and TAF tab" onclick="switchTab('multi-metar')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('multi-metar')}">METAR / TAF<span class="floating-minimize-control" role="button" tabindex="0" aria-label="Minimize METAR / TAF" onclick="event.stopPropagation();toggleFloatingMinimize('vsMetarLauncher','metar')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();toggleFloatingMinimize('vsMetarLauncher','metar')}">−</span></div>
-
-<div id="forecastTafLauncher" class="floating-forecast-taf-tab" role="button" tabindex="0" title="Open Forecast & TAF Generator" aria-label="Open Forecast and TAF Generator" onclick="toggleForecastTAF(true)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleForecastTAF(true)}">Forecast & TAF<span class="floating-minimize-control" role="button" tabindex="0" aria-label="Minimize Forecast and TAF" onclick="event.stopPropagation();toggleFloatingMinimize('forecastTafLauncher','forecast-taf')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();toggleFloatingMinimize('forecastTafLauncher','forecast-taf')}">−</span></div>
-
-<aside class="forecast-taf-panel" id="forecastTafPanel" aria-label="Forecast and TAF Generator">
-  <div class="forecast-taf-head">
-    <div><h3>✈️ Forecast &amp; TAF Generator</h3><div style="font-size:10px;opacity:.82;margin-top:2px">Selected location • synchronized with forecast telemetry</div></div>
-    <button class="forecast-taf-close" onclick="toggleForecastTAF(false)" aria-label="Close Forecast and TAF Generator">×</button>
-  </div>
-  <div class="forecast-taf-body">
-    <div class="forecast-taf-card">
-      <h4>📋 Period-Based Generic Aviation Forecast</h4>
-      <div class="forecast-taf-toolbar">
-        <label>Select Issuance &amp; Valid Period Slot
-          <select id="genericPeriodSlot">
-            <option value="0700">Issued at 0700 IST | Valid: 0730 - 1930 IST</option>
-            <option value="1300">Issued at 1300 IST | Valid: 1330 - 0130 IST</option>
-            <option value="1800">Issued at 1800 IST | Valid: 1830 - 0930 IST (Next Day)</option>
-          </select>
-        </label>
-        <button class="forecast-taf-btn" onclick="generateGenericAviationForecast()">Generate Forecast</button>
-      </div>
-      <div class="forecast-taf-output" id="genericForecastOutput">Select a slot and click "Generate Forecast"…</div>
-    </div>
-
-    <div class="forecast-taf-card">
-      <h4>✈️ Terminal Aerodrome Forecast (TAF)</h4>
-      <div class="forecast-taf-toolbar">
-        <label>Select Issuance Slot &amp; Active TAF
-          <select id="tafSlot">
-            <option value="auto">Auto-select based on current time (Live Rule)</option>
-            <option value="0330">Issued at 0330 UTC (Valid 06 to 18 UTC)</option>
-            <option value="0930">Issued at 0930 UTC (Valid 12 to 24 UTC)</option>
-            <option value="1530">Issued at 1530 UTC (Valid 00 to 12 UTC Next Day)</option>
-          </select>
-        </label>
-        <button class="forecast-taf-btn" onclick="renderTAFModal()">Generate TAF</button>
-      </div>
-      <div class="forecast-taf-output" id="tafOutput">Click "Generate TAF" to load report…</div>
-    </div>
-
-    <div style="font-size:10px;color:#64748b;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:9px 10px">The generator uses the currently selected VayuSarathi location and loaded forecast telemetry. Select a location and allow the forecast to load before generating a report.</div>
-  </div>
-</aside>
-
 <div class="floating-windy-widget" id="draggableWindyWidget" title="Drag to move, click to view live feed">
-  <span class="floating-minimize-control" role="button" tabindex="0" aria-label="Minimize Windy Satellite" onclick="event.stopPropagation();toggleFloatingMinimize('draggableWindyWidget','windy')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();toggleFloatingMinimize('draggableWindyWidget','windy')}">−</span>
-  <iframe id="miniWindyIframe" src="https://embed.windy.com/embed2.html?lat=22.67&lon=87.01&zoom=5&overlay=satellite&product=ecmwf&marker=true&metricWind=km%2Fh&metricTemp=%C2%B0C" loading="lazy"></iframe>
-  <div class="floating-widget-label">🛰️ Windy</div>
+<span aria-label="Minimize Windy Satellite" class="floating-minimize-control" onclick="event.stopPropagation();toggleFloatingMinimize('draggableWindyWidget','windy')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();toggleFloatingMinimize('draggableWindyWidget','windy')}" role="button" tabindex="0">−</span>
+<iframe id="miniWindyIframe" loading="lazy" src="https://embed.windy.com/embed2.html?lat=22.67&amp;lon=87.01&amp;zoom=5&amp;overlay=satellite&amp;product=ecmwf&amp;marker=true&amp;metricWind=km%2Fh&amp;metricTemp=%C2%B0C"></iframe>
+<div class="floating-widget-label">🛰️ Windy</div>
 </div>
-
-<div id="floatingWindyModal" class="modal-overlay" onclick="outsideClose(event, 'floatingWindyModal')">
-  <div class="modal-box" style="max-width: 800px; width: 95%;">
-    <div class="modal-header">
-      <h3>🛰️ Live Windy Satellite Image Feed</h3>
-      <button class="modal-close" onclick="closeModal('floatingWindyModal')">×</button>
-    </div>
-    <div style="width: 100%; height: 500px; border-radius: 12px; overflow: hidden; background: #000;">
-      <iframe 
-        id="modalWindyIframe"
-        src="https://embed.windy.com/embed2.html?lat=22.67&lon=87.01&detailLat=22.67&detailLon=87.01&width=800&height=500&zoom=6&level=surface&overlay=satellite&product=ecmwf&menu=&message=true&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1" 
-        style="width: 100%; height: 100%; border: none;"
-        allowfullscreen>
-      </iframe>
-    </div>
-  </div>
+<div class="modal-overlay" id="floatingWindyModal" onclick="outsideClose(event, 'floatingWindyModal')">
+<div class="modal-box" style="max-width: 800px; width: 95%;">
+<div class="modal-header">
+<h3>🛰️ Live Windy Satellite Image Feed</h3>
+<button class="modal-close" onclick="closeModal('floatingWindyModal')">×</button>
 </div>
-
+<div style="width: 100%; height: 500px; border-radius: 12px; overflow: hidden; background: #000;">
+<iframe allowfullscreen="" id="modalWindyIframe" src="https://embed.windy.com/embed2.html?lat=22.67&amp;lon=87.01&amp;detailLat=22.67&amp;detailLon=87.01&amp;width=800&amp;height=500&amp;zoom=6&amp;level=surface&amp;overlay=satellite&amp;product=ecmwf&amp;menu=&amp;message=true&amp;marker=true&amp;calendar=now&amp;pressure=&amp;type=map&amp;location=coordinates&amp;detail=&amp;metricWind=km%2Fh&amp;metricTemp=%C2%B0C&amp;radarRange=-1" style="width: 100%; height: 100%; border: none;">
+</iframe>
+</div>
+</div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
 <script>
 let state={lat:22.670,lon:87.016,elevation:40,name:'Selected Point',icao:'VECC',station:null,forecast:null,upper:null,upperRequested:null,marine:null,timezone:'Asia/Kolkata'};
@@ -6668,9 +6415,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
-
-
-
 <script>
 /* ===== VayuSarathi Multi METAR / TAF workspace ===== */
 (function(){
@@ -7064,8 +6808,6 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 })();
 </script>
-
-
 <!-- Multi-model median guidance functionality copied from source dashboard -->
 <script id="multimodel-tab-script">
 (() => {
@@ -7879,10 +7621,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const btn=el('obsCalRefreshBtn');if(btn)btn.addEventListener('click',()=>{activeKey='';lastResult=null;refreshObservationCalibratedGuidance();});
 })();
 </script>
-
-
-
-
 <script>
 /* ===== Unified floating-tab minimize / restore state ===== */
 (function(){
@@ -7911,7 +7649,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('DOMContentLoaded',()=>setTimeout(restoreSaved,50));
 })();
 </script>
-
 <script id="tropical-watch-js">
 (function(){
   const LEGACY_CACHE_KEY='vayusarathi.tropical.watch.v2';
@@ -8116,8 +7853,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })();
 </script>
-
-
 <script>
 /* ==================== MOBILE DASHBOARD CONTROLLER ==================== */
 (function(){
@@ -8231,6 +7966,5 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize',()=>{if(!isMobile())document.body.classList.remove('mobile-classic-mode');});
 })();
 </script>
-
 </body>
 </html>
