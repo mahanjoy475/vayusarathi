@@ -2085,6 +2085,140 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 }
 </style>
 
+
+<style id="vayusarathi-aviation-visual-refresh">
+/* VayuSarathi Flight Deck — desktop only. Mobile shell and data logic are untouched. */
+@media (min-width:1100px){
+  :root{
+    --vs-sidebar-width:214px;
+    --vs-flight-navy:#07192b;
+    --vs-flight-navy2:#0b2742;
+    --vs-flight-blue:#0d5f91;
+    --vs-flight-cyan:#46c4df;
+    --vs-flight-ice:#eaf3f8;
+    --vs-flight-line:#d5e2eb;
+    --vs-flight-ink:#132b40;
+    --vs-flight-muted:#6a8193;
+    --vs-flight-amber:#e6a23b;
+    --vs-flight-red:#d65353;
+  }
+  html{scroll-behavior:smooth;background:#eaf1f6}
+  body{background:linear-gradient(135deg,#eaf1f6 0%,#f4f7fa 52%,#e7eff5 100%)!important;color:var(--vs-flight-ink);font-family:Inter,"Segoe UI",Arial,sans-serif!important}
+  body::before{opacity:.10!important}
+
+  /* Compact mission-control rail */
+  #desktopSidebar{
+    display:flex!important;position:fixed;inset:0 auto 0 0;width:var(--vs-sidebar-width);z-index:1200;
+    flex-direction:column;padding:18px 13px 14px;overflow-y:auto;overscroll-behavior:contain;
+    color:#e7f2fa;background:
+      radial-gradient(ellipse at 10% 2%,rgba(70,196,223,.17),transparent 38%),
+      linear-gradient(180deg,#07192b 0%,#0a233b 48%,#07182a 100%);
+    border-right:1px solid rgba(112,184,211,.22);box-shadow:10px 0 32px rgba(4,22,40,.15);
+  }
+  #desktopSidebar:before{content:"";position:absolute;pointer-events:none;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#3dc6e2,#1b83b7 52%,#e7ac4b)}
+  #desktopSidebar:after{content:"";position:absolute;pointer-events:none;right:17px;top:86px;bottom:90px;width:1px;background:linear-gradient(180deg,transparent,rgba(107,180,209,.20),transparent)}
+  .desktop-side-brand{position:relative;z-index:1;display:flex;align-items:center;gap:11px;padding:7px 7px 18px;border-bottom:1px solid rgba(170,207,228,.16)}
+  .desktop-side-mark{width:43px;height:43px;flex:0 0 43px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(145deg,#55d1e5,#1478a9 66%,#123d66);color:#f4fdff;font-size:24px;font-weight:900;box-shadow:0 7px 20px rgba(36,169,205,.24);transform:rotate(-5deg)}
+  .desktop-side-brand strong{display:block;color:#f4fbff;font-size:17px;letter-spacing:-.5px;font-weight:900}
+  .desktop-side-brand small{display:block;margin-top:4px;font-size:8px;letter-spacing:1.15px;font-weight:900;color:#77c9df}
+  .desktop-side-location{position:relative;z-index:1;margin:15px 1px 12px;padding:12px 12px 12px 14px;border-radius:11px;background:linear-gradient(110deg,rgba(41,128,166,.22),rgba(255,255,255,.035));border:1px solid rgba(102,190,216,.22);box-shadow:inset 3px 0 0 #49c4de}
+  .desktop-side-eyebrow{display:block;font-size:8px;letter-spacing:1.35px;font-weight:950;color:#72c8df;margin-bottom:7px}
+  .desktop-side-location strong{display:block;font-size:12px;color:#f4fbff;font-weight:850;line-height:1.3}
+  .desktop-side-location small{display:block;font-size:9px;color:#a8c3d5;line-height:1.45;margin-top:5px;overflow-wrap:anywhere}
+  .desktop-side-nav{position:relative;z-index:1;display:flex;flex-direction:column;gap:4px;flex:1}
+  .desktop-nav-group-label{font-size:8px;letter-spacing:1.55px;font-weight:950;color:#6798b5;padding:13px 9px 5px}
+  .desktop-nav-item{position:relative;width:100%;display:flex;align-items:center;gap:11px;min-height:39px;border:1px solid transparent;background:transparent;color:#bdcfdb;border-radius:9px;padding:8px 9px;text-align:left;font:750 11px/1.25 Inter,"Segoe UI",Arial,sans-serif;cursor:pointer;transition:background .16s,border-color .16s,color .16s,transform .16s}
+  .desktop-nav-item:hover{background:rgba(125,205,228,.10);border-color:rgba(125,205,228,.14);color:#fff;transform:translateX(2px)}
+  .desktop-nav-item.active{background:linear-gradient(100deg,rgba(55,188,218,.22),rgba(31,111,157,.20));border-color:rgba(87,198,222,.30);color:#f4fcff;box-shadow:inset 3px 0 0 #4ecde4,0 5px 14px rgba(0,0,0,.10)}
+  .desktop-nav-icon{width:25px;height:25px;display:grid;place-items:center;flex:0 0 25px;border-radius:8px;background:rgba(117,175,203,.12);font-size:15px;color:#74cce0}
+  .desktop-nav-item.active .desktop-nav-icon{background:rgba(74,197,222,.20);color:#e1fbff}
+  .desktop-nav-item[data-view="thunderstorm"] .desktop-nav-icon,.desktop-nav-item[data-view="tropical-watch"] .desktop-nav-icon{color:#f0b85c}
+  .desktop-side-footer{position:relative;z-index:1;display:flex;align-items:center;gap:9px;border-top:1px solid rgba(170,207,228,.16);padding:13px 7px 1px;margin-top:13px}
+  .desktop-footer-dot{width:8px;height:8px;border-radius:50%;background:#4ed3a3;box-shadow:0 0 0 4px rgba(78,211,163,.12),0 0 12px rgba(78,211,163,.5)}
+  .desktop-side-footer strong{display:block;color:#e8f7ff;font-size:9px;letter-spacing:.55px}
+  .desktop-side-footer small{display:block;color:#86a9c0;font-size:8px;margin-top:3px}
+
+  /* Flight-deck command header */
+  body>header{
+    margin-left:var(--vs-sidebar-width);width:calc(100% - var(--vs-sidebar-width));box-sizing:border-box;
+    min-height:102px;padding:12px 28px 13px;display:grid;grid-template-columns:minmax(245px,.9fr) minmax(320px,1.3fr) auto;
+    grid-template-rows:1fr;align-items:center;column-gap:25px;row-gap:0;
+    background:linear-gradient(105deg,#0a2036 0%,#0d2a45 56%,#10314d 100%);
+    border:0;border-bottom:1px solid rgba(84,171,202,.34);box-shadow:0 8px 24px rgba(4,25,44,.16);
+    position:sticky;top:0;z-index:1050;overflow:visible;
+  }
+  body>header:before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,#42c8e3 0%,#1788b7 46%,#e7ad51 100%)}
+  body>header:after{content:"";position:absolute;pointer-events:none;right:300px;top:0;bottom:0;width:240px;opacity:.14;background:repeating-linear-gradient(135deg,transparent 0 13px,rgba(131,206,224,.23) 13px 14px)}
+  body>header .brand-group{grid-column:1;grid-row:1;min-width:0;position:relative;z-index:1}
+  body>header .brand{font-size:29px;gap:7px;filter:none;line-height:1;letter-spacing:-1.05px;font-weight:950}
+  body>header .brand .first{color:#f6fbff}
+  body>header .brand .second{color:#62cee4}
+  body>header .brand:hover{transform:none;filter:none}
+  body>header .weather-emblem{transform:scale(.74);transform-origin:left center;margin-right:-7px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.16))}
+  body>header .sub{font-size:8px;letter-spacing:1.05px;color:#8fb8cd;margin-top:8px;font-weight:900;text-transform:uppercase}
+  body>header .header-right-tools{grid-column:3;grid-row:1;gap:10px;justify-self:end;position:relative;z-index:2}
+  body>header .digital-clock-banner{background:rgba(7,22,38,.44);border:1px solid rgba(115,192,216,.28);padding:10px 13px;border-radius:9px;color:#d3edf6;font:800 10px/1.25 "Consolas","SFMono-Regular",monospace;letter-spacing:.25px;box-shadow:none;white-space:nowrap}
+  body>header .menu-container{display:none!important}
+  body>header #searchForm{grid-column:2;grid-row:1;margin:0;width:100%!important;max-width:none;gap:8px;position:relative;z-index:2}
+  body>header #searchForm:before{content:"STATION / LOCATION";position:absolute;top:-15px;left:2px;color:#80aec3;font-size:7px;font-weight:950;letter-spacing:1.45px}
+  body>header #searchForm .searchwrap{min-width:220px}
+  body>header #search{height:42px;padding:10px 14px;border:1px solid rgba(139,190,211,.33);border-radius:9px;background:rgba(243,250,253,.97);box-shadow:0 4px 12px rgba(0,0,0,.08);font-size:12px;color:#18394f}
+  body>header #search::placeholder{color:#7892a3}
+  body>header #search:focus{background:#fff;border-color:#5bd0e5;box-shadow:0 0 0 3px rgba(74,197,222,.18)}
+  body>header #searchButton{height:42px;padding:0 19px;border-radius:9px;background:linear-gradient(135deg,#27a9c8,#1578a8);box-shadow:0 5px 15px rgba(11,116,158,.24);font-size:11px;font-weight:950;letter-spacing:.5px}
+  body>header #searchButton:hover{background:linear-gradient(135deg,#35bad5,#1d8fba);transform:translateY(-1px);box-shadow:0 7px 17px rgba(11,116,158,.3)}
+
+  /* Spacious aeronautical analysis canvas */
+  body>main{margin:0 0 0 var(--vs-sidebar-width);width:calc(100% - var(--vs-sidebar-width));max-width:none;box-sizing:border-box;padding:25px clamp(24px,2.25vw,40px) 48px;background:transparent}
+  body>main>.view{max-width:1900px;margin:0 auto}
+  .section-tag{display:inline-flex;align-items:center;gap:8px;font-size:8px;letter-spacing:1.55px;padding:7px 11px;border-radius:6px;margin-bottom:15px;background:#dff1f7!important;color:#126182!important;border:1px solid #c1e6ef;font-weight:950}
+  .section-tag:before{content:"";width:6px;height:6px;border-radius:50%;background:#20a8bf;box-shadow:0 0 0 3px rgba(32,168,191,.12)}
+  .card,.card.wide,.map-sidebar-card,.ts-map-card,.waypoint-assessment-card{border:1px solid #dbe6ed;border-radius:13px;box-shadow:0 5px 17px rgba(21,53,75,.055);background:rgba(255,255,255,.97)}
+  .card{padding:18px}
+  .card-heading{font-size:11px;letter-spacing:.75px;color:#214d68;font-weight:950;text-transform:uppercase}
+  .muted{color:#6c8292}
+  .alert{border-radius:9px}
+  .forecast-top-layout{grid-template-columns:minmax(0,1.48fr) minmax(330px,.82fr);gap:17px;align-items:stretch}
+  .hero-weather-card{position:relative;border-radius:16px;overflow:hidden;background:linear-gradient(125deg,#09243c 0%,#10486d 55%,#087d96 100%);border:1px solid rgba(49,155,184,.5);box-shadow:0 14px 34px rgba(6,48,76,.20)}
+  .hero-weather-card:after{content:"";position:absolute;pointer-events:none;right:-55px;top:-80px;width:270px;height:270px;border:1px solid rgba(172,235,243,.16);border-radius:50%;box-shadow:0 0 0 22px rgba(172,235,243,.035),0 0 0 48px rgba(172,235,243,.025),0 0 0 78px rgba(172,235,243,.02)}
+  .hero-weather-card .hero-content{position:relative;z-index:1}
+  .hero-weather-card h1,.hero-weather-card .hero-left h1{letter-spacing:-.6px;text-shadow:0 2px 15px rgba(0,0,0,.12)}
+  .map-sidebar-card{padding:12px;background:#fff}
+  #map{min-height:440px;border-radius:10px;overflow:hidden;border:1px solid #cbdde7}
+  .grid-5{grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+  .grid-5>.card{min-width:0}
+  .grid-5 .metric{font-size:25px;font-variant-numeric:tabular-nums}
+  .hourly-scroll-container{border-radius:11px;border:1px solid #dce7ed;background:#fff}
+  .forecast-guidance-intro{border-left:3px solid #34b7d0;background:linear-gradient(100deg,#e9f7fa,#f8fbfd)}
+  .tw-wrap,.location-card{border-radius:14px}
+  .meteogram-panel{box-shadow:0 22px 70px rgba(5,26,46,.30)}
+  .table-wrap{border-radius:9px;border:1px solid #dfe8ee}
+  table.table th{background:#eaf2f6;color:#31566c;font-size:9px;letter-spacing:.75px;text-transform:uppercase;border-bottom:1px solid #d5e2e9}
+  table.table td{font-size:10.5px;color:#284458}
+  table.table tbody tr:nth-child(even){background:#f7fafc}
+  table.table tbody tr:hover{background:#edf8fb}
+  button,select,input{accent-color:#1597b7}
+  .source-btn,.forecast-taf-btn{border-radius:8px;font-weight:850;letter-spacing:.15px}
+  .badge{letter-spacing:.2px}
+  ::selection{background:rgba(61,190,216,.22);color:#102c42}
+}
+
+@media (min-width:1100px) and (max-width:1350px){
+  :root{--vs-sidebar-width:202px}
+  body>header{padding-left:21px;padding-right:21px;column-gap:17px}
+  body>header .brand{font-size:26px}
+  body>main{padding-left:21px;padding-right:21px}
+  .grid-5{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .forecast-top-layout{grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr)}
+}
+/* Smaller desktop/tablet landscape: keep the original responsive header and hide the desktop rail. */
+@media (min-width:768px) and (max-width:1099px){
+  #desktopSidebar{display:none!important}
+  body>header{margin:0;width:100%;padding:12px 18px;gap:12px}
+  body>main{margin:0;width:100%;padding:20px 18px}
+}
+</style>
+
 </head>
 <body>
 <header>
@@ -2126,7 +2260,7 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
         <svg class="emblem-rain-3" width="4" height="10" viewBox="0 0 2 8"><line x1="1" y1="0" x2="1" y2="8"/></svg>
       </div>
     </div>
-    <div class="sub">Convective Assessment • Upper-Air Guidance • Marine & Aviation Forecasting</div>
+    <div class="sub">AVIATION METEOROLOGY  /  FLIGHT OPERATIONS WEATHER DESK</div>
   </div>
 
   <div class="header-right-tools">
@@ -2234,37 +2368,37 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 
 <aside id="desktopSidebar" aria-label="Desktop workspace navigation">
   <div class="desktop-side-brand">
-    <div class="desktop-side-mark">VS</div>
-    <div><strong>VayuSarathi</strong><small>METEOROLOGICAL WORKSTATION</small></div>
+    <div class="desktop-side-mark">✈</div>
+    <div><strong>VayuSarathi</strong><small>AVIATION WX OPERATIONS</small></div>
   </div>
   <div class="desktop-side-location">
-    <span class="desktop-side-eyebrow">ACTIVE WORKSPACE</span>
+    <span class="desktop-side-eyebrow">ACTIVE FLIGHT WX DESK</span>
     <strong id="desktopActiveView">Weather overview</strong>
     <small id="desktopActiveLocation">Location follows the main search</small>
   </div>
   <nav class="desktop-side-nav" aria-label="Main modules">
     <div class="desktop-nav-group-label">OPERATIONS</div>
-    <button class="desktop-nav-item active" type="button" data-view="forecast" onclick="switchTab('forecast')"><span class="desktop-nav-icon">⌂</span><span>Weather overview</span></button>
-    <button class="desktop-nav-item" type="button" data-view="forecast-guidance" onclick="switchTab('forecast-guidance')"><span class="desktop-nav-icon">▥</span><span>Forecast guidance</span></button>
-    <button class="desktop-nav-item" type="button" data-view="aviation-forecast" onclick="switchTab('aviation-forecast')"><span class="desktop-nav-icon">✈</span><span>Aviation forecast</span></button>
-    <button class="desktop-nav-item" type="button" data-view="multi-metar" onclick="switchTab('multi-metar')"><span class="desktop-nav-icon">◉</span><span>METAR / TAF</span></button>
+    <button class="desktop-nav-item active" type="button" data-view="forecast" title="Weather overview" aria-label="Weather overview" onclick="switchTab('forecast')"><span class="desktop-nav-icon">⌂</span><span>Weather overview</span></button>
+    <button class="desktop-nav-item" type="button" data-view="forecast-guidance" title="Forecast guidance" aria-label="Forecast guidance" onclick="switchTab('forecast-guidance')"><span class="desktop-nav-icon">▥</span><span>Forecast guidance</span></button>
+    <button class="desktop-nav-item" type="button" data-view="aviation-forecast" title="Aviation forecast" aria-label="Aviation forecast" onclick="switchTab('aviation-forecast')"><span class="desktop-nav-icon">✈</span><span>Aviation forecast</span></button>
+    <button class="desktop-nav-item" type="button" data-view="multi-metar" title="METAR / TAF" aria-label="METAR / TAF" onclick="switchTab('multi-metar')"><span class="desktop-nav-icon">◉</span><span>METAR / TAF</span></button>
 
     <div class="desktop-nav-group-label">ANALYSIS &amp; VERIFICATION</div>
-    <button class="desktop-nav-item" type="button" data-view="verification-learning" onclick="switchTab('verification-learning')"><span class="desktop-nav-icon">▤</span><span>Forecast validation</span></button>
-    <button class="desktop-nav-item" type="button" data-view="thunderstorm" onclick="switchTab('thunderstorm')"><span class="desktop-nav-icon">ϟ</span><span>Thunderstorm analysis</span></button>
-    <button class="desktop-nav-item" type="button" data-view="tropical-watch" onclick="switchTab('tropical-watch')"><span class="desktop-nav-icon">◌</span><span>Tropical system watch</span></button>
-    <button class="desktop-nav-item" type="button" data-view="fits" onclick="switchTab('fits')"><span class="desktop-nav-icon">◈</span><span>FITS assessment</span></button>
+    <button class="desktop-nav-item" type="button" data-view="verification-learning" title="Forecast validation" aria-label="Forecast validation" onclick="switchTab('verification-learning')"><span class="desktop-nav-icon">▤</span><span>Forecast validation</span></button>
+    <button class="desktop-nav-item" type="button" data-view="thunderstorm" title="Thunderstorm analysis" aria-label="Thunderstorm analysis" onclick="switchTab('thunderstorm')"><span class="desktop-nav-icon">ϟ</span><span>Thunderstorm analysis</span></button>
+    <button class="desktop-nav-item" type="button" data-view="tropical-watch" title="Tropical system watch" aria-label="Tropical system watch" onclick="switchTab('tropical-watch')"><span class="desktop-nav-icon">◌</span><span>Tropical system watch</span></button>
+    <button class="desktop-nav-item" type="button" data-view="fits" title="FITS assessment" aria-label="FITS assessment" onclick="switchTab('fits')"><span class="desktop-nav-icon">◈</span><span>FITS assessment</span></button>
 
     <div class="desktop-nav-group-label">ATMOSPHERE &amp; MARINE</div>
-    <button class="desktop-nav-item" type="button" data-view="marine" onclick="switchTab('marine')"><span class="desktop-nav-icon">≈</span><span>Marine &amp; sea state</span></button>
-    <button class="desktop-nav-item" type="button" data-view="upper" onclick="switchTab('upper')"><span class="desktop-nav-icon">↟</span><span>Upper winds</span></button>
-    <button class="desktop-nav-item" type="button" data-view="satellites" onclick="switchTab('satellites')"><span class="desktop-nav-icon">◎</span><span>Satellite imagery</span></button>
-    <button class="desktop-nav-item" type="button" data-view="route" onclick="switchTab('route')"><span class="desktop-nav-icon">⌁</span><span>Route briefing</span></button>
-    <button class="desktop-nav-item" type="button" data-view="nwp" onclick="switchTab('nwp')"><span class="desktop-nav-icon">▦</span><span>IMD NWP portal</span></button>
+    <button class="desktop-nav-item" type="button" data-view="marine" title="Marine & sea state" aria-label="Marine & sea state" onclick="switchTab('marine')"><span class="desktop-nav-icon">≈</span><span>Marine &amp; sea state</span></button>
+    <button class="desktop-nav-item" type="button" data-view="upper" title="Upper winds" aria-label="Upper winds" onclick="switchTab('upper')"><span class="desktop-nav-icon">↟</span><span>Upper winds</span></button>
+    <button class="desktop-nav-item" type="button" data-view="satellites" title="Satellite imagery" aria-label="Satellite imagery" onclick="switchTab('satellites')"><span class="desktop-nav-icon">◎</span><span>Satellite imagery</span></button>
+    <button class="desktop-nav-item" type="button" data-view="route" title="Route briefing" aria-label="Route briefing" onclick="switchTab('route')"><span class="desktop-nav-icon">⌁</span><span>Route briefing</span></button>
+    <button class="desktop-nav-item" type="button" data-view="nwp" title="IMD NWP portal" aria-label="IMD NWP portal" onclick="switchTab('nwp')"><span class="desktop-nav-icon">▦</span><span>IMD NWP portal</span></button>
   </nav>
   <div class="desktop-side-footer">
     <span class="desktop-footer-dot"></span>
-    <div><strong>Desktop workspace</strong><small>Full dashboard modules</small></div>
+    <div><strong>AVIATION WX DESK</strong><small>Forecast • Observation • Analysis</small></div>
   </div>
 </aside>
 
