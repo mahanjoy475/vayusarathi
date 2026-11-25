@@ -1516,9 +1516,9 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 .multi-metar-chip i{width:9px;height:9px;border-radius:50%;display:inline-block}
 .multi-metar-grid{display:grid;grid-template-columns:1fr;gap:14px}
 .multi-station-card{border:1px solid #dbe4ec;border-radius:16px;overflow:hidden;background:rgba(255,255,255,.94);box-shadow:0 10px 26px rgba(99,130,168,.14)}
-.multi-station-head{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px 14px;color:#fff;background:linear-gradient(135deg,#0f766e,#155e75)}
-.multi-station-title{display:flex;flex-direction:column;gap:1px}.multi-station-title strong{font-size:17px;letter-spacing:.8px}.multi-station-title span{font-size:10px;opacity:.86}
-.multi-station-head a{color:#fff;font-size:10px;text-decoration:none;font-weight:900;border:1px solid rgba(255,255,255,.4);padding:5px 8px;border-radius:999px}
+
+
+
 .multi-report-stack{display:flex;flex-direction:column;gap:7px;padding:12px}
 .multi-report-table-head{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(260px,.95fr);gap:12px;padding:0 10px 2px;color:#64748b;font-size:10px;font-weight:950;letter-spacing:.7px;text-transform:uppercase}
 .multi-report-card{border-radius:12px;border:1px solid;overflow:hidden;transition:background .2s,border-color .2s,box-shadow .2s}
@@ -1530,7 +1530,7 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 .multi-report-main{min-width:0;min-height:54px;padding:7px 12px;display:grid;grid-template-columns:auto auto minmax(0,1fr);column-gap:10px;align-items:center}
 .multi-report-head{display:contents}
 .multi-report-head strong{font-size:12px;letter-spacing:.65px;font-weight:950}.multi-report-head span{font-size:10px;font-weight:900;color:#475569;text-align:right}
-.multi-raw{min-width:0;padding:0;white-space:nowrap;overflow-x:auto;overflow-y:hidden;overflow-wrap:normal;font:750 clamp(12px,.9vw,15px)/1.35 ui-monospace,SFMono-Regular,Menlo,monospace;color:#0f172a;letter-spacing:.15px;scrollbar-width:thin}
+.multi-raw{min-width:0;padding:0;white-space:nowrap;overflow-x:auto;overflow-y:hidden;overflow-wrap:normal;font:800 clamp(16px,1.05vw,18px)/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;color:#0f172a;letter-spacing:.2px;scrollbar-width:thin}
 .multi-report-assessment{min-width:0;padding:8px 10px;border-left:1px solid rgba(100,116,139,.22);background:rgba(255,255,255,.38);display:flex;flex-direction:column;justify-content:center;gap:6px}
 .multi-report-assessment .metar-criteria-box{margin:0;width:100%;box-sizing:border-box}
 .multi-report-flight-cat{display:flex;justify-content:flex-end}
@@ -1543,9 +1543,9 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 .metar-criteria-box.clear{background:#bbf7d0;border-color:#4ade80;color:#14532d}
 .multi-taf-card{background:#f5f3ff;border-color:#c4b5fd}.multi-taf-card .multi-report-head{background:#ede9fe}.multi-no-report{padding:14px;border:1px dashed #cbd5e1;border-radius:12px;color:#64748b;text-align:center;font-size:12px;background:#f8fafc}
 @media(max-width:900px){.multi-metar-toolbar{grid-template-columns:1fr 1fr}.multi-metar-input-wrap{grid-column:1/-1}.multi-metar-actions{grid-column:1/-1}.multi-metar-grid{grid-template-columns:1fr}}
-@media(max-width:600px){.multi-metar-toolbar{grid-template-columns:1fr}.multi-metar-actions{grid-column:auto}.multi-metar-btn{flex:1}.multi-metar-grid{grid-template-columns:1fr}.multi-raw{font-size:20px;line-height:1.5;padding:12px 10px}}
+@media(max-width:600px){.multi-metar-toolbar{grid-template-columns:1fr}.multi-metar-actions{grid-column:auto}.multi-metar-btn{flex:1}.multi-metar-grid{grid-template-columns:1fr}.multi-raw{font-size:14px;line-height:1.4;padding:5px 2px}}
 @media(max-width:900px){.multi-report-table-head{grid-template-columns:minmax(0,2.2fr) minmax(220px,.95fr)}.multi-metar-row{grid-template-columns:minmax(0,2.2fr) minmax(220px,.95fr)}.multi-report-assessment{border-left:1px solid rgba(100,116,139,.22);border-top:0}}
-@media(max-width:600px){.multi-report-table-head{display:none}.multi-metar-row{grid-template-columns:minmax(0,1fr) minmax(138px,42%)}.multi-report-main{min-height:48px;padding:6px 8px;grid-template-columns:auto minmax(0,1fr);column-gap:6px}.multi-report-head span{display:none}.multi-raw{font-size:11px;line-height:1.25}.multi-report-assessment{padding:6px;border-left:1px solid rgba(100,116,139,.22);border-top:0}.multi-report-assessment .metar-criteria-box{padding:6px;font-size:10px}.metar-criteria-title{font-size:9px}}
+@media(max-width:600px){.multi-report-table-head{display:none}.multi-metar-row{grid-template-columns:minmax(0,1fr) minmax(138px,42%)}.multi-report-main{min-height:48px;padding:6px 8px;grid-template-columns:auto minmax(0,1fr);column-gap:6px}.multi-report-head span{display:none}.multi-raw{font-size:14px;line-height:1.4}.multi-report-assessment{padding:6px;border-left:1px solid rgba(100,116,139,.22);border-top:0}.multi-report-assessment .metar-criteria-box{padding:6px;font-size:10px}.metar-criteria-title{font-size:9px}}
 
 
 /* ===== Dynamic Solar Cycle / Sun-Moon Timeline ===== */
@@ -6706,8 +6706,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Preserve the user-requested ICAO order, including stations with no data.
     const ordered=requested.map(icao=>byIcao.get(icao)||{icao,metars:[],taf:null,error:''});
     el('multiMetarResults').innerHTML=ordered.map(g=>{
-      const sample=g.metars[0]||null;
-      const name=stationName(sample,g.icao);
       const metars=g.metars.length ? [...g.metars].sort((a,b)=>Number(b.obsTime||0)-Number(a.obsTime||0)) : [];
       const cards=metars.map(renderReportCard).join('');
       const tableHead=metars.length ? `<div class="multi-report-table-head"><span>METAR REPORT</span><span>WEATHER WARNING / CMR</span></div>` : '';
@@ -6716,7 +6714,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const stationClass=stationState.level==='warning'?'metar-warning':stationState.level==='caution'?'metar-caution':'';
       const taf=includeTaf ? renderTafCard(g.taf,g.icao,stationState) : '';
       return `<article class="multi-station-card ${stationClass}">
-        <div class="multi-station-head"><div class="multi-station-title"><strong>${esc(g.icao)}</strong><span>${esc(name || 'Station report')}</span></div><a href="https://aviationweather.gov/data/metar/?id=${encodeURIComponent(g.icao)}" target="_blank" rel="noopener">Official ↗</a></div>
         <div class="multi-report-stack">${tableHead}${cards||noData}${taf}</div>
       </article>`;
     }).join('');
