@@ -6707,7 +6707,7 @@ document.addEventListener('DOMContentLoaded', () => {
     el('multiMetarResults').innerHTML=ordered.map(g=>{
       const metars=g.metars.length ? [...g.metars].sort((a,b)=>Number(b.obsTime||0)-Number(a.obsTime||0)) : [];
       const cards=metars.map(renderReportCard).join('');
-      const tableHead=metars.length ? `<div class="multi-report-table-head"><span>METAR REPORT</span><span>WEATHER WARNING / CMR</span></div>` : '';
+      const tableHead=''; // Column labels removed; each METAR row carries its own assessment.
       const noData=g.error ? `<div class="multi-no-report">${esc(g.error)}</div>` : `<div class="multi-no-report">No METAR observation found in the selected time window.</div>`;
       const stationState=stationCriteria(g);
       const stationClass=stationState.level==='warning'?'metar-warning':stationState.level==='caution'?'metar-caution':'';
