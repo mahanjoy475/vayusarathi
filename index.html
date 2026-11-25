@@ -1519,15 +1519,22 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 .multi-station-head{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px 14px;color:#fff;background:linear-gradient(135deg,#0f766e,#155e75)}
 .multi-station-title{display:flex;flex-direction:column;gap:1px}.multi-station-title strong{font-size:17px;letter-spacing:.8px}.multi-station-title span{font-size:10px;opacity:.86}
 .multi-station-head a{color:#fff;font-size:10px;text-decoration:none;font-weight:900;border:1px solid rgba(255,255,255,.4);padding:5px 8px;border-radius:999px}
-.multi-report-stack{display:grid;gap:10px;padding:12px}
-.multi-report-card{border-radius:13px;border:2px solid;overflow:hidden;transition:background .2s,border-color .2s,box-shadow .2s}
+.multi-report-stack{display:flex;flex-direction:column;gap:9px;padding:12px}
+.multi-report-table-head{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(250px,.85fr);gap:12px;padding:0 10px 2px;color:#64748b;font-size:10px;font-weight:950;letter-spacing:.7px;text-transform:uppercase}
+.multi-report-card{border-radius:12px;border:1px solid;overflow:hidden;transition:background .2s,border-color .2s,box-shadow .2s}
 .multi-report-card.metar-vfr{background:#ecfdf5;border-color:#86efac}.multi-report-card.metar-mvfr{background:#eff6ff;border-color:#93c5fd}.multi-report-card.metar-ifr{background:#fff7ed;border-color:#fdba74}.multi-report-card.metar-lifr{background:#fdf2f8;border-color:#f9a8d4}.multi-report-card.metar-unk{background:#f8fafc;border-color:#cbd5e1}
-.multi-report-card.metar-warning{background:#fee2e2!important;border-color:#dc2626!important;box-shadow:0 0 0 2px rgba(220,38,38,.10)}
-.multi-report-card.metar-caution{background:#fef3c7!important;border-color:#f59e0b!important;box-shadow:0 0 0 2px rgba(245,158,11,.10)}
-.multi-report-card.metar-clear{background:#dcfce7!important;border-color:#16a34a!important;box-shadow:0 0 0 2px rgba(22,163,74,.08)}
-.multi-report-head{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:8px 10px;border-bottom:1px solid rgba(100,116,139,.18)}
-.multi-report-head strong{font-size:13px;letter-spacing:.55px;font-weight:950}.multi-report-head span{font-size:11px;font-weight:900;color:#475569}
-.multi-raw{padding:14px 12px;white-space:pre-wrap;word-break:break-word;font:700 25px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;color:#0f172a;letter-spacing:.35px}
+.multi-report-card.metar-warning{background:#fff1f2!important;border-color:#ef4444!important;box-shadow:inset 4px 0 0 #dc2626}
+.multi-report-card.metar-caution{background:#fffbeb!important;border-color:#f59e0b!important;box-shadow:inset 4px 0 0 #f59e0b}
+.multi-report-card.metar-clear{background:#f0fdf4!important;border-color:#86c99a!important;box-shadow:inset 4px 0 0 #16a34a}
+.multi-metar-row{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(250px,.85fr);gap:0;align-items:stretch}
+.multi-report-main{min-width:0;padding:0 12px 10px}
+.multi-report-head{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:9px 0 7px;border-bottom:1px solid rgba(100,116,139,.22)}
+.multi-report-head strong{font-size:12px;letter-spacing:.65px;font-weight:950}.multi-report-head span{font-size:10px;font-weight:900;color:#475569;text-align:right}
+.multi-raw{padding:11px 0 2px;white-space:pre-wrap;overflow-wrap:anywhere;font:750 clamp(14px,1.05vw,19px)/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;color:#0f172a;letter-spacing:.2px}
+.multi-report-assessment{min-width:0;padding:10px;border-left:1px solid rgba(100,116,139,.22);background:rgba(255,255,255,.38);display:flex;flex-direction:column;justify-content:center;gap:8px}
+.multi-report-assessment .metar-criteria-box{margin:0;width:100%;box-sizing:border-box}
+.multi-report-flight-cat{display:flex;justify-content:flex-end}
+.multi-report-table-head + .multi-metar-row{margin-top:0}
 .multi-raw-badge{font-size:9px;font-weight:900;padding:4px 7px;border-radius:999px;text-transform:uppercase;letter-spacing:.4px}
 .metar-criteria-box{margin:0 10px 10px;padding:9px 10px;border-radius:10px;border:1px solid rgba(15,23,42,.14);background:rgba(255,255,255,.58);font-size:11px;line-height:1.45;color:#334155}
 .metar-criteria-title{font-size:10px;font-weight:950;letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px}
@@ -1537,6 +1544,8 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 .multi-taf-card{background:#f5f3ff;border-color:#c4b5fd}.multi-taf-card .multi-report-head{background:#ede9fe}.multi-no-report{padding:14px;border:1px dashed #cbd5e1;border-radius:12px;color:#64748b;text-align:center;font-size:12px;background:#f8fafc}
 @media(max-width:900px){.multi-metar-toolbar{grid-template-columns:1fr 1fr}.multi-metar-input-wrap{grid-column:1/-1}.multi-metar-actions{grid-column:1/-1}.multi-metar-grid{grid-template-columns:1fr}}
 @media(max-width:600px){.multi-metar-toolbar{grid-template-columns:1fr}.multi-metar-actions{grid-column:auto}.multi-metar-btn{flex:1}.multi-metar-grid{grid-template-columns:1fr}.multi-raw{font-size:20px;line-height:1.5;padding:12px 10px}}
+@media(max-width:900px){.multi-report-table-head{display:none}.multi-metar-row{grid-template-columns:1fr}.multi-report-assessment{border-left:0;border-top:1px solid rgba(100,116,139,.22)}}
+@media(max-width:600px){.multi-report-main{padding:0 10px 8px}.multi-report-head{align-items:flex-start}.multi-report-head span{max-width:58%}.multi-raw{font-size:15px;line-height:1.5}.multi-report-assessment{padding:9px}}
 
 
 /* ===== Dynamic Solar Cycle / Sun-Moon Timeline ===== */
@@ -6623,11 +6632,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const raw=reportRaw(report) || 'No raw METAR text returned.';
     const criteria=evaluateMetarCriteria(report);
     const stateClass=criteria.level==='warning'?'metar-warning':criteria.level==='caution'?'metar-caution':'metar-clear';
-    return `<article class="multi-report-card ${stateClass}">
-      <div class="multi-report-head"><strong>METAR</strong><span>${esc(fmtObsTime(report))}</span></div>
-      <div class="multi-raw" style="padding-bottom:5px">${esc(raw)}</div>
-      ${criteriaBox(criteria)}
-      <div style="padding:0 10px 10px;display:flex;justify-content:flex-end"><span class="multi-raw-badge" style="background:rgba(255,255,255,.72);border:1px solid currentColor;color:inherit">${esc(cat)}</span></div>
+    return `<article class="multi-report-card multi-metar-row ${stateClass}">
+      <div class="multi-report-main">
+        <div class="multi-report-head"><strong>METAR</strong><span>${esc(fmtObsTime(report))}</span></div>
+        <div class="multi-raw">${esc(raw)}</div>
+      </div>
+      <aside class="multi-report-assessment" aria-label="METAR warning and CMR assessment">
+        ${criteriaBox(criteria)}
+        <div class="multi-report-flight-cat"><span class="multi-raw-badge" style="background:rgba(255,255,255,.78);border:1px solid currentColor;color:inherit">${esc(cat)}</span></div>
+      </aside>
     </article>`;
   }
 
@@ -6697,14 +6710,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const name=stationName(sample,g.icao);
       const metars=g.metars.length ? [...g.metars].sort((a,b)=>Number(b.obsTime||0)-Number(a.obsTime||0)) : [];
       const cards=metars.map(renderReportCard).join('');
+      const tableHead=metars.length ? `<div class="multi-report-table-head"><span>METAR REPORT</span><span>WEATHER WARNING / CMR</span></div>` : '';
       const noData=g.error ? `<div class="multi-no-report">${esc(g.error)}</div>` : `<div class="multi-no-report">No METAR observation found in the selected time window.</div>`;
       const stationState=stationCriteria(g);
       const stationClass=stationState.level==='warning'?'metar-warning':stationState.level==='caution'?'metar-caution':'';
-      const stationBanner=stationState.reasons.length ? `<div class="metar-criteria-box ${stationState.level}"><div class="metar-criteria-title">${stationState.level==='warning'?'🔴 WEATHER WARNING':'🟡 CAUTIONARY MET REPORT'}</div>${stationState.reasons.map(r=>`<div>• ${esc(r)}</div>`).join('')}</div>` : '';
       const taf=includeTaf ? renderTafCard(g.taf,g.icao,stationState) : '';
-      return `<article class="multi-station-card ${stationClass}">${stationBanner}
+      return `<article class="multi-station-card ${stationClass}">
         <div class="multi-station-head"><div class="multi-station-title"><strong>${esc(g.icao)}</strong><span>${esc(name || 'Station report')}</span></div><a href="https://aviationweather.gov/data/metar/?id=${encodeURIComponent(g.icao)}" target="_blank" rel="noopener">Official ↗</a></div>
-        <div class="multi-report-stack">${cards||noData}${taf}</div>
+        <div class="multi-report-stack">${tableHead}${cards||noData}${taf}</div>
       </article>`;
     }).join('');
   }
