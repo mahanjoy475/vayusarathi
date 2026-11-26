@@ -2151,6 +2151,808 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
   body>main{margin:0;width:100%;padding:20px 18px}
 }
 </style>
+<style id="vs-aircraft-animation-style">
+/* VayuSarathi aircraft flypast — decorative display, not live aircraft tracking. */
+.vs-aircraft-showcase{
+  position:relative;isolation:isolate;display:grid;grid-template-columns:168px minmax(0,1fr) 118px;align-items:center;
+  min-height:78px;padding:5px 16px;gap:12px;overflow:hidden;
+  color:#dff6ff;background:linear-gradient(100deg,#09243a 0%,#103854 48%,#0b2c46 100%);
+  border-top:1px solid rgba(91,190,215,.28);border-bottom:1px solid rgba(91,190,215,.3);
+  box-shadow:0 5px 16px rgba(6,34,57,.10);
+}
+.vs-aircraft-showcase:before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.25;
+  background:repeating-linear-gradient(120deg,transparent 0 34px,rgba(130,211,231,.10) 34px 35px),
+    radial-gradient(ellipse at 75% 50%,rgba(52,174,211,.22),transparent 48%);
+}
+.vs-aircraft-intro{position:relative;z-index:2;min-width:0;display:flex;flex-direction:column;gap:4px}
+.vs-aircraft-intro strong{font:950 9px/1.1 Inter,Arial,sans-serif;letter-spacing:1.25px;color:#e5f8ff}
+.vs-aircraft-intro small{font:750 7px/1.25 Inter,Arial,sans-serif;letter-spacing:.7px;color:#83bcd0;text-transform:uppercase}
+.vs-aircraft-status{display:inline-flex;align-items:center;gap:6px}
+.vs-aircraft-status i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#52d6b0;box-shadow:0 0 0 3px rgba(82,214,176,.12),0 0 9px rgba(82,214,176,.55)}
+.vs-aircraft-lane{position:relative;height:68px;min-width:0;overflow:hidden;border-left:1px solid rgba(129,201,220,.20);border-right:1px solid rgba(129,201,220,.12)}
+.vs-aircraft-lane:before,.vs-aircraft-lane:after{content:"";position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(122,202,224,.16),transparent)}
+.vs-aircraft-lane:before{top:20px}.vs-aircraft-lane:after{top:41px}
+.vs-plane-flight{position:absolute;left:-190px;display:flex;align-items:center;gap:5px;white-space:nowrap;will-change:left;filter:drop-shadow(0 2px 3px rgba(0,0,0,.2));animation:vsAircraftCross linear infinite}
+.vs-plane-su30{top:1px;animation-duration:23s;animation-delay:-6s}
+.vs-plane-rafale{top:21px;animation-duration:28s;animation-delay:-17s}
+.vs-plane-mi17{top:41px;animation-duration:32s;animation-delay:-10s}
+@keyframes vsAircraftCross{from{left:-190px}to{left:calc(100% + 22px)}}
+.vs-plane-svg{width:76px;height:20px;overflow:visible;flex:0 0 auto}
+.vs-airframe{fill:#c9edf7;stroke:#5fc2dc;stroke-width:1.15;stroke-linejoin:round}
+.vs-canopy{fill:#257a9c;stroke:#b9edf8;stroke-width:.8}
+.vs-detail{fill:none;stroke:#70c8dc;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
+.vs-exhaust{fill:#7ba9ba;stroke:#c4eff8;stroke-width:.6}
+.vs-plane-name{font:900 7px/1 Inter,Arial,sans-serif;letter-spacing:1px;color:#b9e8f4;text-shadow:0 1px 2px rgba(0,0,0,.45)}
+.vs-heli-svg{width:78px;height:26px}
+.vs-main-rotor,.vs-tail-rotor{transform-box:fill-box;transform-origin:center;animation:vsRotorSpin .32s linear infinite}
+.vs-main-rotor path,.vs-tail-rotor path{fill:none;stroke:#a9ddeb;stroke-width:2.1;stroke-linecap:round}
+.vs-tail-rotor{transform-origin:21px 20px;animation-duration:.22s}
+@keyframes vsRotorSpin{to{transform:rotate(360deg)}}
+.vs-aircraft-note{position:relative;z-index:2;text-align:right;font:800 7px/1.4 Inter,Arial,sans-serif;letter-spacing:.55px;color:#82b7c9;text-transform:uppercase}
+.vs-aircraft-showcase-mobile{display:none}
+@media(min-width:1100px){.vs-aircraft-showcase-desktop{margin-left:var(--vs-sidebar-width);width:calc(100% - var(--vs-sidebar-width))}}
+@media(max-width:767px){
+  .vs-aircraft-showcase-desktop{display:none!important}
+  .vs-aircraft-showcase-mobile{display:block;min-height:48px;height:48px;margin-top:9px;padding:2px 7px;border:1px solid rgba(111,192,216,.25);border-radius:11px;box-shadow:0 4px 12px rgba(15,38,72,.12)}
+  .vs-aircraft-showcase-mobile .vs-aircraft-intro,.vs-aircraft-showcase-mobile .vs-aircraft-note{display:none}
+  .vs-aircraft-showcase-mobile .vs-aircraft-lane{height:44px;border:0}
+  .vs-aircraft-showcase-mobile .vs-aircraft-lane:before{top:14px}.vs-aircraft-showcase-mobile .vs-aircraft-lane:after{top:28px}
+  .vs-aircraft-showcase-mobile .vs-plane-flight{left:-150px;gap:3px}
+  .vs-aircraft-showcase-mobile .vs-plane-su30{top:0;animation-duration:17s;animation-delay:-4s}
+  .vs-aircraft-showcase-mobile .vs-plane-rafale{top:14px;animation-duration:20s;animation-delay:-13s}
+  .vs-aircraft-showcase-mobile .vs-plane-mi17{top:28px;animation-duration:24s;animation-delay:-8s}
+  .vs-aircraft-showcase-mobile .vs-plane-svg{width:56px;height:14px}
+  .vs-aircraft-showcase-mobile .vs-heli-svg{width:58px;height:17px}
+  .vs-aircraft-showcase-mobile .vs-plane-name{font-size:6px;letter-spacing:.7px}
+}
+@media(prefers-reduced-motion:reduce){
+  .vs-plane-flight,.vs-main-rotor,.vs-tail-rotor{animation-play-state:paused!important}
+}
+</style>
+
+<style id="vayusarathi-mobile-operations-refresh">
+/* Hidden outside the phone breakpoint; the dedicated shell is only for narrow mobile screens. */
+#mobileClassicHeader, #mobileClassicNav { display:none; }
+/* VayuSarathi Mobile Operations UI — deliberately distinct from the desktop workstation. */
+@media (max-width: 767px) {
+  :root {
+    --m-bg: #07182a;
+    --m-bg2: #0b2138;
+    --m-surface: #102b46;
+    --m-surface-2: #153652;
+    --m-card: #f8fbff;
+    --m-card-soft: #edf5fb;
+    --m-line: #c9d9e8;
+    --m-text: #10263d;
+    --m-muted: #5d7187;
+    --m-cyan: #16b9e8;
+    --m-blue: #3478db;
+  }
+  html { background: var(--m-bg); scroll-padding-top: 82px; }
+  body {
+    background: radial-gradient(ellipse at 12% -10%, rgba(15,115,174,.32), transparent 36%),
+                radial-gradient(ellipse at 100% 28%, rgba(84,70,180,.20), transparent 34%),
+                linear-gradient(180deg, #07182a 0%, #0b1d31 48%, #081a2d 100%) !important;
+    color: #e8f2fb !important;
+    padding-bottom: calc(78px + env(safe-area-inset-bottom)) !important;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body:not(.mobile-classic-mode)>header,
+  body:not(.mobile-classic-mode)>main { display: none !important; }
+  body:not(.mobile-classic-mode) #mobileApp { display:block !important; }
+  #desktopSidebar, .vs-aircraft-showcase-desktop { display:none !important; }
+
+  /* Home / mobile dashboard shell */
+  #mobileApp {
+    min-height: 100dvh;
+    color: #e8f2fb;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    padding-bottom: calc(84px + env(safe-area-inset-bottom));
+  }
+  .mobile-top {
+    position: sticky; top:0; z-index:3000;
+    padding: calc(11px + env(safe-area-inset-top)) 14px 12px;
+    background: rgba(5,19,34,.94);
+    border-bottom: 1px solid rgba(105,174,221,.22);
+    box-shadow: 0 8px 22px rgba(0,0,0,.22);
+    backdrop-filter: blur(18px);
+  }
+  .mobile-brand { color:#f3f8ff; font-size:19px; letter-spacing:-.6px; }
+  .mobile-brand .mark { background:linear-gradient(135deg,#10b9e8,#286ad0 65%,#6552cb); box-shadow:0 5px 18px rgba(16,185,232,.22); }
+  .mobile-time { color:#bcd2e6; background:#102d48; border:1px solid #234864; }
+  .mobile-search { gap:7px; margin-top:11px; }
+  .mobile-search input {
+    color:#ecf7ff; background:#0d2942; border:1px solid #2b5574;
+    border-radius:13px; min-height:46px; padding:12px 13px; font-size:16px;
+  }
+  .mobile-search input::placeholder { color:#87a4bc; }
+  .mobile-search input:focus { border-color:#20bce9; box-shadow:0 0 0 3px rgba(32,188,233,.15); }
+  .mobile-search button { min-height:46px; padding:0 15px; background:linear-gradient(135deg,#087fb7,#345bd2); border-radius:13px; }
+  #mobileSuggestions { top:52px; right:70px; background:#102b46; border:1px solid #315978; }
+  #mobileSuggestions button { background:#102b46; color:#e8f3fc; border-color:#23445f; min-height:44px; }
+  .mobile-main { max-width:720px; padding:16px 13px 20px; }
+  .mobile-section-head { align-items:center; margin:4px 2px 12px; }
+  .mobile-section-head h2 { color:#f3f8ff; font-size:19px; letter-spacing:-.45px; }
+  .mobile-section-head span { color:#9bb4ca; font-size:10px; }
+  .mobile-hero {
+    border:1px solid rgba(119,201,239,.32);
+    border-radius:22px;
+    background: radial-gradient(circle at 86% 18%,rgba(74,179,229,.28),transparent 32%), linear-gradient(145deg,#0d3153,#14528a 62%,#293a83);
+    box-shadow:0 16px 34px rgba(0,0,0,.23);
+  }
+  .mobile-hero:after { border:1px solid rgba(176,223,255,.12); }
+  .mobile-location { color:#f5fbff; font-size:14px; }
+  .mobile-coords,.mobile-feels { color:#c4d9ec; }
+  .mobile-temp { font-size:55px; }
+  .mobile-condition { color:#e1f4ff; }
+  .mobile-data-grid { gap:9px; margin-top:10px; }
+  .mobile-data-card {
+    background:linear-gradient(150deg,#f8fbff,#e9f3fb);
+    border:1px solid #c8d9e8; border-radius:15px; padding:12px;
+    box-shadow:0 6px 15px rgba(0,0,0,.13);
+  }
+  .mobile-data-card .k { color:#60758c; font-size:9px; }
+  .mobile-data-card .v { color:#102c47; font-size:21px; }
+  .mobile-data-card .s { color:#61768b; }
+  .mobile-card {
+    background:#f7fbff; color:#10263d; border:1px solid #c8d9e8;
+    border-radius:17px; padding:13px; box-shadow:0 7px 17px rgba(0,0,0,.14);
+  }
+  .mobile-card-title { color:#12304d; font-size:13px; }
+  .mobile-card-title button { background:#e0f1fb; color:#076c9e; min-height:34px; }
+  .mobile-day { background:#edf5fb; border-color:#d2e1ed; min-height:58px; }
+  .mobile-day .date,.mobile-day .range { color:#183b5a; }
+  .mobile-day .rain { color:#0879b4; }
+  .mobile-day small { color:#637c92; }
+  .mobile-actions { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+  .mobile-action {
+    background:linear-gradient(145deg,#f9fcff,#edf5fb); color:#173650;
+    border:1px solid #c9dbe9; border-radius:15px; min-height:76px;
+    padding:11px 10px; box-shadow:0 6px 15px rgba(0,0,0,.12);
+  }
+  .mobile-action .ico { background:#dceefa; color:#087bad; width:36px;height:36px;border-radius:12px; }
+  .mobile-action b { color:#153550; font-size:11px; line-height:1.25; }
+  .mobile-action small { color:#627b91; font-size:9px; line-height:1.35; }
+  .mobile-tool-group { margin-top:17px; }
+  .mobile-tool-heading { color:#8ecfe9; font-size:9px; font-weight:950; letter-spacing:.12em; margin:0 2px 8px; }
+  .mobile-about-copy { color:#5d7187; font-size:11px; line-height:1.55; }
+  .mobile-empty { color:#678198; }
+  .mobile-bottom-nav, #mobileClassicNav {
+    position:fixed; z-index:6500; left:0; right:0; bottom:0;
+    display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
+    padding:7px 7px calc(7px + env(safe-area-inset-bottom));
+    background:rgba(5,19,34,.97); border-top:1px solid rgba(108,177,219,.28);
+    box-shadow:0 -8px 24px rgba(0,0,0,.28); backdrop-filter:blur(18px);
+  }
+  .mobile-nav-btn { color:#8eaac1; min-height:48px; font-size:9px; gap:4px; }
+  .mobile-nav-btn .ico { font-size:19px; }
+  .mobile-nav-btn.active { color:#54d4f5; }
+  .mobile-nav-btn.active .ico { filter:drop-shadow(0 0 7px rgba(67,199,238,.45)); }
+
+  /* Full mobile module shell — active for every desktop module on phones. */
+  #mobileClassicHeader { display:none; }
+  #mobileClassicNav { display:none; grid-template-columns:repeat(5,minmax(0,1fr)); }
+  #mobileClassicNav button {
+    border:0; background:transparent; color:#8daac1; min-width:0; min-height:48px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+    font:800 9px/1.1 Inter,system-ui,sans-serif; padding:3px 1px;
+  }
+  #mobileClassicNav button span { font-size:18px; line-height:1; }
+  #mobileClassicNav button small { font-size:9px; }
+  #mobileClassicNav button.active { color:#4ed4f4; }
+  #mobileClassicNav button.active span { filter:drop-shadow(0 0 7px rgba(78,212,244,.45)); }
+  .mobile-legacy-back { display:none !important; }
+  body.mobile-classic-mode {
+    background:radial-gradient(ellipse at 8% -12%,rgba(16,119,171,.25),transparent 35%),#07182a !important;
+    padding-top:0 !important;
+    padding-bottom:calc(76px + env(safe-area-inset-bottom)) !important;
+  }
+  body.mobile-classic-mode #mobileApp { display:none !important; }
+  body.mobile-classic-mode>header { display:none !important; }
+  body.mobile-classic-mode>main {
+    display:block !important; width:100% !important; max-width:760px !important;
+    margin:0 auto !important; padding:13px 12px calc(96px + env(safe-area-inset-bottom)) !important;
+  }
+  body.mobile-classic-mode #desktopSidebar,
+  body.mobile-classic-mode .vs-aircraft-showcase-desktop { display:none !important; }
+  body.mobile-classic-mode #mobileClassicHeader {
+    display:flex; position:sticky; top:0; z-index:6200; min-height:calc(66px + env(safe-area-inset-top));
+    align-items:center; gap:10px; padding:calc(9px + env(safe-area-inset-top)) 13px 9px;
+    background:rgba(5,19,34,.96); border-bottom:1px solid rgba(105,174,221,.24);
+    box-shadow:0 7px 20px rgba(0,0,0,.22); backdrop-filter:blur(18px);
+  }
+  .mobile-classic-back {
+    flex:0 0 39px; width:39px; height:39px; border:1px solid #315775; border-radius:13px;
+    background:#102e49; color:#e9f6ff; font-size:27px; line-height:1; cursor:pointer;
+  }
+  .mobile-classic-brand { display:flex; align-items:center; gap:9px; min-width:0; flex:1; }
+  .mobile-classic-mark { display:grid; place-items:center; width:34px;height:34px;border-radius:11px;color:#fff;font-weight:1000;font-size:16px;background:linear-gradient(135deg,#0ab6df,#315bd3);box-shadow:0 5px 14px rgba(14,165,233,.2); }
+  .mobile-classic-brand strong { display:block; color:#f3f8ff; font-size:14px; line-height:1.1; }
+  .mobile-classic-brand small { display:block; margin-top:3px; color:#7fb4d4; font-size:8px; font-weight:900; letter-spacing:.11em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:46vw; }
+  .mobile-classic-meta { display:flex; align-items:center; gap:6px; color:#b7cde0; white-space:nowrap; font-size:9px; font-weight:850; }
+  .mobile-classic-live-dot { width:7px;height:7px;border-radius:50%;background:#31d49b;box-shadow:0 0 0 4px rgba(49,212,155,.12); }
+  body.mobile-classic-mode #mobileClassicNav { display:grid !important; }
+
+  /* Common mobile module surfaces and typography */
+  .view.active { animation:mobileModuleIn .2s ease-out; }
+  @keyframes mobileModuleIn { from {opacity:.55; transform:translateY(5px)} to {opacity:1; transform:none} }
+  body.mobile-classic-mode .section-tag {
+    display:inline-flex; max-width:100%; white-space:normal; line-height:1.35;
+    padding:6px 10px; margin:1px 0 11px; border-radius:8px;
+    background:#123551; border:1px solid #2a607d; color:#8fe5f6;
+    font-size:9px; letter-spacing:.08em;
+  }
+  body.mobile-classic-mode .card,
+  body.mobile-classic-mode .card.wide,
+  body.mobile-classic-mode .map-sidebar-card,
+  body.mobile-classic-mode .ts-map-card,
+  body.mobile-classic-mode .waypoint-assessment-card {
+    min-width:0; max-width:100%; padding:13px !important; margin:0 0 11px;
+    background:linear-gradient(155deg,#f9fcff,#eef5fb) !important;
+    color:#122d46; border:1px solid #c6d9e8 !important; border-radius:16px !important;
+    box-shadow:0 7px 18px rgba(0,0,0,.14) !important;
+  }
+  body.mobile-classic-mode .card-heading { color:#17466a; font-size:12px; line-height:1.35; letter-spacing:.01em; }
+  body.mobile-classic-mode h1, body.mobile-classic-mode h2, body.mobile-classic-mode h3,
+  body.mobile-classic-mode h4 { max-width:100%; overflow-wrap:anywhere; }
+  body.mobile-classic-mode h2 { color:#123a59 !important; font-size:19px; line-height:1.2; margin:4px 0 10px; }
+  body.mobile-classic-mode .tw-title { color:#123b5d !important; font-size:19px; }
+  body.mobile-classic-mode h3 { font-size:14px; line-height:1.35; }
+  body.mobile-classic-mode .muted { color:#61788e !important; }
+  body.mobile-classic-mode p { overflow-wrap:anywhere; }
+  body.mobile-classic-mode .alert { border-radius:12px; padding:11px 12px; font-size:11px; line-height:1.45; overflow-wrap:anywhere; }
+  body.mobile-classic-mode .badge { max-width:100%; white-space:normal; }
+  body.mobile-classic-mode .location-card {
+    padding:12px !important; margin-bottom:11px; border-radius:15px;
+    background:linear-gradient(145deg,#103858,#14537a) !important;
+    color:#f1f8ff !important; border:1px solid #2b6b90 !important;
+    box-shadow:0 8px 18px rgba(0,0,0,.17);
+  }
+  body.mobile-classic-mode .location-card .loc-title,
+  body.mobile-classic-mode .location-card .coords { color:#f1f8ff !important; }
+  body.mobile-classic-mode .location-card .coords { opacity:.8; }
+  body.mobile-classic-mode .forecast-top-layout,
+  body.mobile-classic-mode .grid,
+  body.mobile-classic-mode .grid-5,
+  body.mobile-classic-mode .source-grid,
+  body.mobile-classic-mode .route-summary,
+  body.mobile-classic-mode .ts-analysis-layout,
+  body.mobile-classic-mode .ts-hotspot-layout,
+  body.mobile-classic-mode .ts-lower-grid,
+  body.mobile-classic-mode .tw-lower,
+  body.mobile-classic-mode .tw-details-grid,
+  body.mobile-classic-mode .tw-source-grid,
+  body.mobile-classic-mode .marine-grid,
+  body.mobile-classic-mode .upper-grid,
+  body.mobile-classic-mode .aviation-grid,
+  body.mobile-classic-mode .fits-grid,
+  body.mobile-classic-mode .route-grid,
+  body.mobile-classic-mode .satellite-grid,
+  body.mobile-classic-mode .nwp-grid {
+    display:grid !important; grid-template-columns:minmax(0,1fr) !important; gap:10px !important;
+  }
+  body.mobile-classic-mode .grid-5 > *, body.mobile-classic-mode .grid > *,
+  body.mobile-classic-mode .source-grid > *, body.mobile-classic-mode .route-summary > * { min-width:0; }
+  body.mobile-classic-mode .hero-weather-card { min-height:0; border-radius:17px; }
+  body.mobile-classic-mode .hero-content { padding:15px !important; gap:8px; }
+  body.mobile-classic-mode .hero-temp { font-size:42px !important; }
+  body.mobile-classic-mode .solar-events { grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:7px; }
+  body.mobile-classic-mode .solar-event { min-width:0; padding:9px; }
+  body.mobile-classic-mode .convective-bar { display:grid !important; grid-template-columns:1fr !important; gap:8px; }
+  body.mobile-classic-mode .prob-pill { min-width:0; }
+  body.mobile-classic-mode .map-sidebar-card { padding:11px !important; }
+  body.mobile-classic-mode #map,
+  body.mobile-classic-mode #tsMap,
+  body.mobile-classic-mode #marineMap,
+  body.mobile-classic-mode #routeMap,
+  body.mobile-classic-mode .route-map { width:100% !important; min-height:300px !important; height:330px !important; border-radius:12px; overflow:hidden; }
+  body.mobile-classic-mode .map-note { font-size:10px; }
+
+  /* Forms, selector bars and controls are stacked and touch-sized. */
+  body.mobile-classic-mode input:not([type=checkbox]):not([type=radio]),
+  body.mobile-classic-mode select,
+  body.mobile-classic-mode textarea {
+    min-width:0; max-width:100%; min-height:43px; border-radius:11px;
+    font-size:16px !important; padding:10px 11px !important;
+    color:#173a58; background:#fff; border:1px solid #b9d0e2;
+  }
+  body.mobile-classic-mode button,
+  body.mobile-classic-mode .source-btn,
+  body.mobile-classic-mode .tw-btn,
+  body.mobile-classic-mode .multi-metar-btn,
+  body.mobile-classic-mode .windy-btn {
+    min-height:40px; max-width:100%; border-radius:11px; touch-action:manipulation;
+  }
+  body.mobile-classic-mode .toolbar,
+  body.mobile-classic-mode .tw-controls,
+  body.mobile-classic-mode .multi-metar-toolbar,
+  body.mobile-classic-mode .multi-metar-actions,
+  body.mobile-classic-mode .mm-controls,
+  body.mobile-classic-mode .route-toolbar,
+  body.mobile-classic-mode .ts-controls {
+    display:flex !important; flex-wrap:wrap !important; gap:8px !important; align-items:stretch;
+  }
+  body.mobile-classic-mode .toolbar > *,
+  body.mobile-classic-mode .multi-metar-toolbar > *,
+  body.mobile-classic-mode .mm-controls > *,
+  body.mobile-classic-mode .route-toolbar > * { min-width:0; max-width:100%; }
+
+  /* Data tables remain intact but use a dedicated swipeable viewport. */
+  body.mobile-classic-mode .table-wrap,
+  body.mobile-classic-mode .tw-table-wrap,
+  body.mobile-classic-mode .obs-cal-table-wrap,
+  body.mobile-classic-mode .route-upper-table-wrap,
+  body.mobile-classic-mode .multi-report-table-wrap {
+    display:block; width:100%; max-width:100%; overflow-x:auto !important; overflow-y:hidden;
+    -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain;
+    border:1px solid #c7d9e8; border-radius:12px; background:#fff;
+    box-shadow:inset -12px 0 14px -16px rgba(12,52,83,.65);
+  }
+  body.mobile-classic-mode table.table { min-width:650px; font-size:11px; background:#fff; }
+  body.mobile-classic-mode table.table th { position:sticky; top:0; z-index:1; background:#e7f3fb; color:#175478; font-size:9px; padding:9px 10px; }
+  body.mobile-classic-mode table.table td { color:#243f57; font-size:11px; padding:9px 10px; white-space:nowrap; }
+  body.mobile-classic-mode .tw-table { min-width:900px; }
+  body.mobile-classic-mode .hourly-scroll-container,
+  body.mobile-classic-mode .mm-guidance-scroll,
+  body.mobile-classic-mode .hourly-guidance-scroll,
+  body.mobile-classic-mode .marine-timeline-scroll {
+    max-width:100%; overflow-x:auto !important; -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x proximity; padding-bottom:7px;
+  }
+  body.mobile-classic-mode .hourly-card,
+  body.mobile-classic-mode .mm-hour-card { scroll-snap-align:start; }
+
+  /* Forecast guidance: stacked summary blocks, horizontal hourly strips and compact bias cards. */
+  body.mobile-classic-mode .obs-cal-bias-grid,
+  body.mobile-classic-mode .ts-kpi-grid,
+  body.mobile-classic-mode .tw-kpi-grid,
+  body.mobile-classic-mode .route-summary { grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:8px !important; }
+  body.mobile-classic-mode .obs-cal-bias,
+  body.mobile-classic-mode .ts-kpi,
+  body.mobile-classic-mode .tw-kpi,
+  body.mobile-classic-mode .route-kpi { min-width:0; padding:10px !important; border-radius:12px; }
+  body.mobile-classic-mode .obs-cal-bias b,
+  body.mobile-classic-mode .ts-kpi .value,
+  body.mobile-classic-mode .tw-kpi-value,
+  body.mobile-classic-mode .route-kpi b { overflow-wrap:anywhere; }
+  body.mobile-classic-mode .mm-home-summary { padding:12px !important; }
+  body.mobile-classic-mode .mm-home-content { padding:9px !important; }
+  body.mobile-classic-mode .mm-home-summary-title { font-size:13px; }
+
+  /* Aviation / METAR console */
+  body.mobile-classic-mode .multi-metar-toolbar { display:grid !important; grid-template-columns:minmax(0,1fr) !important; }
+  body.mobile-classic-mode .multi-metar-input-wrap,
+  body.mobile-classic-mode .multi-metar-actions { grid-column:auto !important; width:100%; }
+  body.mobile-classic-mode .multi-metar-grid { grid-template-columns:1fr !important; }
+  body.mobile-classic-mode .multi-metar-row { grid-template-columns:minmax(0,1fr) !important; gap:0; }
+  body.mobile-classic-mode .multi-report-assessment { border-left:0 !important; border-top:1px solid #d7e3ed !important; }
+  body.mobile-classic-mode .multi-raw { font-size:17px !important; line-height:1.4; overflow-wrap:anywhere; }
+  body.mobile-classic-mode .metar-criteria-box { font-size:11px; }
+
+  /* Tropical watch */
+  body.mobile-classic-mode .tw-wrap { padding:0; }
+  body.mobile-classic-mode .tw-topline { display:block; }
+  body.mobile-classic-mode .tw-livebox { justify-content:flex-start; margin-top:9px; }
+  body.mobile-classic-mode .tw-hero-banner { display:grid; grid-template-columns:auto 1fr; gap:7px 10px; padding:13px; }
+  body.mobile-classic-mode .tw-hero-label { border:0; padding:0; font-size:10px; }
+  body.mobile-classic-mode .tw-hero-name { font-size:18px; white-space:normal; }
+  body.mobile-classic-mode .tw-hero-button { grid-column:1/-1; margin:3px 0 0; width:100%; }
+  body.mobile-classic-mode .tw-kpi-grid { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+  body.mobile-classic-mode .tw-lower,
+  body.mobile-classic-mode .tw-details-grid { grid-template-columns:1fr !important; }
+  body.mobile-classic-mode .tw-detail-list { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  body.mobile-classic-mode .tw-sat,
+  body.mobile-classic-mode .tw-map { height:270px; }
+  body.mobile-classic-mode .tw-panel,
+  body.mobile-classic-mode .tw-section { padding:11px; border-radius:14px; }
+  body.mobile-classic-mode .tw-table { min-width:980px; }
+
+  /* Marine / satellite / NWP: preserve maps and embeds at phone proportions. */
+  body.mobile-classic-mode .live-frame,
+  body.mobile-classic-mode .live-frame iframe { width:100% !important; min-height:260px; height:300px !important; }
+  body.mobile-classic-mode iframe { max-width:100%; }
+  body.mobile-classic-mode .meteogram-chart-wrap { height:260px !important; }
+  body.mobile-classic-mode canvas { max-width:100% !important; }
+  body.mobile-classic-mode .route-map { min-height:320px !important; }
+
+  /* Floating global widgets must not cover the phone navigation. */
+  body.mobile-classic-mode .floating-meteogram-tab,
+  body.mobile-classic-mode .floating-metar-tab,
+  body.mobile-classic-mode .floating-windy-widget,
+  body.mobile-classic-mode .floating-widget-launcher { display:none !important; }
+  body.mobile-classic-mode #tropicalWatchBanner.tw-floating-alert { left:8px !important; right:8px !important; width:auto !important; max-width:none !important; bottom:calc(74px + env(safe-area-inset-bottom)) !important; top:auto !important; }
+  body.mobile-classic-mode #draggableWindyWidget { max-width:calc(100vw - 20px); }
+
+  /* Keep text, buttons and embedded controls inside narrow screens. */
+  body.mobile-classic-mode .card > *,
+  body.mobile-classic-mode .tw-panel > *,
+  body.mobile-classic-mode .tw-section > * { max-width:100%; }
+  body.mobile-classic-mode pre { max-width:100%; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; }
+  body.mobile-classic-mode .source-grid > *,
+  body.mobile-classic-mode .live-card,
+  body.mobile-classic-mode .live-frame { min-width:0; }
+}
+@media (max-width: 380px) {
+  .mobile-main { padding-left:10px; padding-right:10px; }
+  .mobile-actions { grid-template-columns:1fr !important; }
+  .mobile-data-card .v { font-size:19px; }
+  body.mobile-classic-mode>main { padding-left:9px !important; padding-right:9px !important; }
+  body.mobile-classic-mode .obs-cal-bias-grid,
+  body.mobile-classic-mode .ts-kpi-grid,
+  body.mobile-classic-mode .tw-kpi-grid,
+  body.mobile-classic-mode .route-summary { grid-template-columns:1fr !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .view.active, .mobile-page, #mobileClassicHeader, #mobileClassicNav { animation:none !important; transition:none !important; }
+}
+</style>
+
+<style id="vayusarathi-mobile-redesign-v2">
+/* VayuSarathi Mobile Operations: purpose-built phone screens. Desktop rules are untouched. */
+#mobileModuleHero { display:none; }
+@media (max-width: 767px) {
+  :root {
+    --vs-mobile-bg:#061626;
+    --vs-mobile-bg2:#0a2137;
+    --vs-mobile-panel:#102b45;
+    --vs-mobile-panel2:#153752;
+    --vs-mobile-ink:#102b43;
+    --vs-mobile-muted:#5b7186;
+    --vs-mobile-cyan:#27c5e8;
+    --vs-mobile-accent:#27c5e8;
+    --vs-mobile-accent-soft:#e3f8ff;
+  }
+  html, body { max-width:100%; overflow-x:hidden; }
+  body.mobile-classic-mode {
+    background:
+      radial-gradient(ellipse at 0% 0%,rgba(20,142,191,.20),transparent 34%),
+      radial-gradient(ellipse at 100% 23%,rgba(104,81,211,.13),transparent 33%),
+      linear-gradient(180deg,#061626 0%,#081d31 55%,#061626 100%) !important;
+    color:#eaf4fb !important;
+    padding-bottom:calc(78px + env(safe-area-inset-bottom)) !important;
+  }
+  body.mobile-classic-mode > main {
+    box-sizing:border-box;
+    width:100% !important;
+    max-width:720px !important;
+    margin:0 auto !important;
+    padding:12px 12px calc(102px + env(safe-area-inset-bottom)) !important;
+  }
+  body.mobile-classic-mode #mobileClassicHeader {
+    min-height:64px;
+    padding:8px 12px;
+    background:rgba(4,17,30,.97);
+    border-bottom:1px solid rgba(100,190,225,.24);
+    box-shadow:0 9px 24px rgba(0,0,0,.26);
+  }
+  body.mobile-classic-mode .mobile-classic-back {
+    border:1px solid #2b5875;
+    background:linear-gradient(145deg,#143b59,#0d2942);
+    color:#edfbff;
+    border-radius:13px;
+  }
+  body.mobile-classic-mode .mobile-classic-mark {
+    background:linear-gradient(140deg,#16c4e6,#236bc2 65%,#6152c5);
+    box-shadow:0 5px 18px rgba(22,196,230,.24);
+  }
+  body.mobile-classic-mode .mobile-classic-brand strong { color:#f3fbff; font-size:14px; }
+  body.mobile-classic-mode .mobile-classic-brand small { color:#82cce2; }
+  body.mobile-classic-mode .mobile-classic-meta { color:#b9d0e0; }
+
+  /* Dynamic screen-specific title card. */
+  body.mobile-classic-mode #mobileModuleHero {
+    --vs-mobile-accent:#27c5e8;
+    --vs-mobile-accent-soft:#e3f8ff;
+    display:flex;
+    position:relative;
+    overflow:hidden;
+    align-items:center;
+    gap:12px;
+    margin:2px 0 14px;
+    padding:15px 14px;
+    min-height:92px;
+    border:1px solid color-mix(in srgb,var(--vs-mobile-accent) 42%, #254861);
+    border-radius:19px;
+    background:
+      radial-gradient(circle at 91% 4%,color-mix(in srgb,var(--vs-mobile-accent) 22%,transparent),transparent 40%),
+      linear-gradient(135deg,#102b45 0%,#0d2942 65%,#10233c 100%);
+    box-shadow:0 12px 26px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.045);
+  }
+  body.mobile-classic-mode #mobileModuleHero:after {
+    content:""; position:absolute; right:-38px; top:-62px; width:150px; height:150px;
+    border:1px solid color-mix(in srgb,var(--vs-mobile-accent) 28%,transparent);
+    border-radius:50%; box-shadow:0 0 0 16px color-mix(in srgb,var(--vs-mobile-accent) 5%,transparent),0 0 0 34px color-mix(in srgb,var(--vs-mobile-accent) 4%,transparent);
+    pointer-events:none;
+  }
+  .vs-mob-hero-icon {
+    flex:0 0 48px; width:48px; height:48px; display:grid; place-items:center;
+    border-radius:15px; color:#fff; font-size:24px;
+    background:linear-gradient(145deg,var(--vs-mobile-accent),color-mix(in srgb,var(--vs-mobile-accent) 42%,#1a3e68));
+    box-shadow:0 7px 18px color-mix(in srgb,var(--vs-mobile-accent) 23%,transparent);
+  }
+  .vs-mob-hero-copy { position:relative; z-index:1; min-width:0; flex:1; }
+  .vs-mob-hero-kicker { color:var(--vs-mobile-accent); font-size:8px; font-weight:950; letter-spacing:.15em; line-height:1.3; margin-bottom:5px; }
+  .vs-mob-hero-title { color:#f2f8fd; font-size:18px; font-weight:950; letter-spacing:-.45px; line-height:1.15; }
+  .vs-mob-hero-sub { color:#a9c0d3; font-size:9px; font-weight:750; line-height:1.45; margin-top:5px; letter-spacing:.025em; }
+  .vs-mob-hero-loc { color:#d0e4f1; font-size:9px; font-weight:850; margin-top:6px; }
+
+  /* Module-specific colour identity. */
+  #forecast-guidance { --vs-mobile-accent:#20c5e6; --vs-mobile-accent-soft:#e4f9ff; }
+  #tropical-watch { --vs-mobile-accent:#a78bfa; --vs-mobile-accent-soft:#f1edff; }
+  #verification-learning { --vs-mobile-accent:#34d399; --vs-mobile-accent-soft:#e5fff4; }
+  #thunderstorm { --vs-mobile-accent:#c084fc; --vs-mobile-accent-soft:#f6edff; }
+  #marine { --vs-mobile-accent:#22c6d9; --vs-mobile-accent-soft:#e4fcff; }
+  #upper { --vs-mobile-accent:#9b8cff; --vs-mobile-accent-soft:#f0edff; }
+  #aviation-forecast { --vs-mobile-accent:#4ba8ff; --vs-mobile-accent-soft:#eaf5ff; }
+  #multi-metar { --vs-mobile-accent:#25d1b1; --vs-mobile-accent-soft:#e7fff8; }
+  #fits { --vs-mobile-accent:#f5a64b; --vs-mobile-accent-soft:#fff4e5; }
+  #route { --vs-mobile-accent:#ef86c8; --vs-mobile-accent-soft:#fff0f8; }
+  #satellites { --vs-mobile-accent:#42b9ef; --vs-mobile-accent-soft:#e8f8ff; }
+  #nwp { --vs-mobile-accent:#9d9cff; --vs-mobile-accent-soft:#f0efff; }
+
+  /* Shared module surfaces: separate visual language from the desktop white canvas. */
+  body.mobile-classic-mode main .view.active { animation:vsMobileScreenIn .24s ease-out both; }
+  @keyframes vsMobileScreenIn { from { opacity:.55; transform:translateY(8px); } to { opacity:1; transform:none; } }
+  body.mobile-classic-mode .view.active > .section-tag {
+    display:inline-flex; align-items:center; gap:6px; margin:0 0 11px 2px;
+    border-radius:999px; padding:7px 10px; background:#102c45;
+    border:1px solid color-mix(in srgb,var(--vs-mobile-accent) 45%,#31536d);
+    color:var(--vs-mobile-accent); font-size:8px; font-weight:950; letter-spacing:.105em;
+    line-height:1.35; white-space:normal;
+  }
+  body.mobile-classic-mode .view.active > .section-tag:before {
+    content:""; width:6px; height:6px; flex:0 0 6px; border-radius:50%; background:var(--vs-mobile-accent); box-shadow:0 0 9px var(--vs-mobile-accent);
+  }
+  body.mobile-classic-mode .view.active > .card,
+  body.mobile-classic-mode .view.active > .location-card,
+  body.mobile-classic-mode .view.active .card.wide,
+  body.mobile-classic-mode .view.active .map-sidebar-card,
+  body.mobile-classic-mode .view.active .ts-map-card,
+  body.mobile-classic-mode .view.active .waypoint-assessment-card {
+    box-sizing:border-box; min-width:0; max-width:100%; margin:0 0 11px !important;
+    padding:13px !important; border-radius:17px !important;
+    background:linear-gradient(155deg,#f9fcff 0%,#edf5fb 100%) !important;
+    border:1px solid #c9dbe9 !important; border-top:3px solid var(--vs-mobile-accent) !important;
+    color:#16334d; box-shadow:0 9px 20px rgba(0,0,0,.15) !important;
+  }
+  body.mobile-classic-mode .view.active .card-heading { color:#174c70; font-size:12px; font-weight:950; line-height:1.35; }
+  body.mobile-classic-mode .view.active h2 { color:#f2f8fd !important; font-size:19px; line-height:1.2; letter-spacing:-.35px; }
+  body.mobile-classic-mode .view.active h3 { color:#173e5c; font-size:14px; line-height:1.35; }
+  body.mobile-classic-mode .view.active .muted { color:#627b90 !important; }
+  body.mobile-classic-mode .view.active p { color:#456077; font-size:11px; line-height:1.55; }
+  body.mobile-classic-mode .view.active .alert { border-radius:13px; padding:11px 12px; font-size:10px; line-height:1.5; overflow-wrap:anywhere; }
+  body.mobile-classic-mode .view.active .badge { max-width:100%; white-space:normal; }
+  body.mobile-classic-mode .view.active .location-card {
+    background:radial-gradient(circle at 100% 0%,color-mix(in srgb,var(--vs-mobile-accent) 24%,transparent),transparent 42%),linear-gradient(140deg,#103756,#104b6b) !important;
+    border:1px solid color-mix(in srgb,var(--vs-mobile-accent) 55%,#2c607d) !important;
+    border-top:3px solid var(--vs-mobile-accent) !important; color:#f0f8ff !important;
+  }
+  body.mobile-classic-mode .view.active .location-card .loc-title,
+  body.mobile-classic-mode .view.active .location-card .coords { color:#f0f8ff !important; }
+  body.mobile-classic-mode .view.active .location-card .coords { opacity:.78; }
+
+  /* Touch-first controls and compact filter bars. */
+  body.mobile-classic-mode input:not([type=checkbox]):not([type=radio]),
+  body.mobile-classic-mode select, body.mobile-classic-mode textarea {
+    box-sizing:border-box; min-width:0; max-width:100%; min-height:44px;
+    border-radius:12px; padding:10px 12px !important; font-size:16px !important;
+    color:#173a56; background:#fff; border:1px solid #bad0e1;
+  }
+  body.mobile-classic-mode button { min-height:42px; max-width:100%; border-radius:12px; touch-action:manipulation; }
+  body.mobile-classic-mode .toolbar, body.mobile-classic-mode .tw-controls,
+  body.mobile-classic-mode .multi-metar-toolbar, body.mobile-classic-mode .multi-metar-actions,
+  body.mobile-classic-mode .mm-controls, body.mobile-classic-mode .route-toolbar,
+  body.mobile-classic-mode .ts-controls, body.mobile-classic-mode .route-upper-controls {
+    display:flex !important; flex-wrap:wrap !important; gap:8px !important; align-items:stretch;
+  }
+  body.mobile-classic-mode .toolbar > *, body.mobile-classic-mode .multi-metar-toolbar > *,
+  body.mobile-classic-mode .mm-controls > *, body.mobile-classic-mode .route-toolbar > * { min-width:0; max-width:100%; }
+
+  /* FORECAST GUIDANCE: a dedicated model-and-observation flow. */
+  body.mobile-classic-mode #forecast-guidance .forecast-guidance-intro {
+    border-top-color:#20c5e6 !important; background:linear-gradient(135deg,#f5fcff,#e8f7fd) !important;
+  }
+  body.mobile-classic-mode #forecast-guidance .obs-cal-card {
+    border:1px solid #94d9ee !important; border-top:4px solid #0b9fc7 !important;
+    background:linear-gradient(155deg,#f4fcff,#e5f6fc) !important;
+  }
+  body.mobile-classic-mode #forecast-guidance .obs-cal-bias-grid {
+    display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:8px !important;
+  }
+  body.mobile-classic-mode #forecast-guidance .obs-cal-bias {
+    min-width:0; padding:10px !important; border-radius:13px; background:#fff;
+    border:1px solid #cfe3ed; box-shadow:0 4px 10px rgba(15,67,98,.06);
+  }
+  body.mobile-classic-mode #forecast-guidance .mm-home-summary { border-radius:14px; background:#eaf6fc; }
+  body.mobile-classic-mode #forecast-guidance .mm-guidance-head,
+  body.mobile-classic-mode #forecast-guidance .obs-cal-head { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  body.mobile-classic-mode #forecast-guidance .hourly-scroll-container,
+  body.mobile-classic-mode #forecast-guidance .mm-guidance-scroll,
+  body.mobile-classic-mode #forecast-guidance .obs-cal-animated-wrap {
+    max-width:100%; overflow-x:auto !important; -webkit-overflow-scrolling:touch; scroll-snap-type:x proximity;
+  }
+  body.mobile-classic-mode #forecast-guidance .hourly-scroll-container > *,
+  body.mobile-classic-mode #forecast-guidance .mm-guidance-scroll > * { scroll-snap-align:start; }
+
+  /* TROPICAL WATCH: threat banner, two-column vital statistics, stacked guidance panels. */
+  body.mobile-classic-mode #tropical-watch .tw-wrap { padding:0; }
+  body.mobile-classic-mode #tropical-watch .tw-topline { display:block; padding:0 2px 10px; }
+  body.mobile-classic-mode #tropical-watch .tw-title { color:#f4edff !important; font-size:20px; line-height:1.15; }
+  body.mobile-classic-mode #tropical-watch .tw-subtitle { color:#afc3d6; font-size:10px; line-height:1.5; }
+  body.mobile-classic-mode #tropical-watch .tw-livebox { justify-content:flex-start; margin:8px 0 0; }
+  body.mobile-classic-mode #tropical-watch .tw-hero-banner {
+    display:grid; grid-template-columns:42px minmax(0,1fr); gap:7px 10px; padding:14px;
+    border:1px solid #6e5b9a; border-radius:17px;
+    background:radial-gradient(circle at 100% 0%,rgba(167,139,250,.24),transparent 42%),linear-gradient(145deg,#25234e,#172f4a);
+  }
+  body.mobile-classic-mode #tropical-watch .tw-hero-label { border:0; padding:0; font-size:9px; }
+  body.mobile-classic-mode #tropical-watch .tw-hero-name { font-size:18px; white-space:normal; color:#fff; }
+  body.mobile-classic-mode #tropical-watch .tw-hero-button { grid-column:1/-1; margin:3px 0 0; width:100%; }
+  body.mobile-classic-mode #tropical-watch .tw-kpi-grid { display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:8px !important; }
+  body.mobile-classic-mode #tropical-watch .tw-kpi { min-width:0; padding:11px; border-radius:13px; background:#f6f3ff; border:1px solid #d7cef6; }
+  body.mobile-classic-mode #tropical-watch .tw-kpi-value { font-size:19px; }
+  body.mobile-classic-mode #tropical-watch .tw-lower,
+  body.mobile-classic-mode #tropical-watch .tw-details-grid { display:grid !important; grid-template-columns:1fr !important; gap:10px !important; }
+  body.mobile-classic-mode #tropical-watch .tw-detail-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
+  body.mobile-classic-mode #tropical-watch .tw-panel,
+  body.mobile-classic-mode #tropical-watch .tw-section { padding:11px; border-radius:15px; }
+  body.mobile-classic-mode #tropical-watch .tw-sat,
+  body.mobile-classic-mode #tropical-watch .tw-map,
+  body.mobile-classic-mode #tropical-watch .tw-track-model-map { height:260px; }
+
+  /* VERIFICATION: KPI tiles first, comparison tables stay in swipe viewports. */
+  body.mobile-classic-mode #verification-learning .obs-cal-bias-grid { display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:8px !important; }
+  body.mobile-classic-mode #verification-learning .obs-cal-bias { padding:10px; border-radius:13px; background:#e9fff5; border:1px solid #bcebd5; }
+  body.mobile-classic-mode #verification-learning .fv-event-list { display:grid; gap:8px; }
+  body.mobile-classic-mode #verification-learning .fv-event { padding:10px; border-radius:13px; background:#f0faf5; border:1px solid #cce9da; }
+
+  /* THUNDERSTORM: spatial map as primary visual, risk tiles below it. */
+  body.mobile-classic-mode #thunderstorm .ts-analysis-toolbar { display:grid !important; grid-template-columns:1fr !important; gap:8px; }
+  body.mobile-classic-mode #thunderstorm .ts-analysis-toolbar button { width:100%; }
+  body.mobile-classic-mode #thunderstorm .ts-analysis-layout { display:flex !important; flex-direction:column !important; gap:10px !important; }
+  body.mobile-classic-mode #thunderstorm .ts-map-card { order:0; padding:10px !important; }
+  body.mobile-classic-mode #thunderstorm .ts-hotspot-panel { order:1; }
+  body.mobile-classic-mode #thunderstorm .ts-kpi-grid { display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:8px !important; }
+  body.mobile-classic-mode #thunderstorm .ts-kpi { padding:10px; border-radius:13px; background:#f7f1ff; border:1px solid #ddc9f4; }
+  body.mobile-classic-mode #thunderstorm .ts-map-legend { flex-wrap:wrap; gap:7px; }
+  body.mobile-classic-mode #thunderstorm .ts-direction-arrow { margin:auto; }
+
+  /* MARINE: sea-state metrics in a two-column tile grid; map and timeline get their own panels. */
+  body.mobile-classic-mode #marine .marine-location-picker { padding:12px; border-radius:15px; background:#e8faff; border:1px solid #bfeaf2; }
+  body.mobile-classic-mode #marine .marine-location-picker-head { display:block; }
+  body.mobile-classic-mode #marine .grid-5 { display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:8px !important; }
+  body.mobile-classic-mode #marine .grid-5 > .card { min-width:0; padding:11px !important; margin:0 !important; border-radius:14px !important; }
+  body.mobile-classic-mode #marine .grid-5 > .card:first-child { grid-column:1/-1; }
+  body.mobile-classic-mode #marine .metric { font-size:20px; }
+  body.mobile-classic-mode #marine .windy-map-container { height:270px !important; min-height:250px !important; }
+
+  /* UPPER AIR: compact input deck + deliberate sideways sounding matrix. */
+  body.mobile-classic-mode #upper > .card:not(.wide) { background:linear-gradient(145deg,#f6f3ff,#ebeafe) !important; border-top-color:#8d7cf1 !important; }
+  body.mobile-classic-mode #upper .toolbar { display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:8px !important; }
+  body.mobile-classic-mode #upper .toolbar > * { min-width:0; width:100%; }
+  body.mobile-classic-mode #upper .pressure-selector-box { padding:10px; border-radius:12px; background:#fff; }
+  body.mobile-classic-mode #upper .table-wrap { overflow-x:auto !important; -webkit-overflow-scrolling:touch; }
+  body.mobile-classic-mode #upper #upperMatrix { min-width:760px; }
+
+  /* AVIATION FORECAST + FITS: turn each hourly row into a readable stacked mobile briefing card. */
+  body.mobile-classic-mode .mobile-record-table-wrap { width:100%; max-width:100%; overflow:visible !important; border:0 !important; background:transparent !important; box-shadow:none !important; }
+  body.mobile-classic-mode table.mobile-record-table { display:block; width:100% !important; min-width:0 !important; border:0 !important; border-collapse:separate; background:transparent !important; }
+  body.mobile-classic-mode table.mobile-record-table thead { position:absolute !important; width:1px !important; height:1px !important; padding:0 !important; margin:-1px !important; overflow:hidden !important; clip:rect(0,0,0,0) !important; white-space:nowrap !important; border:0 !important; }
+  body.mobile-classic-mode table.mobile-record-table tbody { display:grid !important; grid-template-columns:1fr; gap:9px; }
+  body.mobile-classic-mode table.mobile-record-table tbody tr {
+    display:block !important; padding:8px 11px !important; border:1px solid #cbdde9 !important;
+    border-left:4px solid var(--vs-mobile-accent) !important; border-radius:14px !important;
+    background:linear-gradient(150deg,#fff,#f0f6fb) !important; box-shadow:0 5px 13px rgba(0,0,0,.09);
+  }
+  body.mobile-classic-mode table.mobile-record-table tbody td {
+    display:flex !important; align-items:flex-start; justify-content:space-between; gap:12px;
+    min-width:0; padding:7px 1px !important; border:0 !important; border-bottom:1px solid #e6eef4 !important;
+    background:transparent !important; color:#183850 !important; font-size:11px !important; line-height:1.4;
+    white-space:normal !important; text-align:right;
+  }
+  body.mobile-classic-mode table.mobile-record-table tbody td:last-child { border-bottom:0 !important; }
+  body.mobile-classic-mode table.mobile-record-table tbody td:before {
+    content:attr(data-label); flex:0 0 43%; max-width:43%; color:#60788c; font-size:9px; font-weight:900;
+    letter-spacing:.02em; line-height:1.4; text-align:left;
+  }
+  body.mobile-classic-mode table.mobile-record-table tbody td:first-child {
+    display:block !important; padding:8px 9px !important; margin-bottom:5px; border:0 !important;
+    border-radius:9px; background:#e8f5fc !important; color:#075b85 !important; font-size:12px !important;
+    font-weight:950; text-align:left;
+  }
+  body.mobile-classic-mode table.mobile-record-table tbody td:first-child:before { content:none !important; }
+  body.mobile-classic-mode #aviation-forecast .location-card,
+  body.mobile-classic-mode #fits .location-card { margin-bottom:10px !important; }
+  body.mobile-classic-mode #aviation-forecast .card.wide,
+  body.mobile-classic-mode #fits .card.wide { padding:11px !important; }
+
+  /* MULTI-METAR: airport-first result cards, vertical search controls. */
+  body.mobile-classic-mode #multi-metar .multi-metar-toolbar { display:grid !important; grid-template-columns:1fr !important; gap:9px !important; }
+  body.mobile-classic-mode #multi-metar .multi-metar-input-wrap,
+  body.mobile-classic-mode #multi-metar .multi-metar-actions { width:100%; grid-column:auto !important; }
+  body.mobile-classic-mode #multi-metar .multi-metar-grid { display:grid !important; grid-template-columns:1fr !important; gap:10px !important; }
+  body.mobile-classic-mode #multi-metar .multi-metar-row { display:grid !important; grid-template-columns:1fr !important; gap:0 !important; }
+  body.mobile-classic-mode #multi-metar .multi-report-assessment { border-left:0 !important; border-top:1px solid #d7e3ed !important; }
+  body.mobile-classic-mode #multi-metar .multi-raw { font-size:17px !important; line-height:1.45; overflow-wrap:anywhere; }
+
+  /* ROUTE: map-led briefing, two-column flight metrics, stacked waypoint reports. */
+  body.mobile-classic-mode #route .route-summary { display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:8px !important; }
+  body.mobile-classic-mode #route .route-kpi { min-width:0; padding:11px; border-radius:13px; background:#fff2fa; border:1px solid #f2c9e1; }
+  body.mobile-classic-mode #route .route-kpi b { display:block; color:#7a2759; font-size:17px; overflow-wrap:anywhere; }
+  body.mobile-classic-mode #route .route-map,
+  body.mobile-classic-mode #route #routeMap { height:270px !important; min-height:250px !important; border-radius:13px; }
+  body.mobile-classic-mode #route #routeTable { display:grid; gap:9px; }
+  body.mobile-classic-mode #route .route-upper-grid { display:grid !important; grid-template-columns:1fr !important; gap:9px !important; }
+
+  /* SATELLITE: map/feeds fill the screen width with swipeable layers. */
+  body.mobile-classic-mode #satellites .windy-layer-controls { display:flex !important; overflow-x:auto; flex-wrap:nowrap !important; padding-bottom:5px; }
+  body.mobile-classic-mode #satellites .windy-btn { flex:0 0 auto; white-space:nowrap; }
+  body.mobile-classic-mode #satellites .live-grid { display:grid !important; grid-template-columns:1fr !important; gap:10px !important; }
+  body.mobile-classic-mode #satellites .live-frame,
+  body.mobile-classic-mode #satellites .live-frame iframe { width:100% !important; height:270px !important; min-height:240px !important; border-radius:12px; }
+
+  /* NWP: operational products become a two-column launchpad. */
+  body.mobile-classic-mode #nwp .grid-5 { display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:8px !important; }
+  body.mobile-classic-mode #nwp .grid-5 > .card { min-width:0; padding:11px !important; margin:0 !important; border-radius:14px !important; }
+  body.mobile-classic-mode #nwp .grid-5 .source-btn { width:100%; white-space:normal; }
+
+  /* Map canvases and remote embeds: actual phone viewport sizing. */
+  body.mobile-classic-mode #map, body.mobile-classic-mode #tsMap,
+  body.mobile-classic-mode #routeMap, body.mobile-classic-mode .route-map,
+  body.mobile-classic-mode #marine .windy-map-container,
+  body.mobile-classic-mode .tw-map, body.mobile-classic-mode .tw-sat {
+    width:100% !important; min-height:250px !important; height:270px !important; max-width:100%; border-radius:13px; overflow:hidden;
+  }
+  body.mobile-classic-mode iframe { max-width:100% !important; }
+  body.mobile-classic-mode .meteogram-chart-wrap { height:250px !important; }
+  body.mobile-classic-mode canvas { max-width:100% !important; }
+  body.mobile-classic-mode .live-frame { min-width:0; }
+
+  /* Wide technical matrices deliberately remain swipeable and are clearly identified as such. */
+  body.mobile-classic-mode .table-wrap, body.mobile-classic-mode .tw-table-wrap,
+  body.mobile-classic-mode .obs-cal-table-wrap, body.mobile-classic-mode .route-upper-table-wrap,
+  body.mobile-classic-mode .multi-report-table-wrap {
+    display:block; width:100%; max-width:100%; overflow-x:auto !important; overflow-y:hidden;
+    -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain;
+    border:1px solid #c6d9e8; border-radius:12px; background:#fff;
+  }
+  body.mobile-classic-mode table.table:not(.mobile-record-table) { min-width:680px; font-size:11px; background:#fff; }
+  body.mobile-classic-mode table.table:not(.mobile-record-table) th { position:sticky; top:0; z-index:1; background:#e7f3fb; color:#175478; font-size:9px; padding:9px 10px; }
+  body.mobile-classic-mode table.table:not(.mobile-record-table) td { color:#243f57; font-size:11px; padding:9px 10px; white-space:nowrap; }
+  body.mobile-classic-mode #verification-learning table.table { min-width:760px; }
+  body.mobile-classic-mode #marine #marineForecastTable { min-width:920px; }
+  body.mobile-classic-mode #upper #upperMatrix { min-width:760px; }
+  body.mobile-classic-mode #forecast-guidance .obs-cal-table-wrap { overflow-x:auto !important; }
+
+  /* Prevent floating desktop widgets from covering controls at the bottom of a phone. */
+  body.mobile-classic-mode .floating-meteogram-tab,
+  body.mobile-classic-mode .floating-metar-tab,
+  body.mobile-classic-mode .floating-windy-widget,
+  body.mobile-classic-mode .floating-widget-launcher { display:none !important; }
+  body.mobile-classic-mode #tropicalWatchBanner.tw-floating-alert {
+    left:8px !important; right:8px !important; width:auto !important; max-width:none !important;
+    bottom:calc(76px + env(safe-area-inset-bottom)) !important; top:auto !important;
+  }
+  body.mobile-classic-mode .card > *, body.mobile-classic-mode .tw-panel > *,
+  body.mobile-classic-mode .tw-section > * { max-width:100%; }
+  body.mobile-classic-mode pre { max-width:100%; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; }
+}
+@media (max-width: 390px) {
+  body.mobile-classic-mode > main { padding-left:9px !important; padding-right:9px !important; }
+  body.mobile-classic-mode .view.active > .card,
+  body.mobile-classic-mode .view.active .card.wide { padding:10px !important; }
+  body.mobile-classic-mode .vs-mob-hero-title { font-size:16px; }
+  body.mobile-classic-mode #marine .grid-5,
+  body.mobile-classic-mode #nwp .grid-5 { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+  body.mobile-classic-mode #forecast-guidance .obs-cal-bias-grid,
+  body.mobile-classic-mode #verification-learning .obs-cal-bias-grid { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.mobile-classic-mode main .view.active { animation:none !important; }
+}
+</style>
 </head>
 <body>
 <header>
@@ -2223,6 +3025,47 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 <button id="searchButton" title="Search and load the first matching result" type="submit">Enter</button>
 </form>
 </header>
+<div class="vs-aircraft-showcase vs-aircraft-showcase-desktop" aria-label="Decorative animated aircraft flypast: Su-30MKI, Rafale and Mi-17 V5. This is not live flight tracking.">
+  <div class="vs-aircraft-intro"><span class="vs-aircraft-status"><i></i><strong>AIRCRAFT FLYPAST</strong></span><small>Platform showcase</small></div>
+  <div class="vs-aircraft-lane" aria-hidden="true">
+  <div class="vs-plane-flight vs-plane-su30">
+    <svg class="vs-plane-svg" viewBox="0 0 200 70" role="img" aria-label="Su-30MKI silhouette">
+      <path class="vs-airframe" d="M8 34 L73 32 L108 10 L128 11 L117 31 L159 32 L190 35 L159 38 L117 39 L128 59 L108 60 L73 38 L8 36 Z"/>
+      <path class="vs-airframe" d="M25 31 L40 15 L49 16 L43 32 Z M25 39 L40 55 L49 54 L43 38 Z"/>
+      <path class="vs-airframe" d="M111 31 L123 22 L135 24 L130 33 Z M111 39 L123 48 L135 46 L130 37 Z"/>
+      <path class="vs-canopy" d="M143 33 L165 35 L143 37 Q139 35 143 33 Z"/>
+      <path class="vs-detail" d="M18 34 L74 35 M33 22 L40 31 M33 48 L40 39 M77 34 L111 35"/>
+      <path class="vs-exhaust" d="M10 32 L2 30 L2 39 L10 38 Z M18 32 L12 30 L12 39 L18 38 Z"/>
+    </svg>
+    <span class="vs-plane-name">SU-30MKI</span>
+  </div>
+  <div class="vs-plane-flight vs-plane-rafale">
+    <svg class="vs-plane-svg" viewBox="0 0 200 70" role="img" aria-label="Rafale silhouette">
+      <path class="vs-airframe" d="M9 34 L74 32 L116 8 L135 10 L123 31 L164 32 L190 35 L164 38 L123 39 L135 60 L116 62 L74 38 L9 36 Z"/>
+      <path class="vs-airframe" d="M103 31 L118 20 L131 22 L124 33 Z M103 39 L118 50 L131 48 L124 37 Z"/>
+      <path class="vs-airframe" d="M28 31 L39 20 L47 21 L42 33 Z M28 39 L39 50 L47 49 L42 37 Z"/>
+      <path class="vs-canopy" d="M151 33 L169 35 L151 37 Q147 35 151 33 Z"/>
+      <path class="vs-detail" d="M18 35 L75 35 M45 27 L52 34 M45 43 L52 36 M77 35 L115 35"/>
+    </svg>
+    <span class="vs-plane-name">RAFALE</span>
+  </div>
+  <div class="vs-plane-flight vs-plane-mi17">
+    <svg class="vs-plane-svg vs-heli-svg" viewBox="0 0 220 82" role="img" aria-label="Mi-17 V5 helicopter silhouette">
+      <g class="vs-main-rotor"><path d="M108 14 L108 5 M108 5 L20 5 M108 5 L197 5"/></g>
+      <path class="vs-airframe" d="M47 43 Q52 29 76 28 L119 29 Q137 30 148 39 L178 40 L204 34 L208 39 L181 47 L151 48 Q141 59 119 60 L74 60 Q53 58 47 49 Z"/>
+      <path class="vs-airframe" d="M47 44 L17 39 L13 44 L48 51 Z"/>
+      <path class="vs-airframe" d="M19 37 L21 19 L26 19 L27 40 Z M18 20 L31 20 L31 23 L18 23 Z"/>
+      <path class="vs-canopy" d="M137 34 Q151 35 159 43 L140 43 Z"/>
+      <path class="vs-canopy" d="M115 33 L133 34 L137 44 L114 44 Z"/>
+      <path class="vs-detail" d="M64 59 L62 66 L131 66 L136 59 M76 59 L76 66 M127 59 L127 66"/>
+      <g class="vs-tail-rotor"><path d="M21 9 L21 31 M10 20 L32 20"/></g>
+      <path class="vs-detail" d="M50 49 L150 49 M86 28 L86 24 M118 28 L118 24"/>
+    </svg>
+    <span class="vs-plane-name">MI-17 V5</span>
+  </div>
+</div>
+  <div class="vs-aircraft-note">ANIMATED DISPLAY<br/>NOT LIVE TRACKS</div>
+</div>
 <div aria-label="VayuSarathi mobile dashboard" id="mobileApp">
 <div class="mobile-top">
 <div class="mobile-brandline">
@@ -2234,6 +3077,45 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 <button type="submit">Search</button>
 <div hidden="" id="mobileSuggestions"></div>
 </form>
+<div class="vs-aircraft-showcase vs-aircraft-showcase-mobile" aria-label="Decorative animated aircraft flypast: Su-30MKI, Rafale and Mi-17 V5. This is not live flight tracking.">
+  <div class="vs-aircraft-lane" aria-hidden="true">
+  <div class="vs-plane-flight vs-plane-su30">
+    <svg class="vs-plane-svg" viewBox="0 0 200 70" role="img" aria-label="Su-30MKI silhouette">
+      <path class="vs-airframe" d="M8 34 L73 32 L108 10 L128 11 L117 31 L159 32 L190 35 L159 38 L117 39 L128 59 L108 60 L73 38 L8 36 Z"/>
+      <path class="vs-airframe" d="M25 31 L40 15 L49 16 L43 32 Z M25 39 L40 55 L49 54 L43 38 Z"/>
+      <path class="vs-airframe" d="M111 31 L123 22 L135 24 L130 33 Z M111 39 L123 48 L135 46 L130 37 Z"/>
+      <path class="vs-canopy" d="M143 33 L165 35 L143 37 Q139 35 143 33 Z"/>
+      <path class="vs-detail" d="M18 34 L74 35 M33 22 L40 31 M33 48 L40 39 M77 34 L111 35"/>
+      <path class="vs-exhaust" d="M10 32 L2 30 L2 39 L10 38 Z M18 32 L12 30 L12 39 L18 38 Z"/>
+    </svg>
+    <span class="vs-plane-name">SU-30MKI</span>
+  </div>
+  <div class="vs-plane-flight vs-plane-rafale">
+    <svg class="vs-plane-svg" viewBox="0 0 200 70" role="img" aria-label="Rafale silhouette">
+      <path class="vs-airframe" d="M9 34 L74 32 L116 8 L135 10 L123 31 L164 32 L190 35 L164 38 L123 39 L135 60 L116 62 L74 38 L9 36 Z"/>
+      <path class="vs-airframe" d="M103 31 L118 20 L131 22 L124 33 Z M103 39 L118 50 L131 48 L124 37 Z"/>
+      <path class="vs-airframe" d="M28 31 L39 20 L47 21 L42 33 Z M28 39 L39 50 L47 49 L42 37 Z"/>
+      <path class="vs-canopy" d="M151 33 L169 35 L151 37 Q147 35 151 33 Z"/>
+      <path class="vs-detail" d="M18 35 L75 35 M45 27 L52 34 M45 43 L52 36 M77 35 L115 35"/>
+    </svg>
+    <span class="vs-plane-name">RAFALE</span>
+  </div>
+  <div class="vs-plane-flight vs-plane-mi17">
+    <svg class="vs-plane-svg vs-heli-svg" viewBox="0 0 220 82" role="img" aria-label="Mi-17 V5 helicopter silhouette">
+      <g class="vs-main-rotor"><path d="M108 14 L108 5 M108 5 L20 5 M108 5 L197 5"/></g>
+      <path class="vs-airframe" d="M47 43 Q52 29 76 28 L119 29 Q137 30 148 39 L178 40 L204 34 L208 39 L181 47 L151 48 Q141 59 119 60 L74 60 Q53 58 47 49 Z"/>
+      <path class="vs-airframe" d="M47 44 L17 39 L13 44 L48 51 Z"/>
+      <path class="vs-airframe" d="M19 37 L21 19 L26 19 L27 40 Z M18 20 L31 20 L31 23 L18 23 Z"/>
+      <path class="vs-canopy" d="M137 34 Q151 35 159 43 L140 43 Z"/>
+      <path class="vs-canopy" d="M115 33 L133 34 L137 44 L114 44 Z"/>
+      <path class="vs-detail" d="M64 59 L62 66 L131 66 L136 59 M76 59 L76 66 M127 59 L127 66"/>
+      <g class="vs-tail-rotor"><path d="M21 9 L21 31 M10 20 L32 20"/></g>
+      <path class="vs-detail" d="M50 49 L150 49 M86 28 L86 24 M118 28 L118 24"/>
+    </svg>
+    <span class="vs-plane-name">MI-17 V5</span>
+  </div>
+</div>
+</div>
 </div>
 <main class="mobile-main">
 <section class="mobile-page active" id="mobilePageHome">
@@ -2265,17 +3147,34 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 </section>
 <section class="mobile-page" id="mobilePageMore">
 <div class="mobile-section-head"><h2>More tools</h2><span>Full dashboard modules</span></div>
+<div class="mobile-tool-group">
+<div class="mobile-tool-heading">FORECAST &amp; FLIGHT OPERATIONS</div>
 <div class="mobile-actions">
-<button class="mobile-action" onclick="mobileOpenClassic('tropical-watch')" type="button"><span class="ico">🌀</span><span><b>Tropical Watch</b><small>Official alerts and model guidance</small></span></button>
-<button class="mobile-action" onclick="mobileOpenClassic('verification-learning')" type="button"><span class="ico">📊</span><span><b>Forecast Validation</b><small>Model errors and quality scores</small></span></button>
-<button class="mobile-action" onclick="mobileOpenClassic('aviation-forecast')" type="button"><span class="ico">🛫</span><span><b>Aviation Forecast</b><small>Operational weather guidance</small></span></button>
-<button class="mobile-action" onclick="mobileOpenClassic('marine')" type="button"><span class="ico">🌊</span><span><b>Marine &amp; Sea State</b><small>Waves and ocean conditions</small></span></button>
-<button class="mobile-action" onclick="mobileOpenClassic('upper')" type="button"><span class="ico">💨</span><span><b>Upper Winds</b><small>Winds and temperatures aloft</small></span></button>
-<button class="mobile-action" onclick="mobileOpenClassic('satellites')" type="button"><span class="ico">🛰️</span><span><b>Satellite Imagery</b><small>Live satellite feeds</small></span></button>
-<button class="mobile-action" onclick="mobileOpenClassic('thunderstorm')" type="button"><span class="ico">⛈️</span><span><b>Thunderstorm Hotspot</b><small>0–3 hour spatial guidance</small></span></button>
-<button class="mobile-action" onclick="mobileOpenClassic('fits')" type="button"><span class="ico">🌡️</span><span><b>FITS</b><small>Thermal stress assessment</small></span></button>
+<button class="mobile-action" onclick="mobileOpenClassic('forecast-guidance')" type="button"><span class="ico">▥</span><span><b>Forecast Guidance</b><small>72-hour model consensus and METAR calibration</small></span></button>
+<button class="mobile-action" onclick="mobileOpenClassic('aviation-forecast')" type="button"><span class="ico">🛫</span><span><b>Aviation Forecast</b><small>Operational weather parameters</small></span></button>
+<button class="mobile-action" onclick="mobileOpenClassic('multi-metar')" type="button"><span class="ico">✈️</span><span><b>METAR / TAF Console</b><small>Airport observations and terminal forecasts</small></span></button>
+<button class="mobile-action" onclick="mobileOpenClassic('route')" type="button"><span class="ico">⌁</span><span><b>Route Briefing</b><small>Along-route surface and upper-air assessment</small></span></button>
 </div>
-<div class="mobile-card"><div class="mobile-card-title">About this view</div><div style="font-size:11px;color:#718096;line-height:1.55">This simplified interface is shown on narrow mobile screens. The full VayuSarathi dashboard remains available from each tool link and continues to be used on desktop.</div></div>
+</div>
+<div class="mobile-tool-group">
+<div class="mobile-tool-heading">ATMOSPHERE &amp; OCEAN</div>
+<div class="mobile-actions">
+<button class="mobile-action" onclick="mobileOpenClassic('marine')" type="button"><span class="ico">🌊</span><span><b>Marine &amp; Sea State</b><small>Waves, currents and ocean conditions</small></span></button>
+<button class="mobile-action" onclick="mobileOpenClassic('upper')" type="button"><span class="ico">💨</span><span><b>Upper Winds &amp; Temperature</b><small>Isobaric sounding matrix</small></span></button>
+<button class="mobile-action" onclick="mobileOpenClassic('satellites')" type="button"><span class="ico">🛰️</span><span><b>Satellite Imagery</b><small>Live satellite feeds and overlays</small></span></button>
+<button class="mobile-action" onclick="mobileOpenClassic('nwp')" type="button"><span class="ico">🗺️</span><span><b>NWP Products</b><small>GFS meteograms and WRF products</small></span></button>
+</div>
+</div>
+<div class="mobile-tool-group">
+<div class="mobile-tool-heading">HAZARDS, DIAGNOSTICS &amp; VERIFICATION</div>
+<div class="mobile-actions">
+<button class="mobile-action" onclick="mobileOpenClassic('tropical-watch')" type="button"><span class="ico">🌀</span><span><b>Tropical System Watch</b><small>Official alerts and model guidance</small></span></button>
+<button class="mobile-action" onclick="mobileOpenClassic('thunderstorm')" type="button"><span class="ico">⛈️</span><span><b>Thunderstorm Hotspot</b><small>0–3 hour convective guidance</small></span></button>
+<button class="mobile-action" onclick="mobileOpenClassic('fits')" type="button"><span class="ico">🌡️</span><span><b>FITS Assessment</b><small>Thermal stress and safety zones</small></span></button>
+<button class="mobile-action" onclick="mobileOpenClassic('verification-learning')" type="button"><span class="ico">📊</span><span><b>Forecast Verification</b><small>Model errors and quality scores</small></span></button>
+</div>
+</div>
+<div class="mobile-card"><div class="mobile-card-title">Mobile operations interface</div><div class="mobile-about-copy">Every module opens in a dedicated phone layout. Dense matrices and multi-hour timelines remain horizontally scrollable; maps, controls and briefing cards are rearranged for touch use. The desktop workstation remains unchanged.</div></div>
 </section>
 </main>
 <nav aria-label="Mobile navigation" class="mobile-bottom-nav">
@@ -2285,7 +3184,18 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 <button class="mobile-nav-btn" data-page="more" onclick="mobileShowPage('more')"><span class="ico">☰</span><span>More</span></button>
 </nav>
 </div>
-<button class="mobile-legacy-back" onclick="mobileReturnHome()" type="button">← Mobile home</button>
+<div id="mobileClassicHeader" aria-label="Mobile module header">
+  <button class="mobile-classic-back" onclick="mobileReturnTools()" type="button" aria-label="Back to all mobile tools">‹</button>
+  <div class="mobile-classic-brand"><span class="mobile-classic-mark">V</span><div><strong>VayuSarathi</strong><small id="mobileClassicSection">MOBILE OPERATIONS</small></div></div>
+  <div class="mobile-classic-meta"><span class="mobile-classic-live-dot"></span><span id="mobileClassicClock">IST • —</span></div>
+</div>
+<nav id="mobileClassicNav" aria-label="Mobile quick navigation">
+  <button type="button" data-classic-nav="home" onclick="mobileReturnHome()"><span>⌂</span><small>Home</small></button>
+  <button type="button" data-classic-nav="forecast" onclick="mobileOpenClassic('forecast-guidance')"><span>▥</span><small>Forecast</small></button>
+  <button type="button" data-classic-nav="metar" onclick="mobileOpenClassic('multi-metar')"><span>✈</span><small>METAR</small></button>
+  <button type="button" data-classic-nav="aviation" onclick="mobileOpenClassic('aviation-forecast')"><span>🛫</span><small>Aviation</small></button>
+  <button type="button" data-classic-nav="tools" onclick="mobileReturnTools()"><span>☷</span><small>Tools</small></button>
+</nav>
 <aside aria-label="Desktop workspace navigation" id="desktopSidebar">
 <div class="desktop-side-brand">
 <div class="desktop-side-mark">✈</div>
@@ -7868,10 +8778,27 @@ document.addEventListener('DOMContentLoaded', () => {
 (function(){
   const $=id=>document.getElementById(id);
   const isMobile=()=>window.matchMedia('(max-width: 767px)').matches;
+  const mobileViewTitles={
+    forecast:'Weather overview', 'forecast-guidance':'Forecast guidance', 'verification-learning':'Forecast verification',
+    'tropical-watch':'Tropical system watch', marine:'Marine & sea state', thunderstorm:'Thunderstorm analysis',
+    upper:'Upper winds & temperature', 'aviation-forecast':'Aviation forecast', 'multi-metar':'METAR / TAF console',
+    fits:'FITS assessment', route:'Route briefing', satellites:'Satellite imagery', nwp:'NWP products'
+  };
+  function setMobileClassicNav(which){
+    document.querySelectorAll('#mobileClassicNav button').forEach(b=>b.classList.toggle('active',b.dataset.classicNav===which));
+  }
+  function mobileSetClassicTitle(tab){
+    const title=mobileViewTitles[tab]||'Mobile operations';
+    const e=$('mobileClassicSection');if(e)e.textContent=title.toUpperCase();
+    const active=(tab==='forecast-guidance')?'forecast':(tab==='multi-metar'?'metar':(['aviation-forecast','route'].includes(tab)?'aviation':(tab==='forecast'?'home':'tools')));
+    setMobileClassicNav(active);
+  }
   function mobileShowPage(name){
+    document.body.classList.remove('mobile-classic-mode');
     document.querySelectorAll('#mobileApp .mobile-page').forEach(p=>p.classList.toggle('active',p.id==='mobilePage'+name.charAt(0).toUpperCase()+name.slice(1)));
     document.querySelectorAll('.mobile-nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
     if(name==='forecast')mobileUpdateDashboard();
+    window.scrollTo({top:0,behavior:'smooth'});
   }
   function mobileOpenMeteogram(){
     if(!isMobile())return;
@@ -7885,7 +8812,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if(!isMobile())return;
     document.body.classList.add('mobile-classic-mode');
     if(typeof switchTab==='function')switchTab(tab);
+    mobileSetClassicTitle(tab);
     window.scrollTo({top:0,behavior:'instant'});
+    setTimeout(()=>{if(typeof window.invalidateMobileMaps==='function')window.invalidateMobileMaps();},180);
+  }
+  function mobileReturnTools(){
+    document.body.classList.remove('mobile-classic-mode');
+    mobileShowPage('more');
   }
   function mobileReturnHome(){
     document.body.classList.remove('mobile-classic-mode');
@@ -7966,14 +8899,126 @@ document.addEventListener('DOMContentLoaded', () => {
     }catch(e){if(suggestions){suggestions.innerHTML='<button type="button">Search failed. Please try again.</button>';suggestions.hidden=false;}}
     finally{if(input)input.disabled=false;}
   }
-  function mobileClock(){set('mobileClock','IST • '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Kolkata'}));}
+  function mobileClock(){const t='IST • '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Kolkata'});set('mobileClock',t);set('mobileClassicClock',t);}
   function set(id,v){const e=document.getElementById(id);if(e)e.textContent=v;}
   const searchForm=$('mobileSearchForm');
   if(searchForm)searchForm.addEventListener('submit',e=>{e.preventDefault();mobileSearch();});
-  window.mobileShowPage=mobileShowPage;window.mobileOpenMeteogram=mobileOpenMeteogram;window.mobileOpenClassic=mobileOpenClassic;window.mobileReturnHome=mobileReturnHome;window.mobileUpdateDashboard=mobileUpdateDashboard;
+  window.mobileShowPage=mobileShowPage;window.mobileOpenMeteogram=mobileOpenMeteogram;window.mobileOpenClassic=mobileOpenClassic;window.mobileReturnHome=mobileReturnHome;window.mobileReturnTools=mobileReturnTools;window.mobileUpdateDashboard=mobileUpdateDashboard;
   mobileClock();setInterval(mobileClock,30000);
   document.addEventListener('DOMContentLoaded',()=>{setTimeout(mobileUpdateDashboard,700);});
   window.addEventListener('resize',()=>{if(!isMobile())document.body.classList.remove('mobile-classic-mode');});
+})();
+</script>
+<script id="vayusarathi-mobile-redesign-controller">
+(function(){
+  const mobileQuery = window.matchMedia('(max-width: 767px)');
+  const modules = {
+    'forecast-guidance': {icon:'▥', kicker:'FORECAST INTELLIGENCE · 72 HOURS', title:'Forecast guidance', sub:'MODEL CONSENSUS  /  HOURLY AVIATION WEATHER  /  METAR CALIBRATION'},
+    'tropical-watch': {icon:'🌀', kicker:'TROPICAL SYSTEM MONITOR', title:'Tropical system watch', sub:'CYCLONE SIGNALS  /  TRACK GUIDANCE  /  OFFICIAL BULLETINS'},
+    'verification-learning': {icon:'◒', kicker:'MODEL PERFORMANCE', title:'Forecast verification', sub:'OBSERVATION MATCHING  /  ERROR SCORES  /  DATA QUALITY'},
+    'thunderstorm': {icon:'⛈', kicker:'CONVECTIVE NOWCAST · 0–3 HOUR', title:'Thunderstorm analysis', sub:'50 KM SEARCH DOMAIN  /  HOTSPOT EVOLUTION  /  RISK'},
+    'marine': {icon:'≈', kicker:'OCEANOGRAPHY & MARINE SAFETY', title:'Marine & sea state', sub:'WAVE HEIGHT  /  SWELL  /  CURRENT VECTORS'},
+    'upper': {icon:'↟', kicker:'UPPER-AIR SOUNDING', title:'Upper winds & temperature', sub:'ISOBARIC LEVELS  /  WIND PROFILE  /  TEMPERATURE'},
+    'aviation-forecast': {icon:'✈', kicker:'OPERATIONAL AVIATION WEATHER', title:'Aviation forecast', sub:'HOURLY BRIEFING  /  CLOUD  /  VISIBILITY  /  WIND'},
+    'multi-metar': {icon:'◉', kicker:'AERODROME OBSERVATIONS', title:'METAR / TAF console', sub:'MULTI-STATION  /  RAW REPORTS  /  FLIGHT CATEGORY'},
+    'fits': {icon:'♨', kicker:'AVIATION SAFETY DIAGNOSTICS', title:'FITS assessment', sub:'THERMAL STRESS  /  HOURLY EXPOSURE  /  SAFETY ZONES'},
+    'route': {icon:'⌁', kicker:'FLIGHT PLANNING', title:'Route briefing', sub:'WAYPOINTS  /  EN-ROUTE WEATHER  /  UPPER WINDS'},
+    'satellites': {icon:'🛰', kicker:'REMOTE SENSING', title:'Satellite & radar', sub:'SATELLITE  /  LIGHTNING  /  PRECIPITATION RADAR'},
+    'nwp': {icon:'▦', kicker:'NUMERICAL WEATHER PREDICTION', title:'NWP products', sub:'MODEL GUIDANCE  /  METEOGRAMS  /  WRF PRODUCTS'},
+    'forecast': {icon:'⌂', kicker:'ATMOSPHERIC TELEMETRY', title:'Weather overview', sub:'CURRENT CONDITIONS  /  OBSERVATIONS  /  FORECAST'}
+  };
+  const accent = {
+    'forecast-guidance':'#20c5e6','tropical-watch':'#a78bfa','verification-learning':'#34d399',
+    'thunderstorm':'#c084fc','marine':'#22c6d9','upper':'#9b8cff','aviation-forecast':'#4ba8ff',
+    'multi-metar':'#25d1b1','fits':'#f5a64b','route':'#ef86c8','satellites':'#42b9ef','nwp':'#9d9cff','forecast':'#27c5e8'
+  };
+  function addHero(){
+    const main=document.querySelector('body > main');
+    if(!main || document.getElementById('mobileModuleHero')) return;
+    const hero=document.createElement('section');
+    hero.id='mobileModuleHero';
+    hero.setAttribute('aria-live','polite');
+    hero.innerHTML='<div class="vs-mob-hero-icon" id="vsMobHeroIcon">▥</div><div class="vs-mob-hero-copy"><div class="vs-mob-hero-kicker" id="vsMobHeroKicker">MOBILE OPERATIONS</div><div class="vs-mob-hero-title" id="vsMobHeroTitle">VayuSarathi</div><div class="vs-mob-hero-sub" id="vsMobHeroSub">AVIATION METEOROLOGY</div><div class="vs-mob-hero-loc" id="vsMobHeroLoc"></div></div>';
+    const firstView=main.querySelector('.view');
+    if(firstView) main.insertBefore(hero, firstView); else main.prepend(hero);
+  }
+  function decorateTables(){
+    const ids=['aviationForecastTable','fitsTable'];
+    ids.forEach(id=>{
+      const table=document.getElementById(id); if(!table) return;
+      table.classList.add('mobile-record-table');
+      const wrap=table.closest('.table-wrap'); if(wrap) wrap.classList.add('mobile-record-table-wrap');
+      const heads=Array.from(table.querySelectorAll('thead tr:last-child th')).map(th=>th.textContent.trim());
+      table.querySelectorAll('tbody tr').forEach(row=>{
+        Array.from(row.cells).forEach((cell,i)=>{
+          if(!cell.hasAttribute('data-label')) cell.setAttribute('data-label',heads[i] || `Parameter ${i+1}`);
+        });
+      });
+    });
+  }
+  function currentLocation(){
+    const name=document.getElementById('heroName');
+    const coords=document.getElementById('heroCoords');
+    const n=name?.textContent?.trim();
+    const c=coords?.textContent?.trim();
+    if(n && !/select a location/i.test(n) && !/awaiting/i.test(n)) return c && !/pending/i.test(c) ? `${n} · ${c}` : n;
+    return '';
+  }
+  function setModule(id){
+    if(!mobileQuery.matches) return;
+    addHero(); decorateTables();
+    const cfg=modules[id] || modules['forecast-guidance'];
+    const hero=document.getElementById('mobileModuleHero'); if(!hero) return;
+    hero.style.setProperty('--vs-mobile-accent',accent[id] || '#27c5e8');
+    const set=(name,value)=>{const el=document.getElementById(name);if(el)el.textContent=value;};
+    set('vsMobHeroIcon',cfg.icon); set('vsMobHeroKicker',cfg.kicker); set('vsMobHeroTitle',cfg.title); set('vsMobHeroSub',cfg.sub); set('vsMobHeroLoc',currentLocation());
+    const title=document.getElementById('mobileClassicSection'); if(title) title.textContent=cfg.title.toUpperCase();
+    const nav=id==='forecast-guidance'?'forecast':id==='multi-metar'?'metar':(['aviation-forecast','route'].includes(id)?'aviation':id==='forecast'?'home':'tools');
+    document.querySelectorAll('#mobileClassicNav button').forEach(b=>b.classList.toggle('active',b.dataset.classicNav===nav));
+  }
+  function setFromActive(){
+    const v=document.querySelector('body > main .view.active');
+    if(v) setModule(v.id);
+  }
+  function enhanceMobileTables(){
+    decorateTables();
+    ['aviationForecastTable','fitsTable'].forEach(id=>{
+      const t=document.getElementById(id); if(!t) return;
+      const body=t.tBodies?.[0];
+      if(body && !body.dataset.mobileLabelsObserver){
+        body.dataset.mobileLabelsObserver='1';
+        new MutationObserver(()=>decorateTables()).observe(body,{childList:true,subtree:true});
+      }
+    });
+  }
+  function init(){
+    addHero(); enhanceMobileTables();
+    const main=document.querySelector('body > main');
+    if(main){
+      new MutationObserver(records=>{
+        if(!mobileQuery.matches) return;
+        if(records.some(r=>r.type==='attributes' && r.attributeName==='class')) setTimeout(setFromActive,0);
+      }).observe(main,{subtree:true,attributes:true,attributeFilter:['class']});
+    }
+    const priorOpen=window.mobileOpenClassic;
+    if(typeof priorOpen==='function' && !priorOpen.__vsRedesign){
+      const wrapped=function(tab){const ret=priorOpen.apply(this,arguments);setTimeout(()=>setModule(tab),40);return ret;};
+      wrapped.__vsRedesign=true; window.mobileOpenClassic=wrapped;
+    }
+    const priorSwitch=window.switchTab;
+    if(typeof priorSwitch==='function' && !priorSwitch.__vsRedesign){
+      const wrapped=function(tab){const ret=priorSwitch.apply(this,arguments);setTimeout(()=>{if(document.body.classList.contains('mobile-classic-mode'))setModule(tab);},40);return ret;};
+      wrapped.__vsRedesign=true; window.switchTab=wrapped;
+    }
+    document.addEventListener('click',e=>{
+      const classic=e.target.closest('#mobileClassicNav button, .mobile-action');
+      if(classic) setTimeout(setFromActive,80);
+    });
+    window.addEventListener('resize',()=>{if(mobileQuery.matches){setFromActive();enhanceMobileTables();}});
+    setTimeout(setFromActive,80);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true}); else init();
+  window.vayuRefreshMobileScreen=setFromActive;
 })();
 </script>
 </body>
