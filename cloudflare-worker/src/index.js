@@ -70,9 +70,9 @@ async function nearestMetar(lat,lon){
     const d=hav(lat,lon,slat,slon);if(d>200||(best&&d>=best.distanceKm))continue;
     const vis=num(row,'visibility_statute_mi','visibility','visib');
     const alt=num(row,'altim_in_hg','altimeter_in_hg','altim');
+    const rawText=get(row,'raw_text','rawob','raw_ob');
     const slp=num(row,'sea_level_pressure_mb','mslp','slp')??parseMetarSlpHpa(rawText);
     const weather=get(row,'wx_string','present_weather','weather');
-    const rawText=get(row,'raw_text','rawob','raw_ob');
     const clouds=get(row,'sky_condition','sky_cover','clouds');
     best={
       icao:get(row,'station_id','icao_id','icao'),stationName:get(row,'station_name','name','station'),
@@ -249,8 +249,9 @@ async function cronCollector(env){
     if(lat==null||lon==null||!Number.isFinite(t)||Math.abs(Date.now()-t)>2.5*3600*1000)continue;
     const vis=n(g('visibility_statute_mi','visibility','visib'));
     const alt=n(g('altim_in_hg','altimeter_in_hg','altim'));
+    const rawText=g('raw_text','rawob','raw_ob');
     const slp=n(g('sea_level_pressure_mb','mslp','slp'))??parseMetarSlpHpa(rawText);
-    const wx=g('wx_string','present_weather','weather');const rawText=g('raw_text','rawob','raw_ob');
+    const wx=g('wx_string','present_weather','weather');
     const clouds=g('sky_condition','sky_cover','clouds');const cloudCover=metarCloudCoverPercent(clouds,rawText);
     obs.push({
       icao:g('station_id','icao_id','icao'),lat,lon,observationTime:new Date(t).toISOString(),
