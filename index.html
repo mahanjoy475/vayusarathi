@@ -2151,65 +2151,7 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
   body>main{margin:0;width:100%;padding:20px 18px}
 }
 </style>
-<style id="vs-aircraft-animation-style">
-/* VayuSarathi aircraft flypast — decorative display, not live aircraft tracking. */
-.vs-aircraft-showcase{
-  position:relative;isolation:isolate;display:grid;grid-template-columns:168px minmax(0,1fr) 118px;align-items:center;
-  min-height:78px;padding:5px 16px;gap:12px;overflow:hidden;
-  color:#dff6ff;background:linear-gradient(100deg,#09243a 0%,#103854 48%,#0b2c46 100%);
-  border-top:1px solid rgba(91,190,215,.28);border-bottom:1px solid rgba(91,190,215,.3);
-  box-shadow:0 5px 16px rgba(6,34,57,.10);
-}
-.vs-aircraft-showcase:before{
-  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.25;
-  background:repeating-linear-gradient(120deg,transparent 0 34px,rgba(130,211,231,.10) 34px 35px),
-    radial-gradient(ellipse at 75% 50%,rgba(52,174,211,.22),transparent 48%);
-}
-.vs-aircraft-intro{position:relative;z-index:2;min-width:0;display:flex;flex-direction:column;gap:4px}
-.vs-aircraft-intro strong{font:950 9px/1.1 Inter,Arial,sans-serif;letter-spacing:1.25px;color:#e5f8ff}
-.vs-aircraft-intro small{font:750 7px/1.25 Inter,Arial,sans-serif;letter-spacing:.7px;color:#83bcd0;text-transform:uppercase}
-.vs-aircraft-status{display:inline-flex;align-items:center;gap:6px}
-.vs-aircraft-status i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#52d6b0;box-shadow:0 0 0 3px rgba(82,214,176,.12),0 0 9px rgba(82,214,176,.55)}
-.vs-aircraft-lane{position:relative;height:68px;min-width:0;overflow:hidden;border-left:1px solid rgba(129,201,220,.20);border-right:1px solid rgba(129,201,220,.12)}
-.vs-aircraft-lane:before,.vs-aircraft-lane:after{content:"";position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(122,202,224,.16),transparent)}
-.vs-aircraft-lane:before{top:20px}.vs-aircraft-lane:after{top:41px}
-.vs-plane-flight{position:absolute;left:-190px;display:flex;align-items:center;gap:5px;white-space:nowrap;will-change:left;filter:drop-shadow(0 2px 3px rgba(0,0,0,.2));animation:vsAircraftCross linear infinite}
-.vs-plane-su30{top:1px;animation-duration:23s;animation-delay:-6s}
-.vs-plane-rafale{top:21px;animation-duration:28s;animation-delay:-17s}
-.vs-plane-mi17{top:41px;animation-duration:32s;animation-delay:-10s}
-@keyframes vsAircraftCross{from{left:-190px}to{left:calc(100% + 22px)}}
-.vs-plane-svg{width:76px;height:20px;overflow:visible;flex:0 0 auto}
-.vs-airframe{fill:#c9edf7;stroke:#5fc2dc;stroke-width:1.15;stroke-linejoin:round}
-.vs-canopy{fill:#257a9c;stroke:#b9edf8;stroke-width:.8}
-.vs-detail{fill:none;stroke:#70c8dc;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
-.vs-exhaust{fill:#7ba9ba;stroke:#c4eff8;stroke-width:.6}
-.vs-plane-name{font:900 7px/1 Inter,Arial,sans-serif;letter-spacing:1px;color:#b9e8f4;text-shadow:0 1px 2px rgba(0,0,0,.45)}
-.vs-heli-svg{width:78px;height:26px}
-.vs-main-rotor,.vs-tail-rotor{transform-box:fill-box;transform-origin:center;animation:vsRotorSpin .32s linear infinite}
-.vs-main-rotor path,.vs-tail-rotor path{fill:none;stroke:#a9ddeb;stroke-width:2.1;stroke-linecap:round}
-.vs-tail-rotor{transform-origin:21px 20px;animation-duration:.22s}
-@keyframes vsRotorSpin{to{transform:rotate(360deg)}}
-.vs-aircraft-note{position:relative;z-index:2;text-align:right;font:800 7px/1.4 Inter,Arial,sans-serif;letter-spacing:.55px;color:#82b7c9;text-transform:uppercase}
-.vs-aircraft-showcase-mobile{display:none}
-@media(min-width:1100px){.vs-aircraft-showcase-desktop{margin-left:var(--vs-sidebar-width);width:calc(100% - var(--vs-sidebar-width))}}
-@media(max-width:767px){
-  .vs-aircraft-showcase-desktop{display:none!important}
-  .vs-aircraft-showcase-mobile{display:block;min-height:48px;height:48px;margin-top:9px;padding:2px 7px;border:1px solid rgba(111,192,216,.25);border-radius:11px;box-shadow:0 4px 12px rgba(15,38,72,.12)}
-  .vs-aircraft-showcase-mobile .vs-aircraft-intro,.vs-aircraft-showcase-mobile .vs-aircraft-note{display:none}
-  .vs-aircraft-showcase-mobile .vs-aircraft-lane{height:44px;border:0}
-  .vs-aircraft-showcase-mobile .vs-aircraft-lane:before{top:14px}.vs-aircraft-showcase-mobile .vs-aircraft-lane:after{top:28px}
-  .vs-aircraft-showcase-mobile .vs-plane-flight{left:-150px;gap:3px}
-  .vs-aircraft-showcase-mobile .vs-plane-su30{top:0;animation-duration:17s;animation-delay:-4s}
-  .vs-aircraft-showcase-mobile .vs-plane-rafale{top:14px;animation-duration:20s;animation-delay:-13s}
-  .vs-aircraft-showcase-mobile .vs-plane-mi17{top:28px;animation-duration:24s;animation-delay:-8s}
-  .vs-aircraft-showcase-mobile .vs-plane-svg{width:56px;height:14px}
-  .vs-aircraft-showcase-mobile .vs-heli-svg{width:58px;height:17px}
-  .vs-aircraft-showcase-mobile .vs-plane-name{font-size:6px;letter-spacing:.7px}
-}
-@media(prefers-reduced-motion:reduce){
-  .vs-plane-flight,.vs-main-rotor,.vs-tail-rotor{animation-play-state:paused!important}
-}
-</style>
+
 
 <style id="vayusarathi-mobile-operations-refresh">
 /* Hidden outside the phone breakpoint; the dedicated shell is only for narrow mobile screens. */
@@ -2242,7 +2184,7 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
   body:not(.mobile-classic-mode)>header,
   body:not(.mobile-classic-mode)>main { display: none !important; }
   body:not(.mobile-classic-mode) #mobileApp { display:block !important; }
-  #desktopSidebar, .vs-aircraft-showcase-desktop { display:none !important; }
+  #desktopSidebar { display:none !important; }
 
   /* Home / mobile dashboard shell */
   #mobileApp {
@@ -2355,8 +2297,7 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
     display:block !important; width:100% !important; max-width:760px !important;
     margin:0 auto !important; padding:13px 12px calc(96px + env(safe-area-inset-bottom)) !important;
   }
-  body.mobile-classic-mode #desktopSidebar,
-  body.mobile-classic-mode .vs-aircraft-showcase-desktop { display:none !important; }
+  body.mobile-classic-mode #desktopSidebar { display:none !important; }
   body.mobile-classic-mode #mobileClassicHeader {
     display:flex; position:sticky; top:0; z-index:6200; min-height:calc(66px + env(safe-area-inset-top));
     align-items:center; gap:10px; padding:calc(9px + env(safe-area-inset-top)) 13px 9px;
@@ -2953,6 +2894,45 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
   body.mobile-classic-mode main .view.active { animation:none !important; }
 }
 </style>
+<style id="vayusarathi-mobile-metar-no-horizontal-scroll">
+/* Mobile METAR/TAF: show the complete report in the card without horizontal scrolling. */
+@media (max-width: 767px) {
+  body.mobile-classic-mode #multi-metar .multi-metar-row,
+  body.mobile-classic-mode #multi-metar .multi-report-main {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  body.mobile-classic-mode #multi-metar .multi-report-main {
+    display: block !important;
+    min-height: 0 !important;
+    padding: 11px 12px !important;
+  }
+  body.mobile-classic-mode #multi-metar .multi-raw,
+  body.mobile-classic-mode #multi-metar .multi-report-card .multi-raw {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    white-space: normal !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+    text-overflow: clip !important;
+    font-size: clamp(14px, 4.15vw, 17px) !important;
+    line-height: 1.48 !important;
+    letter-spacing: .08px !important;
+    padding: 2px 0 !important;
+    scrollbar-width: none !important;
+  }
+  body.mobile-classic-mode #multi-metar .multi-raw::-webkit-scrollbar {
+    display: none !important;
+  }
+}
+</style>
 </head>
 <body>
 <header>
@@ -3025,47 +3005,7 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 <button id="searchButton" title="Search and load the first matching result" type="submit">Enter</button>
 </form>
 </header>
-<div class="vs-aircraft-showcase vs-aircraft-showcase-desktop" aria-label="Decorative animated aircraft flypast: Su-30MKI, Rafale and Mi-17 V5. This is not live flight tracking.">
-  <div class="vs-aircraft-intro"><span class="vs-aircraft-status"><i></i><strong>AIRCRAFT FLYPAST</strong></span><small>Platform showcase</small></div>
-  <div class="vs-aircraft-lane" aria-hidden="true">
-  <div class="vs-plane-flight vs-plane-su30">
-    <svg class="vs-plane-svg" viewBox="0 0 200 70" role="img" aria-label="Su-30MKI silhouette">
-      <path class="vs-airframe" d="M8 34 L73 32 L108 10 L128 11 L117 31 L159 32 L190 35 L159 38 L117 39 L128 59 L108 60 L73 38 L8 36 Z"/>
-      <path class="vs-airframe" d="M25 31 L40 15 L49 16 L43 32 Z M25 39 L40 55 L49 54 L43 38 Z"/>
-      <path class="vs-airframe" d="M111 31 L123 22 L135 24 L130 33 Z M111 39 L123 48 L135 46 L130 37 Z"/>
-      <path class="vs-canopy" d="M143 33 L165 35 L143 37 Q139 35 143 33 Z"/>
-      <path class="vs-detail" d="M18 34 L74 35 M33 22 L40 31 M33 48 L40 39 M77 34 L111 35"/>
-      <path class="vs-exhaust" d="M10 32 L2 30 L2 39 L10 38 Z M18 32 L12 30 L12 39 L18 38 Z"/>
-    </svg>
-    <span class="vs-plane-name">SU-30MKI</span>
-  </div>
-  <div class="vs-plane-flight vs-plane-rafale">
-    <svg class="vs-plane-svg" viewBox="0 0 200 70" role="img" aria-label="Rafale silhouette">
-      <path class="vs-airframe" d="M9 34 L74 32 L116 8 L135 10 L123 31 L164 32 L190 35 L164 38 L123 39 L135 60 L116 62 L74 38 L9 36 Z"/>
-      <path class="vs-airframe" d="M103 31 L118 20 L131 22 L124 33 Z M103 39 L118 50 L131 48 L124 37 Z"/>
-      <path class="vs-airframe" d="M28 31 L39 20 L47 21 L42 33 Z M28 39 L39 50 L47 49 L42 37 Z"/>
-      <path class="vs-canopy" d="M151 33 L169 35 L151 37 Q147 35 151 33 Z"/>
-      <path class="vs-detail" d="M18 35 L75 35 M45 27 L52 34 M45 43 L52 36 M77 35 L115 35"/>
-    </svg>
-    <span class="vs-plane-name">RAFALE</span>
-  </div>
-  <div class="vs-plane-flight vs-plane-mi17">
-    <svg class="vs-plane-svg vs-heli-svg" viewBox="0 0 220 82" role="img" aria-label="Mi-17 V5 helicopter silhouette">
-      <g class="vs-main-rotor"><path d="M108 14 L108 5 M108 5 L20 5 M108 5 L197 5"/></g>
-      <path class="vs-airframe" d="M47 43 Q52 29 76 28 L119 29 Q137 30 148 39 L178 40 L204 34 L208 39 L181 47 L151 48 Q141 59 119 60 L74 60 Q53 58 47 49 Z"/>
-      <path class="vs-airframe" d="M47 44 L17 39 L13 44 L48 51 Z"/>
-      <path class="vs-airframe" d="M19 37 L21 19 L26 19 L27 40 Z M18 20 L31 20 L31 23 L18 23 Z"/>
-      <path class="vs-canopy" d="M137 34 Q151 35 159 43 L140 43 Z"/>
-      <path class="vs-canopy" d="M115 33 L133 34 L137 44 L114 44 Z"/>
-      <path class="vs-detail" d="M64 59 L62 66 L131 66 L136 59 M76 59 L76 66 M127 59 L127 66"/>
-      <g class="vs-tail-rotor"><path d="M21 9 L21 31 M10 20 L32 20"/></g>
-      <path class="vs-detail" d="M50 49 L150 49 M86 28 L86 24 M118 28 L118 24"/>
-    </svg>
-    <span class="vs-plane-name">MI-17 V5</span>
-  </div>
-</div>
-  <div class="vs-aircraft-note">ANIMATED DISPLAY<br/>NOT LIVE TRACKS</div>
-</div>
+
 <div aria-label="VayuSarathi mobile dashboard" id="mobileApp">
 <div class="mobile-top">
 <div class="mobile-brandline">
@@ -3077,45 +3017,7 @@ main{padding: 24px 28px; max-width: 1520px; margin: auto}.view{display:none}.vie
 <button type="submit">Search</button>
 <div hidden="" id="mobileSuggestions"></div>
 </form>
-<div class="vs-aircraft-showcase vs-aircraft-showcase-mobile" aria-label="Decorative animated aircraft flypast: Su-30MKI, Rafale and Mi-17 V5. This is not live flight tracking.">
-  <div class="vs-aircraft-lane" aria-hidden="true">
-  <div class="vs-plane-flight vs-plane-su30">
-    <svg class="vs-plane-svg" viewBox="0 0 200 70" role="img" aria-label="Su-30MKI silhouette">
-      <path class="vs-airframe" d="M8 34 L73 32 L108 10 L128 11 L117 31 L159 32 L190 35 L159 38 L117 39 L128 59 L108 60 L73 38 L8 36 Z"/>
-      <path class="vs-airframe" d="M25 31 L40 15 L49 16 L43 32 Z M25 39 L40 55 L49 54 L43 38 Z"/>
-      <path class="vs-airframe" d="M111 31 L123 22 L135 24 L130 33 Z M111 39 L123 48 L135 46 L130 37 Z"/>
-      <path class="vs-canopy" d="M143 33 L165 35 L143 37 Q139 35 143 33 Z"/>
-      <path class="vs-detail" d="M18 34 L74 35 M33 22 L40 31 M33 48 L40 39 M77 34 L111 35"/>
-      <path class="vs-exhaust" d="M10 32 L2 30 L2 39 L10 38 Z M18 32 L12 30 L12 39 L18 38 Z"/>
-    </svg>
-    <span class="vs-plane-name">SU-30MKI</span>
-  </div>
-  <div class="vs-plane-flight vs-plane-rafale">
-    <svg class="vs-plane-svg" viewBox="0 0 200 70" role="img" aria-label="Rafale silhouette">
-      <path class="vs-airframe" d="M9 34 L74 32 L116 8 L135 10 L123 31 L164 32 L190 35 L164 38 L123 39 L135 60 L116 62 L74 38 L9 36 Z"/>
-      <path class="vs-airframe" d="M103 31 L118 20 L131 22 L124 33 Z M103 39 L118 50 L131 48 L124 37 Z"/>
-      <path class="vs-airframe" d="M28 31 L39 20 L47 21 L42 33 Z M28 39 L39 50 L47 49 L42 37 Z"/>
-      <path class="vs-canopy" d="M151 33 L169 35 L151 37 Q147 35 151 33 Z"/>
-      <path class="vs-detail" d="M18 35 L75 35 M45 27 L52 34 M45 43 L52 36 M77 35 L115 35"/>
-    </svg>
-    <span class="vs-plane-name">RAFALE</span>
-  </div>
-  <div class="vs-plane-flight vs-plane-mi17">
-    <svg class="vs-plane-svg vs-heli-svg" viewBox="0 0 220 82" role="img" aria-label="Mi-17 V5 helicopter silhouette">
-      <g class="vs-main-rotor"><path d="M108 14 L108 5 M108 5 L20 5 M108 5 L197 5"/></g>
-      <path class="vs-airframe" d="M47 43 Q52 29 76 28 L119 29 Q137 30 148 39 L178 40 L204 34 L208 39 L181 47 L151 48 Q141 59 119 60 L74 60 Q53 58 47 49 Z"/>
-      <path class="vs-airframe" d="M47 44 L17 39 L13 44 L48 51 Z"/>
-      <path class="vs-airframe" d="M19 37 L21 19 L26 19 L27 40 Z M18 20 L31 20 L31 23 L18 23 Z"/>
-      <path class="vs-canopy" d="M137 34 Q151 35 159 43 L140 43 Z"/>
-      <path class="vs-canopy" d="M115 33 L133 34 L137 44 L114 44 Z"/>
-      <path class="vs-detail" d="M64 59 L62 66 L131 66 L136 59 M76 59 L76 66 M127 59 L127 66"/>
-      <g class="vs-tail-rotor"><path d="M21 9 L21 31 M10 20 L32 20"/></g>
-      <path class="vs-detail" d="M50 49 L150 49 M86 28 L86 24 M118 28 L118 24"/>
-    </svg>
-    <span class="vs-plane-name">MI-17 V5</span>
-  </div>
-</div>
-</div>
+
 </div>
 <main class="mobile-main">
 <section class="mobile-page active" id="mobilePageHome">
